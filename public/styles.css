@@ -1,0 +1,127 @@
+:root {
+  --accent: 136, 58, 234;
+  --accent-light: 224, 204, 250;
+  --accent-dark: 49, 10, 101;
+  --accent-gradient: linear-gradient(45deg, rgb(var(--accent)), rgb(var(--accent-light)) 30%, white 60%);
+  
+  --brand-blue: #199afc;
+  --brand-black: #1e1e2e;
+  --brand-gray: #282c36;
+  --text-color-light: #e0e0e0;
+  --text-color-dark: #ffffff;
+  --bg-color-dark: #0b1422;
+  --bg-color-light: #f5f5f5;
+}
+
+html.dark {
+  --bg-color: var(--bg-color-dark);
+  --text-color: var(--text-color-light);
+}
+
+html.light {
+  --bg-color: var(--bg-color-light);
+  --text-color: var(--text-color-dark);
+}
+
+body {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  font-family: 'Inter', sans-serif;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Headings */
+h1, h3 {
+  color: var(--brand-blue);
+}
+
+h1 {
+  font-size: 4rem;
+  font-weight: 700;
+  text-align: center;
+  color: var(--text-color);
+}
+
+p {
+  font-size: 1.2rem;
+  text-align: center;
+  color: var(--text-color);
+}
+
+/* Links */
+a {
+  color: var(--text-color);
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+a:hover {
+  color: #ff8c00; /* Accent color on hover */
+}
+
+/* Sección con la imagen de fondo y blur */
+.section-background {
+  background-image: url('/walpaper.jpg'); /* Asegúrate de que la ruta comience con / */
+  background-size: cover;
+  background-position: center;
+  filter: blur(10px); /* Aplicar el desenfoque al fondo */
+  border-radius: 20px;
+  padding: 2rem;
+  min-height: 100vh; /* Esto asegura que la sección cubra toda la pantalla */
+  color: var(--text-color);
+  transition: background-color 0.3s ease;
+  z-index: 1; /* Asegura que el contenido esté por encima del fondo */
+  position: relative; /* Asegúrate de que el fondo se mantenga en su lugar */
+}
+
+.section-background::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5); /* Capa oscura semitransparente */
+  z-index: -1; /* Mantiene la capa detrás del contenido */
+  filter: blur(5px); /* Filtro de desenfoque adicional */
+}
+
+html.dark .section-background {
+  background-color: var(--bg-color-dark);
+}
+
+html.light .section-background {
+  background-color: var(--bg-color-light);
+}
+
+/* Footer */
+footer {
+  text-align: center;
+  padding: 1rem;
+  font-size: 0.9rem;
+  color: var(--text-color);
+}
+
+footer a {
+  color: var(--brand-blue);
+  text-decoration: none;
+}
+
+footer a:hover {
+  text-decoration: underline;
+}
+
+/* Responsive Design for Mobile */
+@media (max-width: 768px) {
+  h1 {
+    font-size: 3rem;
+  }
+
+  .projects-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .section-background {
+    padding: 1rem;
+  }
+}

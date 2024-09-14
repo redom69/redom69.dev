@@ -1,0 +1,20 @@
+---
+title: "Contact"
+import Layout from '../layouts/Layout.astro';
+---
+<Layout>
+  <section class="contact-section py-8 px-4">
+    <h1 class="text-4xl font-bold mb-4">Contact Me</h1>
+    <p class="text-lg mb-4">
+      If you have any questions or want to collaborate, feel free to reach out!
+    </p>
+    <form action="/contact" method="POST" class="flex flex-col gap-4">
+      <input type="text" name="name" placeholder="Your Name" required class="p-2 border rounded">
+      <input type="email" name="email" placeholder="Your Email" required class="p-2 border rounded">
+      <textarea name="message" placeholder="Your Message" required class="p-2 border rounded"></textarea>
+      <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded">
+        Send Message
+      </button>
+    </form>
+  </section>
+</Layout>

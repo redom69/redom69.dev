@@ -1,0 +1,37 @@
+---
+import ThemeSwitcher from './ThemeSwitcher.astro'
+
+const pages = [
+  { name: "Sobre mí", url: "/about", icon: "icon-user" },
+  { name: "Contacto", url: "/contact", icon: "icon-contact" },
+];
+---
+
+<!-- components/Navbar.astro -->
+<header class="navbar">
+  <div class="logo">
+    <a href="/">redom69.dev</a>
+  </div>
+  <nav class="nav-links">
+    <a href="/about">Sobre mí</a>
+    <a href="/contact">Contacto</a>
+  </nav>
+  <div class="theme-switcher-container">
+    <select id="language-switcher">
+      <option value="es">ES</option>
+      <option value="en">EN</option>
+    </select>
+    <ThemeSwitcher />  
+  </div>
+</header>
+
+<script>
+  function toggleTheme() {
+    document.documentElement.classList.toggle('dark');
+  }
+</script>
+
+
+<style>
+  /* Tu CSS personalizado aquí (ver ejemplo en la respuesta anterior) */
+</style>

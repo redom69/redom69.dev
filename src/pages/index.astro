@@ -1,23 +1,41 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import About from './about.astro';
+import Contact from './contact.astro';
 import Card from '../components/Card.astro';
 import { getCollection } from 'astro:content';
 import ThemeSwitcher from '../components/ThemeSwitcher.astro';  // Importar el nuevo componente
 
 const posts = await getCollection('posts');
+
+// Ordenar los posts por fecha de manera descendente
+const sortedPosts = posts.sort((a, b) => new Date(b.data.date) - new Date(a.data.date));
+
+// Obtener solo las dos últimas publicaciones ya ordenadas por fecha
+const latestPosts = sortedPosts.slice(0, 2);
 ---
 
 <Layout title="Welcome to My Newsletter">
   <main>
+    <!-- Renderizamos el contenido de la sección de "About" -->
+    <section id="about">
+      <About />
+    </section>
+
     <p>Explore the latest posts below:</p>
     <ul class="link-card-grid">
-      {posts.map(post => (
+      {latestPosts.map(post => (
         <Card
-          href={`/posts/${post.slug}`}
+          href={`/posts/${post.slug}`}  
           title={post.data.title}
           body={post.data.description}
         />
       ))}
     </ul>
+
+    <!-- Renderizamos el contenido de la sección de "Contact" -->
+    <section id="contact">
+      <Contact />
+    </section>
   </main>
 </Layout>

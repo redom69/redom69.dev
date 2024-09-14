@@ -28,7 +28,7 @@ const pages = [
       <User size={24} class="icon" />
       <span>Sobre mí</span>
     </a>
-    <a class="nav-item" href="/#newsletter">
+    <a class="nav-item" href="/newsletter">
       <Newspaper size={24} class="icon" />
       <span>Newsletter</span>
     </a>
@@ -54,89 +54,3 @@ const pages = [
     </div>
   </div>
 </header>
-
-
-<style>
-/* Navbar styles */
-.navbar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background-color: #2e2e2e;
-  padding: 15px 30px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-}
-
-.navbar-start {
-  display: flex;
-  align-items: center;
-}
-
-.brand-logo {
-  font-size: 1.8rem;
-  font-weight: bold;
-  background: linear-gradient(to right, #ff7e5f, #feb47b);
-  -webkit-background-clip: text;
-  color: transparent;
-  transition: transform 0.3s ease;
-}
-
-.brand-logo:hover {
-  transform: scale(1.1);
-}
-
-/* Center alignment for the menu items */
-.navbar-center {
-  display: flex;
-  gap: 25px;
-}
-
-.nav-item {
-  display: flex;
-  align-items: center;
-  gap: 8px; /* Space between icon and text */
-  color: white;
-  font-size: 1.2rem;
-  text-decoration: none;
-  transition: color 0.3s ease;
-}
-
-.nav-item:hover {
-  color: #ff8c00;
-}
-
-.actions {
-  display: flex;
-  align-items: center;
-  gap: 15px;
-}
-
-.social-icon {
-  font-size: 1.5rem;
-  color: white;
-  transition: transform 0.3s ease;
-}
-
-.social-icon:hover {
-  transform: scale(1.1);
-  color: #ff8c00;
-}
-
-/* Responsive behavior */
-@media (max-width: 1024px) {
-  .navbar-center {
-    display: none;
-  }
-
-  .menu-icon {
-    display: block;
-  }
-}
-
-@media (min-width: 1024px) {
-  .menu-icon {
-    display: none;
-  }
-}
-
-</style>

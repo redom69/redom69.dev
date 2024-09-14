@@ -1,8 +1,8 @@
 :root {
-  --accent: 136, 58, 234;
-  --accent-light: 224, 204, 250;
-  --accent-dark: 49, 10, 101;
-  --accent-gradient: linear-gradient(45deg, rgb(var(--accent)), rgb(var(--accent-light)) 30%, white 60%);
+  --accent: #883AEA;
+  --accent-light: #E0CCFA;
+  --accent-dark: #310A65;
+  --accent-gradient: linear-gradient(45deg, var(--accent), var(--accent-light) 30%, white 60%);
   
   --brand-blue: #199afc;
   --brand-black: #1e1e2e;
@@ -59,19 +59,19 @@ a:hover {
   color: #ff8c00; /* Accent color on hover */
 }
 
-/* Sección con la imagen de fondo y blur */
+/* Section with background image and blur */
 .section-background {
-  background-image: url('tender-telescope/public/walpaper.jpg'); /* Asegúrate de que la ruta comience con / */
+  background-image: url('/walpaper.jpg');
   background-size: cover;
   background-position: center;
-  filter: blur(10px); /* Aplicar el desenfoque al fondo */
+  filter: blur(10px);
   border-radius: 20px;
   padding: 2rem;
-  min-height: 100vh; /* Esto asegura que la sección cubra toda la pantalla */
+  min-height: 100vh;
   color: var(--text-color);
   transition: background-color 0.3s ease;
-  z-index: 1; /* Asegura que el contenido esté por encima del fondo */
-  position: relative; /* Asegúrate de que el fondo se mantenga en su lugar */
+  z-index: 1;
+  position: relative;
 }
 
 .section-background::before {
@@ -81,9 +81,9 @@ a:hover {
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(0, 0, 0, 0.5); /* Capa oscura semitransparente */
-  z-index: -1; /* Mantiene la capa detrás del contenido */
-  filter: blur(5px); /* Filtro de desenfoque adicional */
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: -1;
+  filter: blur(5px);
 }
 
 html.dark .section-background {
@@ -123,5 +123,85 @@ footer a:hover {
 
   .section-background {
     padding: 1rem;
+  }
+}
+
+/* Navbar styles */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #2e2e2e;
+  padding: 15px 30px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.navbar-start {
+  display: flex;
+  align-items: center;
+}
+
+.brand-logo {
+  font-size: 1.8rem;
+  font-weight: bold;
+  background: linear-gradient(to right, #ff7e5f, #feb47b);
+  -webkit-background-clip: text;
+  color: transparent;
+  transition: transform 0.3s ease;
+}
+
+.brand-logo:hover {
+  transform: scale(1.1);
+}
+
+.navbar-center {
+  display: flex;
+  gap: 25px;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: white;
+  font-size: 1.2rem;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.nav-item:hover {
+  color: #ff8c00;
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.social-icon {
+  font-size: 1.5rem;
+  color: white;
+  transition: transform 0.3s ease;
+}
+
+.social-icon:hover {
+  transform: scale(1.1);
+  color: #ff8c00;
+}
+
+@media (max-width: 1024px) {
+  .navbar-center {
+    display: none;
+  }
+
+  .menu-icon {
+    display: block;
+  }
+}
+
+@media (min-width: 1024px) {
+  .menu-icon {
+    display: none;
   }
 }

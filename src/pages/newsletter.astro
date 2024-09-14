@@ -1,19 +1,37 @@
 ---
-title: "Newsletter"
 import Layout from '../layouts/Layout.astro';
+import Card from '../components/Card.astro';
+import { getCollection } from 'astro:content';
+
+const posts = await getCollection('posts');
+
+// Ordenar los posts por fecha de manera descendente
+const sortedPosts = posts.sort((a, b) => new Date(b.data.date) - new Date(a.data.date));
 ---
 
-<Layout>
-    <section class="newsletter-section py-8 px-4">
+<Layout title="Newsletter">
+  <section class="newsletter-section py-8 px-4">
     <h1 class="text-4xl font-bold mb-4">Join the Newsletter</h1>
     <p class="text-lg mb-4">
-        Stay updated with my latest tutorials, projects, and coding insights. Subscribe to the newsletter and get exclusive content directly in your inbox!
+      Stay updated with my latest tutorials, projects, and coding insights. Subscribe to the newsletter and get exclusive content directly in your inbox!
     </p>
-    <form action="/subscribe" method="POST" class="flex flex-col gap-4">
-        <input type="email" name="email" placeholder="Enter your email" required class="p-2 border rounded">
-        <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded">
+    <form action="/subscribe" method="POST" class="flex flex-col gap-4 mb-8">
+      <input type="email" name="email" placeholder="Enter your email" required class="p-2 border rounded">
+      <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded">
         Subscribe
-        </button>
+      </button>
     </form>
-    </section>
+
+    <!-- Listado de posts -->
+    <h2 class="text-3xl font-bold mb-4">Latest Posts</h2>
+    <ul class="link-card-grid">
+      {sortedPosts.map(post => (
+        <Card
+          href={`/posts/${post.slug}`}  
+          title={post.data.title}
+          body={post.data.description}
+        />
+      ))}
+    </ul>
+  </section>
 </Layout>

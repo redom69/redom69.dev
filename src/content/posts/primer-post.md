@@ -1,9 +1,18 @@
 ---
-title: "Bienvenidos a mi Newsletter"
-description: "Este es el primer post de la newsletter"
-date: 2024-09-14
+title: "Novedades de Septiembre"
+description: "Actualizaciones importantes de este mes"
+date: 2024-09-21
+image: "/public/walpaper.jpg"
 ---
 
-# ¡Hola a todos
+# Novedades de Septiembre
 
-Este es el contenido de mi primer post de newsletter.
+Este mes hemos estado trabajando duro en varios proyectos emocionantes. Aquí tienes un resumen de lo que hemos logrado:
+
+- Implementación de un nuevo sistema de gestión de usuarios.
+- Mejora en el rendimiento del sitio web.
+- Publicación de dos nuevos tutoriales.
+
+![Novedades de Septiembre](//public/walpaper.jpg)
+
+¡Gracias por seguir el progreso!

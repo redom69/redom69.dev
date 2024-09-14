@@ -1,37 +1,142 @@
 ---
-import ThemeSwitcher from './ThemeSwitcher.astro'
+import { Github, Linkedin, User, Newspaper, Mail } from 'lucide-react';
+import ThemeSwitcher from './ThemeSwitcher.astro';
 
 const pages = [
-  { name: "Sobre mí", url: "/about", icon: "icon-user" },
-  { name: "Contacto", url: "/contact", icon: "icon-contact" },
+  { name: "Sobre mí", url: "/about" },
+  { name: "Newsletter", url: "/newsletter" },
+  { name: "Contacto", url: "/contact" },
 ];
 ---
-
-<!-- components/Navbar.astro -->
 <header class="navbar">
-  <div class="logo">
-    <a href="/">redom69.dev</a>
+  <div class="navbar-start">
+    <div class="menu-icon lg:hidden">
+      <label for="my-drawer">
+        <svg width="1em" height="1em" viewBox="0 0 24 24" class="w-7 h-7" data-icon="pixelarticons:dashboard">
+          <use xlink:href="#ai:pixelarticons:dashboard"></use>
+        </svg>
+      </label>
+    </div>
+
+    <a href="/" class="brand-logo">
+      redom69.dev
+    </a>
   </div>
-  <nav class="nav-links">
-    <a href="/about">Sobre mí</a>
-    <a href="/contact">Contacto</a>
-  </nav>
-  <div class="theme-switcher-container">
-    <select id="language-switcher">
-      <option value="es">ES</option>
-      <option value="en">EN</option>
-    </select>
-    <ThemeSwitcher />  
+
+  <div class="navbar-center lg:flex hidden">
+    <a class="nav-item" href="/#about">
+      <User size={24} class="icon" />
+      <span>Sobre mí</span>
+    </a>
+    <a class="nav-item" href="/#newsletter">
+      <Newspaper size={24} class="icon" />
+      <span>Newsletter</span>
+    </a>
+    <a class="nav-item" href="/#contact">
+      <Mail size={24} class="icon" />
+      <span>Contacto</span>
+    </a>
+  </div>
+
+  <div class="navbar-end">
+    <div class="actions">
+      <!-- Icono de GitHub -->
+      <a class="social-icon" href="https://github.com/redom69" title="GitHub">
+        <Github size={24} />
+      </a>
+
+      <!-- Icono de LinkedIn -->
+      <a class="social-icon" href="https://www.linkedin.com/in/daniel-hernandez-puerto-57a093194/" title="LinkedIn">
+        <Linkedin size={24} />
+      </a>
+
+      <ThemeSwitcher />
+    </div>
   </div>
 </header>
 
-<script>
-  function toggleTheme() {
-    document.documentElement.classList.toggle('dark');
-  }
-</script>
-
 
 <style>
-  /* Tu CSS personalizado aquí (ver ejemplo en la respuesta anterior) */
+/* Navbar styles */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #2e2e2e;
+  padding: 15px 30px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.navbar-start {
+  display: flex;
+  align-items: center;
+}
+
+.brand-logo {
+  font-size: 1.8rem;
+  font-weight: bold;
+  background: linear-gradient(to right, #ff7e5f, #feb47b);
+  -webkit-background-clip: text;
+  color: transparent;
+  transition: transform 0.3s ease;
+}
+
+.brand-logo:hover {
+  transform: scale(1.1);
+}
+
+/* Center alignment for the menu items */
+.navbar-center {
+  display: flex;
+  gap: 25px;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 8px; /* Space between icon and text */
+  color: white;
+  font-size: 1.2rem;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.nav-item:hover {
+  color: #ff8c00;
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.social-icon {
+  font-size: 1.5rem;
+  color: white;
+  transition: transform 0.3s ease;
+}
+
+.social-icon:hover {
+  transform: scale(1.1);
+  color: #ff8c00;
+}
+
+/* Responsive behavior */
+@media (max-width: 1024px) {
+  .navbar-center {
+    display: none;
+  }
+
+  .menu-icon {
+    display: block;
+  }
+}
+
+@media (min-width: 1024px) {
+  .menu-icon {
+    display: none;
+  }
+}
+
 </style>

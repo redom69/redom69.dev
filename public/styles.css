@@ -61,7 +61,7 @@ a:hover {
 
 /* Sección con la imagen de fondo y blur */
 .section-background {
-  background-image: url('/walpaper.jpg'); /* Asegúrate de que la ruta comience con / */
+  background-image: url('tender-telescope/public/walpaper.jpg'); /* Asegúrate de que la ruta comience con / */
   background-size: cover;
   background-position: center;
   filter: blur(10px); /* Aplicar el desenfoque al fondo */

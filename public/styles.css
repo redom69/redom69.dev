@@ -8,19 +8,19 @@
   --brand-black: #1e1e2e;
   --brand-gray: #282c36;
   --text-color-light: #e0e0e0;
-  --text-color-dark: #ffffff;
+  --text-color-dark: #1e1e2e; /* Cambié a un color oscuro para el modo claro */
   --bg-color-dark: #0b1422;
   --bg-color-light: #f5f5f5;
 }
 
 html.dark {
   --bg-color: var(--bg-color-dark);
-  --text-color: var(--text-color-light);
+  --text-color: var(--text-color-light); /* Texto claro para fondo oscuro */
 }
 
 html.light {
   --bg-color: var(--bg-color-light);
-  --text-color: var(--text-color-dark);
+  --text-color: var(--text-color-dark); /* Texto oscuro para fondo claro */
 }
 
 body {
@@ -42,10 +42,12 @@ h1 {
   color: var(--text-color);
 }
 
+/* Paragraph styles */
 p {
   font-size: 1.2rem;
   text-align: center;
-  color: var(--text-color);
+  color: var(--text-color); /* El color ahora se define correctamente según el modo */
+  transition: color 0.3s ease;
 }
 
 /* Links */

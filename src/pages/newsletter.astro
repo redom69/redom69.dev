@@ -11,13 +11,14 @@ const sortedPosts = posts.sort((a, b) => new Date(b.data.date) - new Date(a.data
 
 <Layout title="Newsletter">
   <section class="newsletter-section py-8 px-4">
-    <h1 class="text-4xl font-bold mb-4">Join the Newsletter</h1>
-    <p class="text-lg mb-4">
+    <h1 class="newsletter-title text-4xl font-bold mb-4">Join the Newsletter</h1>
+    <p class="newsletter-description text-lg mb-4">
       Stay updated with my latest tutorials, projects, and coding insights. Subscribe to the newsletter and get exclusive content directly in your inbox!
     </p>
-    <form action="/subscribe" method="POST" class="flex flex-col gap-4 mb-8">
-      <input type="email" name="email" placeholder="Enter your email" required class="p-2 border rounded">
-      <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded">
+    
+    <form action="/subscribe" method="POST" class="newsletter-form flex flex-col gap-4 mb-8">
+      <input type="email" name="email" placeholder="Enter your email" required class="input-field p-2 border rounded">
+      <button type="submit" class="submit-btn bg-blue-500 text-white px-4 py-2 rounded">
         Subscribe
       </button>
     </form>
@@ -35,3 +36,114 @@ const sortedPosts = posts.sort((a, b) => new Date(b.data.date) - new Date(a.data
     </ul>
   </section>
 </Layout>
+
+<style>
+/* Estilos generales para la sección de newsletter */
+.newsletter-section {
+  background-color: var(--bg-color-light);
+  padding: 2rem;
+  border-radius: 12px;
+  max-width: 900px;
+  margin: 0 auto;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s ease;
+}
+
+html.dark .newsletter-section {
+  background-color: var(--bg-color-dark);
+  color: var(--text-color-light);
+}
+
+/* Título de la newsletter */
+.newsletter-title {
+  text-align: center;
+  color: var(--brand-blue);
+  margin-bottom: 2rem;
+}
+
+/* Descripción de la newsletter */
+.newsletter-description {
+  text-align: center;
+  margin-bottom: 2rem;
+  color: var(--text-color-dark);
+}
+
+html.dark .newsletter-description {
+  color: var(--text-color-light);
+}
+
+/* Estilos del formulario */
+.newsletter-form {
+  max-width: 500px;
+  margin: 0 auto 2rem;
+}
+
+.input-field {
+  padding: 0.75rem;
+  border: 1px solid rgba(var(--accent-dark), 0.4);
+  border-radius: 8px;
+  font-size: 1rem;
+  background-color: rgba(var(--accent-light), 0.15);
+  color: var(--text-color-dark);
+}
+
+html.dark .input-field {
+  background-color: rgba(var(--accent-dark), 0.2);
+  color: var(--text-color-light);
+}
+
+.input-field:focus {
+  border-color: var(--accent);
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(var(--accent), 0.5);
+}
+
+.submit-btn {
+  background-color: var(--brand-blue);
+  color: white;
+  font-size: 1.1rem;
+  padding: 0.75rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.submit-btn:hover {
+  background-color: rgba(var(--brand-blue), 0.8);
+  transform: translateY(-3px);
+}
+
+html.dark .submit-btn {
+  background-color: var(--accent);
+}
+
+html.dark .submit-btn:hover {
+  background-color: rgba(var(--accent-light), 0.9);
+}
+
+/* Listado de posts en formato grid */
+.link-card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+}
+
+/* Responsividad */
+@media (max-width: 768px) {
+  .newsletter-title {
+    font-size: 2.5rem;
+  }
+
+  .newsletter-description {
+    font-size: 1rem;
+  }
+
+  .input-field {
+    font-size: 0.9rem;
+  }
+
+  .submit-btn {
+    font-size: 1rem;
+  }
+}
+</style>

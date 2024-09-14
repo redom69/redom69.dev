@@ -4,10 +4,116 @@ import Layout from '../layouts/Layout.astro';
 ---
 
 
-    <section class="about-section py-8 px-4">
-    <h1 class="text-4xl font-bold mb-4">About Me</h1>
-    <p class="text-lg">
-        Hi, I'm [Your Name], a passionate developer with expertise in [your expertise area]. 
-        I have experience working with [languages, frameworks] and love to share knowledge through my projects and tutorials.
+<section class="about-section">
+    <h1 class="about-title">👋 Hello! I'm Daniel Hernández</h1>
+    <p class="about-description">
+      I am a Full Stack Developer with 4 years of experience in creating web and mobile applications. My primary focus is on agile development and following best practices to write clean and maintainable code. I am passionate about solving complex problems and building scalable solutions.
     </p>
-    </section>
+    <ul class="skills-list">
+      <li><strong>Languages:</strong> TypeScript, JavaScript, Swift, Dart</li>
+      <li><strong>Frontend:</strong> React, Angular</li>
+      <li><strong>Backend:</strong> Node.js, Express</li>
+      <li><strong>Databases:</strong> MongoDB, PostgreSQL, SQL</li>
+      <li><strong>DevOps:</strong> Docker, GitHub Actions, Azure DevOps</li>
+      <li><strong>Main Stack:</strong> MERN (MongoDB, Express, React, Node.js)</li>
+    </ul>
+    <a href="https://www.linkedin.com/in/daniel-hernandez-puerto-57a093194/" class="about-link">Connect with me on LinkedIn</a>
+  </section>
+  
+<style>
+    /* Estilos base para la sección "About Me" */
+.about-section {
+  background-color: var(--bg-color-light);
+  color: var(--text-color-dark);
+  padding: 3rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  max-width: 800px;
+  margin: 2rem auto;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+html.dark .about-section {
+  background-color: var(--bg-color-dark);
+  color: var(--text-color-light);
+}
+
+/* Título */
+.about-title {
+  font-size: 2.5rem;
+  font-weight: bold;
+  margin-bottom: 1.5rem;
+  color: var(--accent-dark);
+}
+
+html.dark .about-title {
+  color: var(--accent-light);
+}
+
+/* Descripción */
+.about-description {
+  font-size: 1.2rem;
+  line-height: 1.6;
+  margin-bottom: 2rem;
+}
+
+/* Lista de habilidades */
+.skills-list {
+  list-style: none;
+  padding: 0;
+  margin: 0 auto 2rem;
+  max-width: 600px;
+  text-align: left;
+}
+
+.skills-list li {
+  margin-bottom: 1rem;
+  font-size: 1.1rem;
+}
+
+.skills-list li strong {
+  font-weight: bold;
+  color: var(--brand-blue);
+}
+
+/* Enlace para conectar en LinkedIn */
+.about-link {
+  display: inline-block;
+  padding: 0.75rem 1.5rem;
+  background-color: var(--brand-blue);
+  color: white;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+.about-link:hover {
+  background-color: rgba(var(--brand-blue), 0.8);
+}
+
+html.dark .about-link {
+  background-color: var(--accent);
+}
+
+html.dark .about-link:hover {
+  background-color: rgba(var(--accent-light), 0.9);
+}
+
+/* Responsividad para móviles */
+@media (max-width: 768px) {
+  .about-title {
+    font-size: 2rem;
+  }
+
+  .about-description {
+    font-size: 1rem;
+  }
+
+  .skills-list li {
+    font-size: 1rem;
+  }
+}
+
+</style>

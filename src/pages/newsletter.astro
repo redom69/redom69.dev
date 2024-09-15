@@ -1,8 +1,10 @@
 ---
+// Importar el layout y componentes
 import Layout from '../layouts/Layout.astro';
 import Card from '../components/Card.astro';
 import { getCollection } from 'astro:content';
 
+// Obtener las publicaciones
 const posts = await getCollection('posts');
 
 // Ordenar los posts por fecha de manera descendente
@@ -16,12 +18,14 @@ const sortedPosts = posts.sort((a, b) => new Date(b.data.date) - new Date(a.data
       Stay updated with my latest tutorials, projects, and coding insights. Subscribe to the newsletter and get exclusive content directly in your inbox!
     </p>
     
-    <form action="/subscribe" method="POST" class="newsletter-form flex flex-col gap-4 mb-8">
-      <input type="email" name="email" placeholder="Enter your email" required class="input-field p-2 border rounded">
+    <form id="newsletter-form" class="newsletter-form flex flex-col gap-4 mb-8">
+      <input type="email" id="email" name="email" placeholder="Enter your email" required class="input-field p-2 border rounded">
       <button type="submit" class="submit-btn bg-blue-500 text-white px-4 py-2 rounded">
         Subscribe
       </button>
     </form>
+    
+    <div id="newsletter-notification" class="notification"></div>
 
     <!-- Listado de posts -->
     <h2 class="text-3xl font-bold mb-4">Latest Posts</h2>
@@ -147,3 +151,48 @@ html.dark .submit-btn:hover {
   }
 }
 </style>
+
+<script>
+ document.getElementById('newsletter-form').addEventListener('submit', async function (e) {
+  e.preventDefault();
+
+  const email = document.getElementById('email').value;
+
+  try {
+    const response = await fetch('/api/subscribe', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ email }),
+    });
+
+    if (response.ok) {
+      showNotification('Te has suscrito correctamente a la newsletter', 'success');
+    } else if (response.status === 409) {
+      // Caso cuando el correo ya está suscrito (código 409)
+      showNotification('Este correo ya está suscrito a la newsletter.', 'error');
+    } else if (response.status >= 500) {
+      // Error del servidor (500 en adelante)
+      showNotification('Hubo un error en el servidor. Intenta nuevamente más tarde.', 'error');
+    } else {
+      // Otros errores inesperados
+      showNotification('Hubo un error al suscribirte. Intenta nuevamente', 'error');
+    }
+  } catch (error) {
+    // Este bloque catch maneja errores de red (e.g., desconexión o timeout)
+    console.error('Error de red:', error);
+    showNotification('No se pudo conectar con el servidor. Revisa tu conexión a Internet.', 'error');
+  }
+});
+
+function showNotification(message, type) {
+  const notification = document.getElementById('newsletter-notification');
+  notification.textContent = message;
+  notification.className = `notification ${type}`;
+  notification.style.display = 'block';
+  setTimeout(() => {
+    notification.style.display = 'none';
+  }, 5000);
+}
+</script>

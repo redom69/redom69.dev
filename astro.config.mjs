@@ -19,16 +19,15 @@ export default defineConfig({
           // Configurar SendGrid con tu API Key
           sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
-          // Ruta API para enviar el correo
+          // Ruta API para enviar el correo de contacto
           app.post('/api/contact', async (req, res) => {
-            const { name, email, message,subject } = req.body;
+            const { name, email, message, subject } = req.body;
 
-            // Crear el objeto de datos para la plantilla de SendGrid
             const msg = {
-              to: process.env.GMAIL_USER,  // Destinatario: GMAIL_USER desde las variables de entorno
-              from:  process.env.VERIFIED_USER,   // Remitente: correo verificado en SendGrid
-              replyTo: email,  // Correo del usuario que llenó el formulario
-              subject: `${subject}`,  // Asunto dinámico (usando template literals)
+              to: process.env.GMAIL_USER,  // Destinatario
+              from: process.env.VERIFIED_USER,  // Remitente
+              replyTo: email,  // Correo del usuario
+              subject: `${subject}`,  // Asunto dinámico
               templateId: process.env.contactoTemplate,  // El ID de la plantilla
               dynamic_template_data: {
                 name: name,
@@ -38,7 +37,6 @@ export default defineConfig({
             };
 
             try {
-              // Enviar el correo utilizando la plantilla
               await sgMail.send(msg);
               res.json({ status: 'success', message: 'Correo enviado correctamente' });
             } catch (error) {
@@ -47,6 +45,119 @@ export default defineConfig({
             }
           });
 
+          // Nueva ruta API para suscripción a la newsletter
+          app.post('/api/subscribe', async (req, res) => {
+            const { email } = req.body;
+          
+            // Verificar que el correo está presente
+            if (!email) {
+              return res.status(400).json({ status: 'error', message: 'El correo es requerido' });
+            }
+          
+            try {
+              // 1. Buscar el contacto en SendGrid para ver si ya está suscrito
+              const searchResponse = await fetch('https://api.sendgrid.com/v3/marketing/contacts/search', {
+                method: 'POST',
+                headers: {
+                  Authorization: `Bearer ${process.env.SENDGRID_API_KEY}`,
+                  'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                  query: `email LIKE '${email}'`,  // Buscar por correo electrónico
+                }),
+              });
+          
+              const searchData = await searchResponse.json();
+          
+              if (searchData.result && searchData.result.length > 0) {
+                // Si el correo ya está en la lista de contactos, devolver un mensaje
+                return res.status(409).json({ status: 'error', message: 'Este correo ya está suscrito a la newsletter.' });
+              }
+          
+              // 2. Si el contacto no existe, agregarlo a la lista de contactos de SendGrid
+              const data = {
+                contacts: [
+                  {
+                    email: email,
+                  },
+                ],
+              };
+          
+              const addResponse = await fetch('https://api.sendgrid.com/v3/marketing/contacts', {
+                method: 'PUT',
+                headers: {
+                  Authorization: `Bearer ${process.env.SENDGRID_API_KEY}`,
+                  'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data),
+              });
+          
+              if (addResponse.ok) {
+                // 3. Enviar correo de bienvenida
+                const msg = {
+                  to: email,
+                  from: process.env.VERIFIED_USER, // Asegúrate de que sea un correo verificado en SendGrid
+                  templateId: process.env.welcomeTemplateId, // Template ID de SendGrid para el correo de bienvenida
+                  dynamic_template_data: {
+                    email: email,
+                  },
+                };
+          
+                await sgMail.send(msg);
+          
+                // Responder que se ha suscrito correctamente
+                return res.json({ status: 'success', message: 'Te has suscrito correctamente a la newsletter y se ha enviado un correo de bienvenida.' });
+              } else {
+                const errorResponse = await addResponse.json();
+                console.error('Error de SendGrid al agregar el contacto:', errorResponse);
+                return res.status(500).json({ status: 'error', message: 'Error al suscribirse a la newsletter' });
+              }
+            } catch (error) {
+              console.error('Error al suscribir el correo:', error);
+              return res.status(500).json({ status: 'error', message: 'Error al suscribir el correo' });
+            }
+          });
+          
+
+          // Api para mandar correo con nuevo post
+          app.post('/api/notify-new-post', async (req, res) => {
+            const { post1_title, post1_link, post2_title, post2_link } = req.body;
+          
+            try {
+              // Obtener todos los contactos desde SendGrid
+              const contactsResponse = await fetch('https://api.sendgrid.com/v3/marketing/contacts', {
+                method: 'GET',
+                headers: {
+                  Authorization: `Bearer ${process.env.SENDGRID_API_KEY}`,
+                  'Content-Type': 'application/json',
+                },
+              });
+          
+              const contactsData = await contactsResponse.json();
+              const emails = contactsData.result.map(contact => contact.email);
+          
+              // Enviar el correo a todos los contactos
+              const msg = {
+                to: emails, // Lista de correos electrónicos
+                from: process.env.VERIFIED_USER,
+                templateId: process.env.newPostsTemplateId,  // Plantilla de correo
+                dynamic_template_data: {
+                  post1_title: post1_title,
+                  post1_link: post1_link,
+                  post2_title: post2_title,
+                  post2_link: post2_link,
+                },
+              };
+              
+              await sgMail.sendMultiple(msg);
+          
+              res.json({ status: 'success', message: 'Correos enviados correctamente a todos los suscriptores' });
+            } catch (error) {
+              console.error('Error al enviar correos:', error);
+              res.status(500).json({ status: 'error', message: 'Error al enviar los correos' });
+            }
+          });
+          
           server.middlewares.use(app);
         },
       },

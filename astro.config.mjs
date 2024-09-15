@@ -47,11 +47,11 @@ export default defineConfig({
 
           // Nueva ruta API para suscripción a la newsletter
           app.post('/api/subscribe', async (req, res) => {
-            const { email } = req.body;
+            const { email, name } = req.body;
           
-            // Verificar que el correo está presente
-            if (!email) {
-              return res.status(400).json({ status: 'error', message: 'El correo es requerido' });
+            // Verificar que el correo y el nombre están presentes
+            if (!email || !name) {
+              return res.status(400).json({ status: 'error', message: 'El correo y el nombre son requeridos' });
             }
           
             try {
@@ -74,11 +74,12 @@ export default defineConfig({
                 return res.status(409).json({ status: 'error', message: 'Este correo ya está suscrito a la newsletter.' });
               }
           
-              // 2. Si el contacto no existe, agregarlo a la lista de contactos de SendGrid
+              // 2. Si el contacto no existe, agregarlo a la lista de contactos de SendGrid con nombre
               const data = {
                 contacts: [
                   {
                     email: email,
+                    first_name: name,  // Agregar el nombre al contacto
                   },
                 ],
               };
@@ -100,6 +101,7 @@ export default defineConfig({
                   templateId: process.env.welcomeTemplateId, // Template ID de SendGrid para el correo de bienvenida
                   dynamic_template_data: {
                     email: email,
+                    name: name,  // Pasar también el nombre al correo
                   },
                 };
           
@@ -118,7 +120,7 @@ export default defineConfig({
             }
           });
           
-
+          
           // Api para mandar correo con nuevo post
           app.post('/api/notify-new-post', async (req, res) => {
             const { post1_title, post1_link, post2_title, post2_link } = req.body;

@@ -10,13 +10,6 @@ const pages = [
 ---
 <header class="navbar">
   <div class="navbar-start">
-    <div class="menu-icon lg:hidden">
-      <label for="my-drawer">
-        <svg width="1em" height="1em" viewBox="0 0 24 24" class="w-7 h-7" data-icon="pixelarticons:dashboard">
-          <use xlink:href="#ai:pixelarticons:dashboard"></use>
-        </svg>
-      </label>
-    </div>
 
     <a href="/" class="brand-logo">
       redom69.dev
@@ -24,15 +17,15 @@ const pages = [
   </div>
 
   <div class="navbar-center lg:flex hidden">
-    <a class="nav-item" href="/#about">
+    <a class="nav-item" href="/#about" aria-label="Sobre mí">
       <User size={24} class="icon" />
       <span>Sobre mí</span>
     </a>
-    <a class="nav-item" href="/newsletter">
+    <a class="nav-item" href="/newsletter" aria-label="Newsletter">
       <Newspaper size={24} class="icon" />
       <span>Newsletter</span>
     </a>
-    <a class="nav-item" href="/#contact">
+    <a class="nav-item" href="/#contact" aria-label="Contacto">
       <Mail size={24} class="icon" />
       <span>Contacto</span>
     </a>
@@ -41,15 +34,16 @@ const pages = [
   <div class="navbar-end">
     <div class="actions">
       <!-- Icono de GitHub -->
-      <a class="social-icon" href="https://github.com/redom69" title="GitHub">
+      <a class="social-icon" href="https://github.com/redom69" title="GitHub" aria-label="GitHub">
         <Github size={24} />
       </a>
 
       <!-- Icono de LinkedIn -->
-      <a class="social-icon" href="https://www.linkedin.com/in/daniel-hernandez-puerto-57a093194/" title="LinkedIn">
+      <a class="social-icon" href="https://www.linkedin.com/in/daniel-hernandez-puerto-57a093194/" title="LinkedIn" aria-label="LinkedIn">
         <Linkedin size={24} />
       </a>
 
+      <!-- Cambiar tema -->
       <ThemeSwitcher />
     </div>
   </div>

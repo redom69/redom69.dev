@@ -9,16 +9,21 @@ import Footer from '../components/Footer.astro';
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="/styles.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/canva/pixelarticons/pixelarticons.css">
-
     <title>{Astro.title}</title>
   </head>
   <body>
     <div class="main-layout">
+      <!-- Navbar fijo en la parte superior -->
       <Navbar />
+      
+      <!-- Contenedor scrolleable para el contenido de la página -->
       <main class="content-container">
-        <slot /> <!-- Esto es donde va el contenido de cada página -->
+        <slot /> <!-- Aquí va el contenido dinámico de la página -->
       </main>
+      
+      <!-- Footer en la parte inferior -->
       <Footer />
     </div>
+    
   </body>
 </html>

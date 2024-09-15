@@ -1,123 +1,62 @@
----
-title: "Contact"
-import Layout from '../layouts/Layout.astro';
----
+<form id="contact-form" class="form-container">
+  <label for="name">Tu nombre:</label>
+  <input type="text" id="name" name="name" required />
 
-<section class="contact-section py-8 px-4">
-  <h1 class="text-4xl font-bold mb-4">Contact Me</h1>
-  <p class="text-lg mb-4">
-    If you have any questions or want to collaborate, feel free to reach out!
-  </p>
-  <form action="/contact" method="POST" class="form-container">
-    <input type="text" name="name" placeholder="Your Name" required class="input-field">
-    <input type="email" name="email" placeholder="Your Email" required class="input-field">
-    <textarea name="message" placeholder="Your Message" required class="input-field"></textarea>
-    <button type="submit" class="submit-btn">
-      Send Message
-    </button>
-  </form>
-</section>
+  <label for="email">Tu correo:</label>
+  <input type="email" id="email" name="email" required />
 
-<style>
-  .contact-section {
-    background-color: var(--bg-color-light);
-    color: var(--text-color-dark);
-    padding: 2rem;
-    border-radius: 12px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-    max-width: 800px;
-    margin: 0 auto;
-    transition: background-color 0.3s ease, color 0.3s ease;
-  }
+  <label for="subject">Asunto:</label>
+  <input type="text" id="subject" name="subject" required />
 
-  html.dark .contact-section {
-    background-color: var(--bg-color-dark);
-    color: var(--text-color-light);
-  }
+  <label for="message">Mensaje:</label>
+  <textarea id="message" name="message" required></textarea>
 
-  .contact-section h1 {
-    font-size: 2.5rem;
-    color: var(--accent-dark);
-    text-align: center;
-  }
+  <button type="submit">Enviar</button>
+</form>
 
-  html.dark .contact-section h1 {
-    color: var(--accent-light);
-  }
+<!-- Contenedor para mostrar las notificaciones -->
+<div id="notification" class="notification"></div>
 
-  .contact-section p {
-    text-align: center;
-    margin-bottom: 2rem;
-  }
+<script>
+  document.getElementById('contact-form').addEventListener('submit', async function (e) {
+    e.preventDefault();
 
-  .form-container {
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
-  }
+    const name = document.getElementById('name').value;
+    const email = document.getElementById('email').value;
+    const subject = document.getElementById('subject').value;
+    const message = document.getElementById('message').value;
 
-  .input-field {
-    padding: 0.75rem;
-    border: 1px solid rgba(var(--accent-dark), 0.4);
-    border-radius: 8px;
-    font-size: 1rem;
-    background-color: rgba(var(--accent-light), 0.15);
-    color: var(--text-color-dark);
-    transition: border-color 0.3s ease, background-color 0.3s ease;
-  }
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ name, email, subject, message }),
+      });
 
-  html.dark .input-field {
-    background-color: rgba(var(--accent-dark), 0.2);
-    color: var(--text-color-light);
-  }
-
-  .input-field:focus {
-    border-color: var(--accent);
-    outline: none;
-    box-shadow: 0 0 0 2px rgba(var(--accent), 0.5);
-  }
-
-  .submit-btn {
-    padding: 0.75rem 2rem;
-    background-color: var(--brand-blue);
-    color: white;
-    border: none;
-    border-radius: 8px;
-    font-size: 1.1rem;
-    cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.2s ease;
-  }
-
-  html.dark .submit-btn {
-    background-color: var(--accent);
-    color: var(--text-color-light);
-  }
-
-  .submit-btn:hover {
-    background-color: rgba(var(--brand-blue), 0.9);
-    transform: translateY(-3px);
-  }
-
-  html.dark .submit-btn:hover {
-    background-color: rgba(var(--accent-light), 0.9);
-  }
-
-  .submit-btn:active {
-    transform: translateY(0);
-  }
-
-  /* Responsive design for mobile */
-  @media (max-width: 768px) {
-    .contact-section h1 {
-      font-size: 2rem;
+      if (response.ok) {
+        const data = await response.json();
+        showNotification('Correo enviado: ' + data.message, 'success');
+      } else {
+        showNotification('Error al enviar el correo', 'error');
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      showNotification('Error al enviar el correo', 'error');
     }
+  });
 
-    .input-field {
-      font-size: 0.9rem;
-    }
+  // Función para mostrar la notificación
+  function showNotification(message, type) {
+    const notification = document.getElementById('notification');
+    notification.textContent = message;
+    notification.classList.remove('success', 'error');
+    notification.classList.add(type === 'success' ? 'success' : 'error');
+    notification.style.display = 'block';
 
-    .submit-btn {
-      font-size: 1rem;
-    }
+    setTimeout(() => {
+      notification.style.display = 'none';
+    }, 5000);
   }
-</style>
+</script>

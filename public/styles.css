@@ -47,8 +47,7 @@ html, body {
   margin: 0 auto;
   padding: 40px;
   background-color: var(--bg-color-light-content); /* Fondo claro para el contenido */
-  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
-  border: 1px solid rgba(0, 0, 0, 0.1); /* Borde suave oscuro */
+  border: 1px solid rgba(122, 122, 122, 0.123); /* Borde suave oscuro */
   min-height: 100%; /* Ocupa toda la altura */
   display: flex;
   flex-direction: column;
@@ -59,8 +58,7 @@ html, body {
 /* Estilo específico para el modo oscuro */
 html.dark .content-container {
   background-color: var(--bg-color-dark-content); /* Fondo oscuro para el contenido */
-  box-shadow: 0px 4px 15px rgba(255, 255, 255, 0.1); /* Sombra más clara */
-  border: 1px solid rgba(255, 255, 255, 0.2); /* Borde suave claro */
+  border: 1px solid  rgba(29, 36, 61, 0.699); /* Borde suave claro */
   color: var(--text-color-light); /* Color de texto para modo oscuro */
 }
 

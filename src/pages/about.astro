@@ -1,10 +1,15 @@
 ---
 title: "About Me"
-import Layout from '../layouts/Layout.astro';
+import ThemeSwitcher from '../components/ThemeSwitcher.astro';
+
 ---
 
 
 <section class="about-section">
+
+    <div class="about-header">
+      <ThemeSwitcher />
+    </div>
     <h1 class="about-title">👋 Hello! I'm Daniel Hernández</h1>
     <p class="about-description">
       I am a Full Stack Developer with 4 years of experience in creating web and mobile applications. My primary focus is on agile development and following best practices to write clean and maintainable code. I am passionate about solving complex problems and building scalable solutions.
@@ -19,101 +24,3 @@ import Layout from '../layouts/Layout.astro';
     </ul>
     <a href="https://www.linkedin.com/in/daniel-hernandez-puerto-57a093194/" class="about-link">Connect with me on LinkedIn</a>
   </section>
-  
-<style>
-    /* Estilos base para la sección "About Me" */
-.about-section {
-  background-color: var(--bg-color-light);
-  color: var(--text-color-dark);
-  padding: 3rem;
-  border-radius: 12px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-  text-align: center;
-  max-width: 800px;
-  margin: 2rem auto;
-  transition: background-color 0.3s ease, color 0.3s ease;
-}
-
-html.dark .about-section {
-  background-color: var(--bg-color-dark);
-  color: var(--text-color-light);
-}
-
-/* Título */
-.about-title {
-  font-size: 2.5rem;
-  font-weight: bold;
-  margin-bottom: 1.5rem;
-  color: var(--accent-dark);
-}
-
-html.dark .about-title {
-  color: var(--accent-light);
-}
-
-/* Descripción */
-.about-description {
-  font-size: 1.2rem;
-  line-height: 1.6;
-  margin-bottom: 2rem;
-}
-
-/* Lista de habilidades */
-.skills-list {
-  list-style: none;
-  padding: 0;
-  margin: 0 auto 2rem;
-  max-width: 600px;
-  text-align: left;
-}
-
-.skills-list li {
-  margin-bottom: 1rem;
-  font-size: 1.1rem;
-}
-
-.skills-list li strong {
-  font-weight: bold;
-  color: var(--brand-blue);
-}
-
-/* Enlace para conectar en LinkedIn */
-.about-link {
-  display: inline-block;
-  padding: 0.75rem 1.5rem;
-  background-color: var(--brand-blue);
-  color: white;
-  border-radius: 8px;
-  text-decoration: none;
-  font-weight: bold;
-  transition: background-color 0.3s ease;
-}
-
-.about-link:hover {
-  background-color: rgba(var(--brand-blue), 0.8);
-}
-
-html.dark .about-link {
-  background-color: var(--accent);
-}
-
-html.dark .about-link:hover {
-  background-color: rgba(var(--accent-light), 0.9);
-}
-
-/* Responsividad para móviles */
-@media (max-width: 768px) {
-  .about-title {
-    font-size: 2rem;
-  }
-
-  .about-description {
-    font-size: 1rem;
-  }
-
-  .skills-list li {
-    font-size: 1rem;
-  }
-}
-
-</style>

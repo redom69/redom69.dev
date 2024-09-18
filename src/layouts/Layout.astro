@@ -7,20 +7,25 @@ import Navbar from '../components/Navbar.astro';
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="/styles.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/canva/pixelarticons/pixelarticons.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <style>
+      body {
+        font-family: 'Roboto', sans-serif;
+        background-color: #f4f4f4; /* Fondo claro */
+        color: #333; /* Texto oscuro */
+      }
+    </style>
     <title>{Astro.title}</title>
   </head>
   <body>
-    <div class="main-layout">
-      <!-- Navbar fijo en la parte superior -->
-      <Navbar />
+
       
       <!-- Contenedor scrolleable para el contenido de la página -->
       <main class="content-container">
         <slot /> <!-- Aquí va el contenido dinámico de la página -->
       </main>
       
-    </div>
     
   </body>
 </html>

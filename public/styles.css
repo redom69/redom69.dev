@@ -243,3 +243,30 @@ html.dark .full-container {
 .contact-section {
   margin-top: 40px;
 }
+
+.social-links a {
+  margin-right: 15px;
+  text-decoration: none;
+  color: #fff; /* Color del ícono */
+  font-size: 24px; /* Tamaño del ícono ajustado */
+  display: inline-flex;
+  align-items: center; /* Alinear verticalmente */
+  justify-content: center;
+  padding: 10px;
+  background-color: #0073b1; /* Fondo azul para LinkedIn */
+  border-radius: 50%; /* Hacerlos circulares */
+  transition: background-color 0.3s ease;
+}
+
+.social-links a.github {
+  background-color: #333; /* Fondo oscuro para GitHub */
+}
+
+.social-links a:hover {
+  background-color: #555; /* Cambia el color al hacer hover */
+}
+
+/* Para mantener los iconos alineados con texto u otros elementos */
+i {
+  vertical-align: middle;
+}

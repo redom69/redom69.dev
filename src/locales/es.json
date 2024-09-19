@@ -1,17 +1,16 @@
 {
-    "form": {
-      "name": "Nombre",
-      "email": "Correo electrónico",
-      "subject": "Asunto",
-      "message": "Mensaje",
-      "submit": "Enviar",
-      "recaptcha": "Por favor, completa el reCAPTCHA",
-      "placeholder": {
-        "name": "John Doe",
-        "email": "john@doe.com",
-        "subject": "Escribe aquí tu asunto...",
-        "message": "Escribe aquí tu mensaje..."
-      }
+  "form": {
+    "name": "Nombre",
+    "email": "Correo electrónico",
+    "subject": "Asunto",
+    "message": "Mensaje",
+    "submit": "Enviar",
+    "recaptcha": "Por favor, completa el reCAPTCHA",
+    "placeholder": {
+      "name": "John Doe",
+      "email": "john@doe.com",
+      "subject": "Escribe aquí tu asunto...",
+      "message": "Escribe aquí tu mensaje..."
     }
   }
-  
+}

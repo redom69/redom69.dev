@@ -3,6 +3,7 @@
 import Layout from '../layouts/Layout.astro';
 import Card from '../components/Card.astro';
 import { getCollection } from 'astro:content';
+import Footer from '../components/Footer.astro';
 
 // Obtener las publicaciones
 const posts = await getCollection('posts');
@@ -13,8 +14,7 @@ const sortedPosts = posts.sort((a, b) => new Date(b.data.date) - new Date(a.data
 
 <Layout title="Newsletter">
 
-  <div class="full-container">
-    <main class="main-content">
+
   <section class="newsletter-section py-8 px-4">
     <h1 class="newsletter-title text-4xl font-bold mb-4">Join the Newsletter</h1>
     <p class="newsletter-description text-lg mb-4">
@@ -45,8 +45,7 @@ const sortedPosts = posts.sort((a, b) => new Date(b.data.date) - new Date(a.data
     </ul>
     
   </section>
-</main>
-</div>
+
 </Layout>
 
 <style>

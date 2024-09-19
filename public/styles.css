@@ -1,7 +1,7 @@
 :root {
-  --accent: #883AEA;
-  --accent-light: #E0CCFA;
-  --accent-dark: #310A65;
+  --accent: #883aea;
+  --accent-light: #e0ccfa;
+  --accent-dark: #310a65;
 
   --brand-blue: #199afc;
   --brand-black: #1e1e2e;
@@ -16,7 +16,7 @@
 
   --icon-gray: rgba(255, 255, 255, 0.6); /* Color gris claro para el sol */
   --icon-theme: #929292; /* Gris oscuro distinguible sobre blanco */
-  --icon-theme-hover: #A5A5A5; /* Gris más claro para el hover */
+  --icon-theme-hover: #a5a5a5; /* Gris más claro para el hover */
 }
 
 /* Modo claro */
@@ -37,13 +37,14 @@ body {
 }
 
 /* Asegura que el html y body ocupen el 100% de la altura */
-html, body {
+html,
+body {
   height: 100%;
   margin: 0;
   padding: 0;
   display: flex;
-  justify-content: center;  /* Centrar horizontalmente */
-  align-items: flex-start;  /* Alinea el contenido a partir del borde superior */
+  justify-content: center; /* Centrar horizontalmente */
+  align-items: flex-start; /* Alinea el contenido a partir del borde superior */
   background-color: var(--bg-color-light); /* Fondo */
 }
 
@@ -92,7 +93,7 @@ a {
 }
 
 /* Estilos para el switch (label) */
-label[for="light-switch"] {
+label[for='light-switch'] {
   display: flex;
   align-items: center;
   gap: 8px;
@@ -122,16 +123,17 @@ label[for="light-switch"] {
 }
 
 /* Hover para ambos íconos */
-.svg-sun:hover, .svg-moon:hover {
+.svg-sun:hover,
+.svg-moon:hover {
   fill: var(--icon-theme-hover);
 }
 
-label[for="light-switch"] span {
+label[for='light-switch'] span {
   color: var(--text-color-dark);
   transition: color 0.3s ease;
 }
 
-html.dark label[for="light-switch"] span {
+html.dark label[for='light-switch'] span {
   color: var(--text-color-light);
 }
 
@@ -195,7 +197,7 @@ html.dark .skills-list li {
 }
 
 .about-link {
-  background-color: #883AEA;
+  background-color: #883aea;
   color: white;
   padding: 10px 20px;
   text-align: center;
@@ -225,7 +227,8 @@ html.dark .full-container {
   color: var(--text-color-light);
 }
 
-.latest-posts-section, .contact-section {
+.latest-posts-section,
+.contact-section {
   margin-bottom: 20px;
 }
 
@@ -240,7 +243,7 @@ html.dark .full-container {
 }
 
 .see-more-btn {
-  background-color: #883AEA;
+  background-color: #883aea;
   color: white;
   padding: 10px 20px;
   text-align: center;
@@ -282,7 +285,6 @@ html.dark .full-container {
   align-items: center; /* Centra el contenido verticalmente si fuera necesario */
   margin-top: 20px; /* Puedes ajustar el margen superior si es necesario */
 }
-
 
 .social-links a:hover {
   background-color: #555;

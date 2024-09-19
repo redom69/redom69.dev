@@ -1,8 +1,8 @@
 ---
-title: "Novedades de Septiembre"
-description: "Actualizaciones importantes de este mes"
+title: 'Novedades de Septiembre'
+description: 'Actualizaciones importantes de este mes'
 date: 2024-09-21
-image: "/walpaper.jpg"
+image: '/walpaper.jpg'
 ---
 
 # Novedades de Septiembre
@@ -13,6 +13,6 @@ Este mes hemos estado trabajando duro en varios proyectos emocionantes. Aquí ti
 - Mejora en el rendimiento del sitio web.
 - Publicación de dos nuevos tutoriales.
 
-<img src="/walpaper.jpg" alt="Novedades de Septiembre" style="max-width: 500px; height: auto; aling-item:center">
+<img src="/walpaper.jpg" alt="Novedades de Septiembre" style="max-width: 500px; height: auto; aling-item">
 
 ¡Gracias por seguir el progreso!

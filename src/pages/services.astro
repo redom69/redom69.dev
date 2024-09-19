@@ -3,6 +3,7 @@
 import Layout from '../layouts/Layout.astro';
 import Card from '../components/Card.astro';
 import { getCollection } from 'astro:content';
+import Footer from '../components/Footer.astro';
 
 // Obtener las publicaciones
 const posts = await getCollection('posts');
@@ -18,7 +19,6 @@ const sortedPosts = posts.sort((a, b) => new Date(b.data.date) - new Date(a.data
       Stay updated with my latest tutorials, projects, and coding insights. Subscribe to the services and get exclusive content directly in your inbox!
     </p>
     
- 
   </section>
 </Layout>
 

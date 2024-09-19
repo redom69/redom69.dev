@@ -139,26 +139,32 @@ html.dark label[for='light-switch'] span {
 
 /* Estilos de las demás secciones */
 .about-header {
-  display: flex;
-  justify-content: flex-end;
-  width: 100%;
+  position: absolute; /* Posiciona el ThemeSwitcher de forma absoluta */
+  top: 20px; /* Espacio desde el borde superior */
+  right: 20px; /* Espacio desde el borde derecho */
+  z-index: 2; /* Asegura que esté por encima del resto */
 }
 
 .about-section {
+  position: relative; /* Permite que el header se posicione dentro del contenedor */
   display: flex;
   flex-direction: column;
-  align-items: center;
-  background-color: transparent;
-  max-width: 900px;
-  position: relative;
+  align-items: center; /* Centrar contenido horizontalmente */
+  text-align: center;
+  background-color: #e7e7e7;
+  padding: 30px;
+  border-radius: 20px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+  max-width: 800px;
+  margin: 50px auto;
 }
 
 .about-title {
-  margin-top: 1rem;
+  font-family: 'Courier New', Courier, monospace;
   font-size: 2.5rem;
   font-weight: bold;
-  text-align: center;
-  color: var(--text-color-dark);
+  color: #00ffb2;
+  margin-bottom: 10px;
 }
 
 html.dark .about-title {
@@ -168,8 +174,7 @@ html.dark .about-title {
 .about-description {
   font-size: 1.2rem;
   line-height: 1.8;
-  text-align: center;
-  color: var(--text-color-dark);
+  color: #080808;
   margin-bottom: 1.5rem;
 }
 
@@ -201,10 +206,12 @@ html.dark .skills-list li {
   color: white;
   padding: 10px 20px;
   text-align: center;
-  border-radius: 5px;
+  border-radius: 10px;
   text-decoration: none;
   font-weight: bold;
+  display: inline-block;
   margin-top: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .about-link:hover {
@@ -293,4 +300,17 @@ html.dark .full-container {
 /* Para mantener los iconos alineados con texto u otros elementos */
 i {
   vertical-align: middle;
+}
+
+.image-section {
+  margin-bottom: 20px;
+}
+
+.profile-image {
+  border-radius: 90%;
+  width: 200px;
+  height: 200px;
+  object-fit: cover;
+  object-position: 0 -30px; /* Ajusta la posición para mostrar más la parte superior (la cabeza) */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }

@@ -1,11 +1,11 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import About from '../components/about.astro';
 import Contact from '../components/contact.astro';
 import Card from '../components/Card.astro';
-import Footer from '../components/Footer.astro';
 
 import { getCollection } from 'astro:content';
+import ThemeSwitcher from '../components/ThemeSwitcher.astro';
+import About from '../components/about.astro';
 
 const posts = await getCollection('posts');
 
@@ -18,10 +18,7 @@ const latestPosts = sortedPosts.slice(0, 2);
 
 <Layout title="Welcome to My Newsletter">
   <!-- Añadimos el contenedor principal -->
-
-      <section id="about" class="about-section">
-        <About />
-      </section>
+      <About  />
 
       <section class="latest-posts-section">
         <h2 class="posts-heading">Latest Articles</h2>
@@ -49,6 +46,4 @@ const latestPosts = sortedPosts.slice(0, 2);
       </section>
 
 </Layout>
-
-
 

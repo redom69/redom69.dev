@@ -1,15 +1,18 @@
 ---
-title: "Consejos para Mejorar tu Productividad"
-description: "Algunos trucos para ser más eficiente en tu trabajo diario"
-date: 2024-09-28
+title: "Novedades de Septiembre"
+description: "Actualizaciones importantes de este mes"
+date: 2024-09-21
+image: "/walpaper.jpg"
 ---
 
-# Consejos para Mejorar tu Productividad
+# Novedades de Septiembre
 
-Ser más productivo no significa trabajar más, sino trabajar de manera más inteligente. Aquí algunos consejos para mejorar tu día a día:
+Este mes hemos estado trabajando duro en varios proyectos emocionantes. Aquí tienes un resumen de lo que hemos logrado:
 
-1. Usa la técnica Pomodoro para mejorar la concentración.
-2. Organiza tus tareas por prioridad.
-3. Haz pausas regulares para evitar la fatiga.
+- Implementación de un nuevo sistema de gestión de usuarios.
+- Mejora en el rendimiento del sitio web.
+- Publicación de dos nuevos tutoriales.
 
-¡Espero que estos consejos te ayuden a ser más eficiente!
+![Novedades de Septiembre](/walpaper.jpg)
+
+¡Gracias por seguir el progreso!

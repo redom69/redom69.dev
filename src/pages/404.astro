@@ -1,0 +1,41 @@
+---
+import Layout from '../layouts/Layout.astro'; // Si usas un layout general
+---
+
+<Layout title="Page Not Found">
+  <section class="error-page">
+    <h1>404 - Page Not Found</h1>
+    <p>Lo sentimos, la página que estás buscando no existe.</p>
+    <a href="/" class="btn">Volver al Inicio</a>
+  </section>
+
+  <style>
+    .error-page {
+      text-align: center;
+      padding: 3rem;
+    }
+
+    .error-page h1 {
+      font-size: 4rem;
+      color: #ff4757;
+    }
+
+    .error-page p {
+      font-size: 1.5rem;
+      margin: 1rem 0;
+      color: #333;
+    }
+
+    .btn {
+      background-color: #0277bd;
+      color: white;
+      padding: 0.75rem 1.5rem;
+      border-radius: 5px;
+      text-decoration: none;
+    }
+
+    .btn:hover {
+      background-color: #01579b;
+    }
+  </style>
+</Layout>

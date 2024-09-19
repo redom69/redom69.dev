@@ -4,13 +4,53 @@ interface Props {
   href: string;
   title: string;
   body: string;
+  image?: string;
 }
 
-const { href, title, body } = Astro.props;
+const { href, title, body, image } = Astro.props;
 ---
-
-<a href={href} class="card">
+<div class="card">
+  {image && (
+    <img src={image} alt={title} class="card-image" />
+  )}
   <h3>{title}</h3>
   <p>{body}</p>
-</a>
+  <a href={href}>Leer más</a>
+</div>
 
+<style>
+  .card {
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 16px;
+    background-color: white;
+    overflow: hidden; /* Asegura que el contenido se mantenga dentro de la tarjeta */
+  }
+
+  .card-image {
+  width: 100%;
+  max-height: 200px;
+  object-fit: contain; /* No recorta, ajusta la imagen dentro del contenedor */
+  border-radius: 8px;
+}
+
+
+  h3 {
+    margin-top: 1rem;
+    font-size: 1.5rem;
+  }
+
+  p {
+    margin-bottom: 1rem;
+  }
+
+  a {
+    color: var(--brand-blue);
+    text-decoration: none;
+    font-weight: bold;
+  }
+
+  a:hover {
+    text-decoration: underline;
+  }
+</style>

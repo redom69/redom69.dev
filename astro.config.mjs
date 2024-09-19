@@ -2,12 +2,17 @@ import { defineConfig } from 'astro/config';
 import react from '@astrojs/react';
 import express from 'express';
 import sgMail from '@sendgrid/mail';
-import dotenv from 'dotenv'; // Para cargar las variables de entorno
+import dotenv from 'dotenv';
 
 dotenv.config(); // Cargar el archivo .env
 
 export default defineConfig({
-  integrations: [react()],
+  output: "server", // O usa "server" o "hybrid" si prefieres renderizado dinámico
+  integrations: [react()], // Quitar `mdx()` de las integraciones
+  markdown: {
+    remarkPlugins: [], // Puedes agregar plugins remark aquí si los necesitas
+    rehypePlugins: [], // Puedes agregar plugins rehype aquí si los necesitas
+  },
   vite: {
     plugins: [
       {

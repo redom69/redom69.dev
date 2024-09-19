@@ -1,0 +1,17 @@
+{
+    "form": {
+      "name": "Name",
+      "email": "Email Address",
+      "subject": "Subject",
+      "message": "Message",
+      "submit": "Send",
+      "recaptcha": "Please complete the reCAPTCHA",
+      "placeholder": {
+        "name": "John Doe",
+        "email": "john@doe.com",
+        "subject": "Enter your subject here...",
+        "message": "Write your message here..."
+      }
+    }
+  }
+  

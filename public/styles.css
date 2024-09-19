@@ -26,11 +26,25 @@ body {
   height: 100%; /* Ocupa toda la altura */
   margin: 0;
   padding: 0;
+  overflow: auto;
+}
+
+/* Asegurarse de que box-sizing sea border-box en todos los elementos */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
 }
 
 /* Asegura que el html y body ocupen el 100% de la altura */
 html, body {
   height: 100%;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;  /* Centrar horizontalmente */
+  align-items: flex-start;  /* Alinea el contenido a partir del borde superior */
+  background-color: var(--bg-color-light); /* Fondo */
 }
 
 /* El contenedor principal debe ocupar toda la altura */
@@ -42,39 +56,39 @@ html, body {
 
 /* Estilo general para el content-container en modo claro */
 .content-container {
-  width: 90%; /* Ajusta el ancho del contenedor para que sea más estrecho */
-  max-width: 800px; /* Controla el ancho máximo */
+  width: 100%;
+  max-width: 800px;
   margin: 0 auto;
-  padding: 40px;
-  background-color: var(--bg-color-light-content); /* Fondo claro para el contenido */
-  border: 1px solid rgba(122, 122, 122, 0.123); /* Borde suave oscuro */
-  min-height: 100%; /* Ocupa toda la altura */
+  padding: 40px 40px 0px 40px;
+  background-color: var(--bg-color-light-content);
+  border: 1px solid rgba(122, 122, 122, 0.123);
+  min-height: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: center; /* Centra el contenido verticalmente */
-  color: var(--text-color-dark); /* Color de texto para modo claro */
+  justify-content: center;
+  color: var(--text-color-dark);
 }
 
 /* Estilo específico para el modo oscuro */
 html.dark .content-container {
-  background-color: var(--bg-color-dark-content); /* Fondo oscuro para el contenido */
-  border: 1px solid  rgba(29, 36, 61, 0.699); /* Borde suave claro */
-  color: var(--text-color-light); /* Color de texto para modo oscuro */
+  background-color: var(--bg-color-dark-content);
+  border: 1px solid rgba(29, 36, 61, 0.699);
+  color: var(--text-color-light);
 }
 
 /* Modo oscuro */
 html.dark body {
-  background-color: var(--bg-color-dark); /* Fondo oscuro */
-  color: var(--text-color-light); /* Texto claro */
+  background-color: var(--bg-color-dark);
+  color: var(--text-color-light);
 }
 
 /* Enlaces en ambos modos */
 html.dark a {
-  color: var(--text-color-light); /* Enlace claro en modo oscuro */
+  color: var(--text-color-light);
 }
 
 a {
-  color: var(--text-color-dark); /* Enlace oscuro en modo claro */
+  color: var(--text-color-dark);
 }
 
 /* Estilos para el switch (label) */
@@ -124,8 +138,8 @@ html.dark label[for="light-switch"] span {
 /* Estilos de las demás secciones */
 .about-header {
   display: flex;
-  justify-content: flex-end; /* Alinea el botón a la derecha */
-  width: 100%; /* Asegura que ocupe todo el ancho */
+  justify-content: flex-end;
+  width: 100%;
 }
 
 .about-section {
@@ -134,32 +148,31 @@ html.dark label[for="light-switch"] span {
   align-items: center;
   background-color: transparent;
   max-width: 900px;
-  margin: 0 auto;
-  position: relative; /* Esto permite la manipulación del contenido interno */
-
+  position: relative;
 }
 
-
 .about-title {
+  margin-top: 1rem;
   font-size: 2.5rem;
   font-weight: bold;
   text-align: center;
-  color: var(--text-color-dark); /* Texto oscuro en modo claro */
+  color: var(--text-color-dark);
 }
 
 html.dark .about-title {
-  color: var(--text-color-light); /* Texto claro en modo oscuro */
+  color: var(--text-color-light);
 }
 
 .about-description {
   font-size: 1.2rem;
   line-height: 1.8;
   text-align: center;
-  color: var(--text-color-dark); /* Texto oscuro en modo claro */
+  color: var(--text-color-dark);
+  margin-bottom: 1.5rem;
 }
 
 html.dark .about-description {
-  color: var(--text-color-light); /* Texto claro en modo oscuro */
+  color: var(--text-color-light);
 }
 
 .skills-list {
@@ -174,11 +187,11 @@ html.dark .about-description {
 
 .skills-list li {
   font-size: 1.1rem;
-  color: var(--text-color-dark); /* Texto oscuro en modo claro */
+  color: var(--text-color-dark);
 }
 
 html.dark .skills-list li {
-  color: var(--text-color-light); /* Texto claro en modo oscuro */
+  color: var(--text-color-light);
 }
 
 .about-link {
@@ -198,18 +211,18 @@ html.dark .skills-list li {
 }
 
 .full-container {
-  min-height: 100vh; /* Ocupa toda la altura de la pantalla */
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
-  justify-content: center; /* Centra el contenido verticalmente */
   padding: 20px;
-  background-color: var(--bg-color-light-content); /* Fondo claro para el container */
-  color: var(--text-color-dark); /* Texto oscuro en modo claro */
+  background-color: var(--bg-color-light-content);
+  color: var(--text-color-dark);
+  justify-content: flex-start;
 }
 
 html.dark .full-container {
   background-color: var(--bg-color-dark-content);
-  color: var(--text-color-light); /* Texto claro en modo oscuro */
+  color: var(--text-color-light);
 }
 
 .latest-posts-section, .contact-section {
@@ -241,29 +254,38 @@ html.dark .full-container {
 }
 
 .contact-section {
-  margin-top: 40px;
+  margin-top: 60px;
+  padding-left: 50px;
 }
 
 .social-links a {
   margin-right: 15px;
   text-decoration: none;
-  color: #fff; /* Color del ícono */
-  font-size: 24px; /* Tamaño del ícono ajustado */
+  color: #fff;
+  font-size: 24px;
   display: inline-flex;
-  align-items: center; /* Alinear verticalmente */
+  align-items: center;
   justify-content: center;
   padding: 10px;
-  background-color: #0073b1; /* Fondo azul para LinkedIn */
-  border-radius: 50%; /* Hacerlos circulares */
+  background-color: #0073b1;
+  border-radius: 50%;
   transition: background-color 0.3s ease;
 }
 
 .social-links a.github {
-  background-color: #333; /* Fondo oscuro para GitHub */
+  background-color: #333;
 }
 
+.see-more-wrapper {
+  display: flex;
+  justify-content: center; /* Centra el botón horizontalmente */
+  align-items: center; /* Centra el contenido verticalmente si fuera necesario */
+  margin-top: 20px; /* Puedes ajustar el margen superior si es necesario */
+}
+
+
 .social-links a:hover {
-  background-color: #555; /* Cambia el color al hacer hover */
+  background-color: #555;
 }
 
 /* Para mantener los iconos alineados con texto u otros elementos */

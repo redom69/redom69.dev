@@ -11,47 +11,20 @@ const posts = await getCollection('posts');
 const sortedPosts = posts.sort((a, b) => new Date(b.data.date) - new Date(a.data.date));
 ---
 
-<Layout title="Newsletter">
-
-  <div class="full-container">
-    <main class="main-content">
-  <section class="newsletter-section py-8 px-4">
-    <h1 class="newsletter-title text-4xl font-bold mb-4">Join the Newsletter</h1>
-    <p class="newsletter-description text-lg mb-4">
-      Stay updated with my latest tutorials, projects, and coding insights. Subscribe to the newsletter and get exclusive content directly in your inbox!
+<Layout title="Services">
+  <section class="services-section py-8 px-4">
+    <h1 class="services-title text-4xl font-bold mb-4">Join the Services</h1>
+    <p class="services-description text-lg mb-4">
+      Stay updated with my latest tutorials, projects, and coding insights. Subscribe to the services and get exclusive content directly in your inbox!
     </p>
     
-    <form id="newsletter-form" class="newsletter-form flex flex-col gap-4 mb-8">
-      <input type="text" id="name" name="name" placeholder="Enter your name" required class="input-field p-2 border rounded">
-      <input type="email" id="email" name="email" placeholder="Enter your email" required class="input-field p-2 border rounded">
-      <button type="submit" class="submit-btn bg-blue-500 text-white px-4 py-2 rounded">
-        Subscribe
-      </button>
-    </form>
-    
-    <div id="newsletter-notification" class="notification"></div>
-
-    <!-- Listado de posts -->
-    <h2 class="text-3xl font-bold mb-4">Latest Posts</h2>
-    <ul class="link-card-grid">
-      {sortedPosts.map(post => (
-        <Card
-          href={`/newsletter/${post.slug}`}  
-          title={post.data.title}
-          body={post.data.description}
-          image={post.data.image}  
-        />
-      ))}
-    </ul>
-    
+ 
   </section>
-</main>
-</div>
 </Layout>
 
 <style>
-/* Estilos generales para la sección de newsletter */
-.newsletter-section {
+/* Estilos generales para la sección de services */
+.services-section {
   background-color: var(--bg-color-light);
   padding: 2rem;
   border-radius: 12px;
@@ -61,31 +34,31 @@ const sortedPosts = posts.sort((a, b) => new Date(b.data.date) - new Date(a.data
   transition: background-color 0.3s ease;
 }
 
-html.dark .newsletter-section {
+html.dark .services-section {
   background-color: var(--bg-color-dark);
   color: var(--text-color-light);
 }
 
-/* Título de la newsletter */
-.newsletter-title {
+/* Título de la services */
+.services-title {
   text-align: center;
   color: var(--brand-blue);
   margin-bottom: 2rem;
 }
 
-/* Descripción de la newsletter */
-.newsletter-description {
+/* Descripción de la services */
+.services-description {
   text-align: center;
   margin-bottom: 2rem;
   color: var(--text-color-dark);
 }
 
-html.dark .newsletter-description {
+html.dark .services-description {
   color: var(--text-color-light);
 }
 
 /* Estilos del formulario */
-.newsletter-form {
+.services-form {
   max-width: 500px;
   margin: 0 auto 2rem;
 }
@@ -142,11 +115,11 @@ html.dark .submit-btn:hover {
 
 /* Responsividad */
 @media (max-width: 768px) {
-  .newsletter-title {
+  .services-title {
     font-size: 2.5rem;
   }
 
-  .newsletter-description {
+  .services-description {
     font-size: 1rem;
   }
 
@@ -161,7 +134,7 @@ html.dark .submit-btn:hover {
 </style>
 
 <script>
-document.getElementById('newsletter-form').addEventListener('submit', async function (e) {
+document.getElementById('services-form').addEventListener('submit', async function (e) {
   e.preventDefault();
 
   const name = document.getElementById('name').value;
@@ -177,9 +150,9 @@ document.getElementById('newsletter-form').addEventListener('submit', async func
     });
 
     if (response.ok) {
-      showNotification('Te has suscrito correctamente a la newsletter', 'success');
+      showNotification('Te has suscrito correctamente a la services', 'success');
     } else if (response.status === 409) {
-      showNotification('Este correo ya está suscrito a la newsletter.', 'error');
+      showNotification('Este correo ya está suscrito a la services.', 'error');
     } else if (response.status >= 500) {
       showNotification('Hubo un error en el servidor. Intenta nuevamente más tarde.', 'error');
     } else {
@@ -192,7 +165,7 @@ document.getElementById('newsletter-form').addEventListener('submit', async func
 });
 
 function showNotification(message, type) {
-  const notification = document.getElementById('newsletter-notification');
+  const notification = document.getElementById('services-notification');
   notification.textContent = message;
   notification.className = `notification ${type}`;
   notification.style.display = 'block';

@@ -2,7 +2,7 @@
 title: "Novedades de Septiembre"
 description: "Actualizaciones importantes de este mes"
 date: 2024-09-21
-image: "/public/walpaper.jpg"
+image: "/walpaper.jpg"
 ---
 
 # Novedades de Septiembre
@@ -13,6 +13,6 @@ Este mes hemos estado trabajando duro en varios proyectos emocionantes. Aquí ti
 - Mejora en el rendimiento del sitio web.
 - Publicación de dos nuevos tutoriales.
 
-![Novedades de Septiembre](//public/walpaper.jpg)
+![Novedades de Septiembre](/walpaper.jpg)
 
 ¡Gracias por seguir el progreso!

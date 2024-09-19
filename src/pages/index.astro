@@ -1,7 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import About from './about.astro';
-import Contact from './contact.astro';
+import About from '../components/about.astro';
+import Contact from '../components/contact.astro';
 import Card from '../components/Card.astro';
 import Footer from '../components/Footer.astro';
 
@@ -31,9 +31,10 @@ const latestPosts = sortedPosts.slice(0, 2);
         <ul class="link-card-grid">
           {latestPosts.map(post => (
             <Card
-              href={`/posts/${post.slug}`}
+              href={`/newsletter/${post.slug}`}
               title={post.data.title}
               body={post.data.description}
+              image={post.data.image}
             />
           ))}
         </ul>

@@ -1,0 +1,41 @@
+---
+import { getEntryBySlug } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+
+// Obtener el slug desde la URL
+const { slug } = Astro.params;
+
+// Obtener el post usando el slug
+const post = await getEntryBySlug('posts', slug);
+
+// Asegurarse de que el post existe y renderizar su contenido
+if (!post) {
+  throw new Error(`Post con slug "${slug}" no encontrado`);
+}
+
+const { Content } = await post.render();  // Renderiza el contenido compilado del post
+---
+
+<Layout title={post.data.title}>
+  <div class="full-container">
+    <main class="main-content">
+  <main>
+    <h1>{post.data.title}</h1>
+    <p>Publicado el: {new Date(post.data.date).toLocaleDateString()}</p>
+    <p>{post.data.description}</p>
+
+    <!-- Renderizar la imagen si existe -->
+    {post.data.image && (
+      <img src={post.data.image} alt={post.data.title} style="max-width: 600px; height: auto; display: block; margin: 20px auto;" />
+    )}
+
+    <!-- Renderizar el contenido del post -->
+    <article style="line-height: 1.6; margin-top: 20px;">
+      <Content /> <!-- Esto renderiza el contenido compilado del Markdown -->
+    </article>
+
+    <a href="/newsletter" style="display: inline-block; margin-top: 20px;">Volver a la página de posts</a>
+  </main>
+    </main>
+  </div>
+</Layout>

@@ -3,7 +3,7 @@
 import Layout from '../layouts/Layout.astro';
 import Card from '../components/Card.astro';
 import { getCollection } from 'astro:content';
-import Footer from '../components/Footer.astro';
+import ArticleCards from '../components/ArticleCards.astro';
 
 // Obtener las publicaciones
 const posts = await getCollection('posts');
@@ -13,8 +13,6 @@ const sortedPosts = posts.sort((a, b) => new Date(b.data.date) - new Date(a.data
 ---
 
 <Layout title="Newsletter">
-
-
   <section class="newsletter-section py-8 px-4">
     <h1 class="newsletter-title text-4xl font-bold mb-4">Join the Newsletter</h1>
     <p class="newsletter-description text-lg mb-4">
@@ -33,23 +31,25 @@ const sortedPosts = posts.sort((a, b) => new Date(b.data.date) - new Date(a.data
 
     <!-- Listado de posts -->
     <h2 class="text-3xl font-bold mb-4">Latest Posts</h2>
-    <ul class="link-card-grid">
+    <div class="article-card-grid">
       {sortedPosts.map(post => (
-        <Card
-          href={`/newsletter/${post.slug}`}  
+        <ArticleCards
+          href={`/newsletter/${post.slug}`}
           title={post.data.title}
-          body={post.data.description}
-          image={post.data.image}  
+          source={post.data.source || "newsletter.com"}  {/* Añadir una fuente predeterminada si no existe */}
+          description={post.data.description}
         />
       ))}
-    </ul>
-    
+    </div>
   </section>
-
 </Layout>
 
 <style>
-/* Estilos generales para la sección de newsletter */
+.article-card-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 16px; /* Espacio entre las tarjetas */
+}
 .newsletter-section {
   background-color: var(--bg-color-light);
   padding: 2rem;

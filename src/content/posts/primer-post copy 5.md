@@ -1,6 +1,6 @@
 ---
 title: 'Novedades de Septiembre'
-description: 'Actualizaciones importantes de este mes'
+description: 'Actualizaciones'
 date: 2024-09-21
 image: '/walpaper.jpg'
 ---

@@ -1,7 +1,6 @@
 ---
 // Importar el layout y componentes
 import Layout from '../layouts/Layout.astro';
-import Card from '../components/Card.astro';
 import { getCollection } from 'astro:content';
 import ArticleCards from '../components/ArticleCards.astro';
 
@@ -12,7 +11,15 @@ const posts = await getCollection('posts');
 const sortedPosts = posts.sort((a, b) => new Date(b.data.date) - new Date(a.data.date));
 ---
 
-<Layout title="Newsletter">
+<Layout   
+  title="Newsletter"
+  description='Ultimas noticias de este mundo tecnologico'
+>
+
+<main class="px-4">
+
+
+  <div class="space-y-24">
   <section class="newsletter-section py-8 px-4">
     <h1 class="newsletter-title text-4xl font-bold mb-4">Join the Newsletter</h1>
     <p class="newsletter-description text-lg mb-4">
@@ -32,16 +39,23 @@ const sortedPosts = posts.sort((a, b) => new Date(b.data.date) - new Date(a.data
     <!-- Listado de posts -->
     <h2 class="text-3xl font-bold mb-4">Latest Posts</h2>
     <div class="article-card-grid">
-      {sortedPosts.map(post => (
-        <ArticleCards
-          href={`/newsletter/${post.slug}`}
-          title={post.data.title}
-          source={post.data.source || "newsletter.com"}  {/* Añadir una fuente predeterminada si no existe */}
-          description={post.data.description}
-        />
-      ))}
+      {sortedPosts && sortedPosts.length > 0 ? (
+        sortedPosts.map(post => (
+          <ArticleCards
+            href={`/newsletter/${post.slug}`}
+            title={post.data.title}
+            source={post.data.source || "newsletter.com"}  {/* Añadir una fuente predeterminada si no existe */}
+            description={post.data.description}
+          />
+        ))
+      ) : (
+        <p>No posts available.</p>  // Mensaje en caso de que no haya publicaciones.
+      )}
     </div>
   </section>
+  </div>
+  </main>
+
 </Layout>
 
 <style>
@@ -51,19 +65,14 @@ const sortedPosts = posts.sort((a, b) => new Date(b.data.date) - new Date(a.data
   gap: 16px; /* Espacio entre las tarjetas */
 }
 .newsletter-section {
-  background-color: var(--bg-color-light);
   padding: 2rem;
+  padding-top: 100px;
   border-radius: 12px;
   max-width: 900px;
   margin: 0 auto;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
   transition: background-color 0.3s ease;
 }
 
-html.dark .newsletter-section {
-  background-color: var(--bg-color-dark);
-  color: var(--text-color-light);
-}
 
 /* Título de la newsletter */
 .newsletter-title {

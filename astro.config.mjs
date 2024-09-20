@@ -3,15 +3,18 @@ import react from '@astrojs/react';
 import express from 'express';
 import sgMail from '@sendgrid/mail';
 import dotenv from 'dotenv';
+import tailwind from '@astrojs/tailwind';
+import robotsTxt from 'astro-robots-txt';
 
-dotenv.config(); // Cargar el archivo .env
+dotenv.config();
 
 export default defineConfig({
-  output: 'server', // O usa "server" o "hybrid" si prefieres renderizado dinámico
-  integrations: [react()], // Quitar `mdx()` de las integraciones
+  output: 'server',
+  integrations: [react(), tailwind(), robotsTxt()],
+  site: 'https://redom69.dev',
   markdown: {
-    remarkPlugins: [], // Puedes agregar plugins remark aquí si los necesitas
-    rehypePlugins: [], // Puedes agregar plugins rehype aquí si los necesitas
+    remarkPlugins: [],
+    rehypePlugins: [],
   },
   vite: {
     plugins: [

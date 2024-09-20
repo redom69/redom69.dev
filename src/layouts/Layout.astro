@@ -1,34 +1,128 @@
 ---
 import Footer from '../components/Footer.astro';
 import Navbar from '../components/Navbar.astro';
----
+import { ViewTransitions } from "astro:transitions"
 
+interface Props {
+  title: string
+  description: string
+}
+
+const { description, title } = Astro.props
+---
+<!doctype html>
 <html lang="es">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="/styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <link href="https://unpkg.com/atropos/css" rel="stylesheet">
-    <style>
+    <title>{title}</title>
+    <meta name="generator" content={Astro.generator} />
+
+    <ViewTransitions />
+  </head>
+  <body class="relative text-black dark:text-white">
+    <div class="absolute top-0 bottom-0 z-[-2] min-h-screen w-full bg-gray-50 dark:bg-gray-950
+    bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(217,216,255,0.5),rgba(255,255,255,0.9))]
+    dark:bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(100,100,200,0.5),rgba(29,29,29,1))]"
+    />
+    <Navbar />
+    <slot />
+    <Footer />
+    <style is:global>
+      :root {
+      --accent: #883aea;
+      --accent-light: #e0ccfa;
+      --accent-dark: #310a65;
+
+      --brand-blue: #199afc;
+      --brand-black: #1e1e2e;
+      --brand-gray: #282c36;
+      --text-color-light: #f0f0f0; /* Ajustado para mayor contraste en modo oscuro */
+      --text-color-dark: #1a1a1a; /* Color oscuro ajustado para mayor contraste */
+
+      --bg-color-dark: rgba(3, 7, 18, 0.95); /* Color de fondo oscuro */
+      --bg-color-dark-content: rgb(19, 25, 48); /* Fondo oscuro para el contenido */
+      --bg-color-light: #f7f0f0; /* Color de fondo claro */
+      --bg-color-light-content: #ffffff; /* Fondo claro para el contenido */
+
+      --icon-gray: rgba(255, 255, 255, 0.6); /* Color gris claro para el sol */
+      --icon-theme: #929292; /* Gris oscuro distinguible sobre blanco */
+      --icon-theme-hover: #a5a5a5; /* Gris más claro para el hover */
+    }
+
+    html {
+        font-family: "Onest Variable", system-ui, sans-serif;
+        scroll-behavior: smooth;
+      }
+
       body {
-        font-family: 'Roboto', sans-serif;
-        background-color: #f4f4f4; /* Fondo claro */
-        color: #333; /* Texto oscuro */
+        color: rgba(17, 17, 17, 0.9);
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+        overscroll-behavior: none;
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        html {
+          scroll-behavior: auto;
+        }
+      }
+
+      @media (prefers-color-scheme: dark) {
+        body {
+          color: rgba(255, 255, 255, 0.9);
+        }
+      }
+
+      #header-nav {
+        animation: blur linear both 0.5s;
+        animation-timeline: scroll();
+        animation-range: 0 500px;
+      }
+
+      @keyframes blur {
+        to {
+          backdrop-filter: blur(20px);
+          border-width: 1px;
+          border-color: rgba(0, 0, 0);
+          padding: 0.25rem 0.75rem;
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+          background-color: rgb(229, 229, 229);
+          border-radius: 9999px;
+        }
+      }
+
+      @media (prefers-color-scheme: dark) {
+        @keyframes blur {
+          from {
+            border: 0px;
+          }
+          to {
+            box-shadow:
+              0px 5px 50px -5px rgba(0, 0, 0, 0.1),
+              0px 0px 0 1px rgba(0, 0, 0, 0.3);
+            background: rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(20px);
+            border-width: 1px;
+            border-color: rgba(0, 0, 0);
+            padding-left: 0.75rem;
+            padding-right: 0.75rem;
+            padding-top: 0.25rem;
+            padding-bottom: 0.25rem;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            background-color: rgba(0, 0, 0, 0.3);
+            border-radius: 9999px;
+          }
+        }
       }
     </style>
-    <title>{Astro.title}</title>
-  </head>
-  <body>
-      <!-- Contenedor scrolleable para el contenido de la página -->
-      <main class="content-container">
-        <div class="full-container">
-          <main class="main-content">
-          <slot /> <!-- Aquí va el contenido dinámico de la página -->
-          <Footer />
-        </main>
-        </div>
-      </main>
   </body>
 </html>

@@ -1,9 +1,7 @@
 ---
 // Importar el layout y componentes
 import Layout from '../layouts/Layout.astro';
-import Card from '../components/Card.astro';
 import { getCollection } from 'astro:content';
-import Footer from '../components/Footer.astro';
 
 // Obtener las publicaciones
 const posts = await getCollection('posts');
@@ -12,7 +10,15 @@ const posts = await getCollection('posts');
 const sortedPosts = posts.sort((a, b) => new Date(b.data.date) - new Date(a.data.date));
 ---
 
-<Layout title="Services">
+<Layout   
+  title="Servicios"
+  description='Todo lo que te puedo ofrecer como desarrollaodr full-stack.'
+>
+
+<main class="px-4">
+
+
+  <div class="space-y-24"></div>
   <section class="services-section py-8 px-4">
     <h1 class="services-title text-4xl font-bold mb-4">Join the Services</h1>
     <p class="services-description text-lg mb-4">
@@ -20,24 +26,23 @@ const sortedPosts = posts.sort((a, b) => new Date(b.data.date) - new Date(a.data
     </p>
     
   </section>
+</div>
+</main>
+
 </Layout>
 
 <style>
 /* Estilos generales para la sección de services */
 .services-section {
-  background-color: var(--bg-color-light);
   padding: 2rem;
+  padding-top: 100px;
   border-radius: 12px;
   max-width: 900px;
   margin: 0 auto;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
   transition: background-color 0.3s ease;
 }
 
-html.dark .services-section {
-  background-color: var(--bg-color-dark);
-  color: var(--text-color-light);
-}
+
 
 /* Título de la services */
 .services-title {

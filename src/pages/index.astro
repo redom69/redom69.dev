@@ -1,49 +1,57 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import Contact from '../components/contact.astro';
-import Card from '../components/Card.astro';
+import About from '../components/About.astro';
+import SectionContainer from '../components/SectionContainer.astro';
+import TitleSection from '../components/TitleSection.astro';
+import Hero from '../components/Hero.astro';
+import Posts from '../components/Posts.astro';
+import Services from './services.astro';
 
-import { getCollection } from 'astro:content';
-import ThemeSwitcher from '../components/ThemeSwitcher.astro';
-import About from '../components/about.astro';
-
-const posts = await getCollection('posts');
-
-// Ordenar los posts por fecha de manera descendente
-const sortedPosts = posts.sort((a, b) => new Date(b.data.date) - new Date(a.data.date));
-
-// Obtener solo las dos últimas publicaciones ya ordenadas por fecha
-const latestPosts = sortedPosts.slice(0, 2);
 ---
 
-<Layout title="Welcome to My Newsletter">
-  <!-- Añadimos el contenedor principal -->
-      <About  />
+<Layout 
+  title="Redom69"
+  description='Desarrollador full stack. Especializado en React y NodeJS'
+>
+  <main class="px-4">
 
-      <section class="latest-posts-section">
-        <h2 class="posts-heading">Latest Articles</h2>
-        <p class="posts-description">Explore my recent posts on web development, tutorials, and more.</p>
+    <SectionContainer class="py-16 md:py-36">
+      <Hero>
+        </slot>
+      </Hero>
+    </SectionContainer>
 
-        <ul class="link-card-grid">
-          {latestPosts.map(post => (
-            <Card
-              href={`/newsletter/${post.slug}`}
-              title={post.data.title}
-              body={post.data.description}
-              image={post.data.image}
-            />
-          ))}
-        </ul>
+    <div class="space-y-24">
 
-        <div class="see-more-wrapper">
-          <a href="/newsletter" class="see-more-btn">View All Posts</a>
-        </div>
-      </section>
+      <SectionContainer id="newsletter">
+        <TitleSection>
+          Newsletter
+        </TitleSection>
+        <Posts/>
+      </SectionContainer>
+      <SectionContainer id="services">
+        <TitleSection>
+          Servicios
+        </TitleSection>
+        <Posts/>
+      </SectionContainer>
+      
+      <SectionContainer id="about">
+        <TitleSection>
+          Sobre mí
+        </TitleSection>
+        <About/>
+      </SectionContainer>
 
-      <!-- Renderizamos el contenido de la sección de "Contact" -->
-      <section id="contact" class="contact-section">
+      <SectionContainer id="contacto">
+        <TitleSection>
+          Contacto
+        </TitleSection>
         <Contact />
-      </section>
+      </SectionContainer>
 
+    </div>
+  </main>
 </Layout>
 

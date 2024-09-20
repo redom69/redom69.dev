@@ -1,0 +1,38 @@
+---
+
+import { getCollection } from 'astro:content';
+import Card from './Card.astro';
+import GitHub from './icons/GitHub.astro';
+import LinkButton from './LinkButton.astro';
+
+
+const posts = await getCollection('posts');
+
+// Ordenar los posts por fecha de manera descendente
+const sortedPosts = posts.sort((a, b) => new Date(b.data.date) - new Date(a.data.date));
+
+// Obtener solo las dos últimas publicaciones ya ordenadas por fecha
+const latestPosts = sortedPosts.slice(0, 2);
+---
+
+<div class="flex flex-col gap-y-16">
+    {latestPosts.map(post => ( 
+        <article class="flex flex-col space-x-0 space-y-8 group md:flex-row md:space-x-8 md:space-y-0">
+            <Card
+                href={`/newsletter/${post.slug}`}
+                title={post.data.title}
+                body={post.data.description}
+                image={post.data.image}
+            />
+        </article>
+        ))
+    }
+
+
+    <LinkButton href="/newsletter">
+        Ver mas
+    </LinkButton>
+</div>
+
+
+

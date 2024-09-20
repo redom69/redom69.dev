@@ -16,7 +16,10 @@ if (!post) {
 const { Content } = await post.render();  // Renderiza el contenido compilado del post
 ---
 
-<Layout title={post.data.title}>
+<Layout 
+  title={post.data.title}
+  description={post.data.description}
+>
   <div class="full-container">
     <main class="main-content">
   <main>

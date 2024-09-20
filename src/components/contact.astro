@@ -9,6 +9,7 @@ const lang = url.searchParams.get('lang') || 'en';
 const translations = await import(`../locales/${lang}.json`);
 ---
 
+
 <div class="form-container">
     <form id="contact-form" method="POST" name="formularioContacto">
         <input type="hidden" name="form-name" value="formularioContacto">
@@ -45,141 +46,113 @@ const translations = await import(`../locales/${lang}.json`);
 
         <!-- Botón de enviar -->
         <div class="field col-12">
+
             <button type="submit" class="p-button p-component" id="button-login-submit">
-                <span class="p-button-label">{translations.form.submit}</span>
+                <span      class="inline-flex items-center justify-center gap-2 px-4 py-1 text-gray-800 transition bg-gray-100 border border-gray-300 rounded-full dark:bg-gray-800 dark:border-gray-600 dark:text-white focus-visible:ring-yellow-500/80 text-md hover:bg-gray-900 hover:border-gray-700 hover:text-white dark:hover:bg-gray-100 dark:hover:border-gray-300 dark:hover:text-black group max-w-fit focus:outline-none focus-visible:outline-none focus-visible:ring focus-visible:ring-white focus-visible:ring-offset-2 active:bg-black"
+
+                >{translations.form.submit}</span>
             </button>
         </div>
     </form>
 </div>
 
-<!-- Estilos para el botón de cambio de idioma y formulario -->
 <style>
-  /* Estilos para los botones de cambio de idioma */
-  .language-switcher button {
-    padding: 10px 20px;
-    margin: 5px;
-    font-size: 1rem;
-    background-color: #0277BD;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-  }
+    /* Contenedor del formulario */
+    body {
+        display: flex; /* Si eliges flexbox */
+        justify-content: center; /* Centrar horizontalmente */
+        align-items: center; /* Centrar verticalmente */
+        min-height: 100vh; /* Ocupa toda la altura de la ventana */
+        margin: 0; /* Quitar márgenes predeterminados */
+    }
 
-  .language-switcher button.active {
-    background-color: #01579B;
-  }
-  /* Centrar el formulario en la pantalla */
-        .form-container * {
-            font-family: 'Roboto', sans-serif;
-        }
+    .form-container {
+        padding: 2rem;
+        border-radius: 10px;
+        width: 100%;
+        max-width: 800px;
+        text-align: center;
+       padding-left: 100px;
+    }
 
-        /* Contenedor del formulario */
-        .form-container {
-            background: #ffffff;
-            padding: 2rem;
-            border-radius: 10px;
-            width: 100%;
-            max-width: 600px;
-            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-            text-align: center;
-        }
+    /* Estilos de los labels */
+    .form-container label {
+        display: block;
+        text-align: left;
+        font-weight: bold;
+        margin-bottom: 0.5rem;
+        padding-bottom: 10px;
+        color: var(--text-color-light);
+    }
 
-        /* Estilos de los labels */
-        .form-container label {
-            display: block;
-            text-align: left;
-            font-weight: bold;
-            margin-bottom: 0.5rem;
-            padding-bottom: 10px;
-            color: #333;
-        }
+    /* Inputs y textarea */
+    .form-container input, .form-container textarea {
+        width: 90%;
+        padding: 0.75rem;
+        margin-bottom: 1.5rem;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-size: 1rem;
+        color: #333;
+        text-align: center; /* Texto centrado en los inputs */
+    }
 
-        /* Inputs y textarea */
-        .form-container input, .form-container textarea {
-            width: 90%;
-            padding: 0.75rem;
-            margin-bottom: 1.5rem;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            font-size: 1rem;
-            color: #333;
-            text-align: center; /* Texto centrado en los inputs */
-        }
+    /* Estilos del enlace de olvidaste tu contraseña */
+    .form-container .forgot-password {
+        color: #0277BD;
+        text-decoration: none;
+        font-size: 0.875rem;
+        margin-bottom: 1.5rem;
+        display: block;
+    }
 
-        /* Botón de enviar */
-        .form-container button {
-            background-color: #0277BD;
-            color: white;
-            padding: 0.75rem 1.5rem;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 1rem;
-            width: 100%;
-        }
-
-        /* Efecto hover en el botón */
-        .form-container button:hover {
-            background-color: #01579B;
-        }
-
-        /* Estilos del enlace de olvidaste tu contraseña */
-        .form-container .forgot-password {
-            color: #0277BD;
-            text-decoration: none;
-            font-size: 0.875rem;
-            margin-bottom: 1.5rem;
-            display: block;
-        }
-
-        .form-container .forgot-password:hover {
-            text-decoration: underline;
-        }
-
+    .form-container .forgot-password:hover {
+        text-decoration: underline;
+    }
 </style>
 
-  <script>
-    document.getElementById('contact-form').addEventListener('submit', async function (e) {
-        e.preventDefault();
-  
-        const name = document.getElementById('name').value;
-        const email = document.getElementById('email').value;
-        const subject = document.getElementById('subject').value;
-        const message = document.getElementById('message').value;
-  
-        try {
-            const response = await fetch('/api/contact', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ name, email, subject, message }),
-            });
-  
-            if (response.ok) {
-                const data = await response.json();
-                showNotification('Correo enviado: ' + data.message, 'success');
-            } else {
-                showNotification('Error al enviar el correo', 'error');
-            }
-        } catch (error) {
-            console.error('Error:', error);
+
+<script>
+document.getElementById('contact-form').addEventListener('submit', async function (e) {
+    e.preventDefault();
+
+    const name = document.getElementById('name').value;
+    const email = document.getElementById('email').value;
+    const subject = document.getElementById('subject').value;
+    const message = document.getElementById('message').value;
+
+    try {
+        const response = await fetch('/api/contact', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ name, email, subject, message }),
+        });
+
+        if (response.ok) {
+            const data = await response.json();
+            showNotification('Correo enviado: ' + data.message, 'success');
+        } else {
             showNotification('Error al enviar el correo', 'error');
         }
-    });
-  
-    // Función para mostrar la notificación
-    function showNotification(message, type) {
-        const notification = document.getElementById('notification');
-        notification.textContent = message;
-        notification.classList.remove('success', 'error');
-        notification.classList.add(type === 'success' ? 'success' : 'error');
-        notification.style.display = 'block';
-  
-        setTimeout(() => {
-            notification.style.display = 'none';
-        }, 5000);
+    } catch (error) {
+        console.error('Error:', error);
+        showNotification('Error al enviar el correo', 'error');
     }
-  </script>
+});
+
+// Función para mostrar la notificación
+function showNotification(message, type) {
+    const notification = document.getElementById('notification');
+    notification.textContent = message;
+    notification.classList.remove('success', 'error');
+    notification.classList.add(type === 'success' ? 'success' : 'error');
+    notification.style.display = 'block';
+
+    setTimeout(() => {
+        notification.style.display = 'none';
+    }, 5000);
+}
+</script>
   

@@ -13,32 +13,32 @@ if (!post) {
   throw new Error(`Post con slug "${slug}" no encontrado`);
 }
 
-const { Content } = await post.render();  // Renderiza el contenido compilado del post
+const { Content } = await post.render();  
 ---
 
 <Layout 
   title={post.data.title}
   description={post.data.description}
 >
-  <div class="full-container">
-    <main class="main-content">
-  <main>
-    <h1>{post.data.title}</h1>
-    <p>Publicado el: {new Date(post.data.date).toLocaleDateString()}</p>
-    <p>{post.data.description}</p>
+<main class="px-4 py-10">
+  <div class="flex justify-center">
+    <section class="services-section py-8 px-4 max-w-2xl w-full"> <!-- Centra el contenido -->
+      <h1 class="services-title text-4xl font-bold mb-4 text-center">{post.data.title}</h1>
+      <p class="services-description text-lg mb-4 text-center">
+        {post.data.description}
+      </p>
+      <p class="services-description text-lg mb-4 text-center">
+        Publicado el: {new Date(post.data.date).toLocaleDateString()}
+      </p>
 
-    <!-- Renderizar la imagen si existe -->
-    {post.data.image && (
-      <img src={post.data.image} alt={post.data.title} style="max-width: 600px; height: auto; display: block; margin: 20px auto;" />
-    )}
-
-    <!-- Renderizar el contenido del post -->
-    <article style="line-height: 1.6; margin-top: 20px;">
-      <Content /> <!-- Esto renderiza el contenido compilado del Markdown -->
-    </article>
-
-    <a href="/newsletter" style="display: inline-block; margin-top: 20px;">Volver a la página de posts</a>
-  </main>
-    </main>
+      {post.data.image && (
+        <img src={post.data.image} alt={post.data.title} class="max-w-full h-auto block mx-auto my-4" />
+      )}
+      
+      <div class="services-grid"> 
+        <Content /> <!-- Renderiza el contenido en formato Markdown -->
+      </div>
+    </section>
   </div>
+</main>
 </Layout>

@@ -23,65 +23,69 @@ const { href, title, source, description } = Astro.props;
 </a>
 
 <style>
-.article-card {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background-color: #dadadd;
-  border-radius: 10px;
-  padding: 16px;
-  margin-bottom: 16px;
-  text-decoration: none;
-  color: #ffffff;
-  position: relative;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-.article-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
-}
-
-.article-content {
-  display: flex;
-  flex-direction: column;
-}
-
-.article-content small {
-  font-size: 0.75rem;
-  color: #a1a1a1;
-  margin-bottom: 8px;
-}
-
-.article-content h3 {
-  margin: 0;
-  font-size: 1.2rem;
-  color: #ffffff;
-}
-
-.article-content p {
-  margin-top: 8px;
-  color: #c0c0c0;
-}
-
-.external-link {
-  position: absolute;
-  top: 12px;
-  right: 12px;
-  transition: transform 0.3s ease;
-}
-
-.arrow-icon {
-  stroke: #a1a1a1;
-  width: 24px;  /* Tamaño de la flecha */
-  height: 24px; /* Tamaño de la flecha */
-  transform: rotate(-90deg); /* Gira la flecha 90 grados */
-  transition: transform 0.3s ease, stroke 0.3s ease;
-}
-
-.article-card:hover .arrow-icon {
-  transform: rotate(-45deg); /* Gira la flecha 90 grados */
-  stroke: #1ca1f2; /* Cambia el color de la flecha al pasar el ratón */
-}
-</style>
+  .h3 {
+    color: #374364;
+  }
+  
+  .article-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #ECECEC;
+    border-radius: 10px;
+    padding: 16px;
+    margin-bottom: 16px;
+    text-decoration: none;
+    color: #ffffff;
+    position: relative;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .article-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+  }
+  
+  .article-content {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .article-content small {
+    font-size: 0.75rem;
+    color: #a1a1a1;
+    margin-bottom: 8px;
+  }
+  
+  .article-content h3 {
+    margin: 0;
+    font-size: 1.2rem;
+    color: #374364; 
+  }
+  
+  .article-content p {
+    margin-top: 8px;
+    color: #374364; 
+  }
+  
+  .external-link {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    transition: transform 0.3s ease;
+  }
+  
+  .arrow-icon {
+    stroke: #a1a1a1;
+    width: 24px;  /* Tamaño de la flecha */
+    height: 24px; /* Tamaño de la flecha */
+    transform: rotate(-90deg); /* Gira la flecha 90 grados */
+    transition: transform 0.3s ease, stroke 0.3s ease;
+  }
+  
+  .article-card:hover .arrow-icon {
+    transform: rotate(-45deg); /* Gira la flecha 90 grados */
+    stroke: #E63946; /* Cambia el color de la flecha al pasar el ratón */
+  }
+  </style>

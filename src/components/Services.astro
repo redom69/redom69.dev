@@ -1,0 +1,64 @@
+---
+import LinkButton from "./LinkButton.astro";
+
+const services = [
+  {
+    title: "Desarrollo de API",
+    description: "Construyo APIs robustas y escalables para integrar sistemas y facilitar la comunicación entre aplicaciones.",
+    image: '/desarrollo-web-a-medida.png'
+  },
+  {
+    title: "Desarrollo Web",
+    description: "Desarrollo sitios web dinámicos y responsivos que ofrecen una experiencia de usuario excepcional.",
+    image: '/desarrollo-web-a-medida.png'
+  },
+  {
+    title: "Desarrollo Frontend",
+    description: "Implemento interfaces intuitivas y atractivas, utilizando las últimas tecnologías y mejores prácticas.",
+    image: '/desarrollo-web-a-medida.png'
+  },
+  {
+    title: "Gestión de Proyectos",
+    description: "Coordino y gestiono proyectos para asegurar que se entreguen a tiempo y cumplan con los requisitos del cliente.",
+    image: '/desarrollo-web-a-medida.png'
+  },
+  {
+    title: "Implementación de Bases de Datos",
+    description: "Diseño e implemento bases de datos eficientes y escalables para almacenar y gestionar datos críticos de tu negocio.",
+    image: '/desarrollo-web-a-medida.png'
+  },
+];
+---
+
+<div class="flex flex-col gap-y-16">
+  {
+    services.slice(0, 3).map(({ image, title, description }) => (
+    <article class="flex flex-col space-x-0 space-y-8 group md:flex-row md:space-x-8 md:space-y-0">
+  <div class="w-full md:w-1/2">
+    <div class="relative flex flex-col items-center col-span-6 row-span-5 gap-8 transition duration-500 ease-in-out transform shadow-xl overflow-clip rounded-xl sm:rounded-xl md:group-hover:-translate-y-1 md:group-hover:shadow-2xl lg:border lg:border-gray-800 lg:hover:border-gray-700 lg:hover:bg-gray-800/50">
+      <img alt="Recién llegado vs 5 años en Nueva Zelanda" class="object-cover object-top w-full h-56 transition duration-500 sm:h-full md:scale-110 md:group-hover:scale-105" loading="lazy" src={image} />
+    </div>
+  </div>
+
+  <div class="w-full md:w-1/2 md:max-w-lg">
+    <h3 class="text-2xl font-bold text-gray-800 dark:text-gray-100">
+      {title}
+    </h3>
+    <div class="flex flex-wrap mt-2">
+
+
+      <div class="mt-2 text-gray-700 dark:text-gray-400">{description}</div>
+
+    </div>
+  </div>
+
+</article>
+    ))
+  }
+</div>
+<div class="flex justify-center mt-8">
+    <LinkButton href="/services">Ver más</LinkButton> 
+</div>
+
+
+

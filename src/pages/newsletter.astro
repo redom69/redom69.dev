@@ -9,53 +9,68 @@ const posts = await getCollection('posts');
 
 // Ordenar los posts por fecha de manera descendente
 const sortedPosts = posts.sort((a, b) => new Date(b.data.date) - new Date(a.data.date));
+
+// Paginación
+const postsPerPage = 10; // Número de posts por página
+const totalPages = Math.ceil(sortedPosts.length / postsPerPage); // Total de páginas
+
+// Obtener el número de página de los parámetros de consulta
+const currentPage = parseInt(new URL(Astro.request.url).searchParams.get('page')) || 1;
+
+// Obtener los posts de la página actual
+const currentPosts = sortedPosts.slice((currentPage - 1) * postsPerPage, currentPage * postsPerPage);
 ---
 
 <Layout   
   title="Newsletter"
-  description='Ultimas noticias de este mundo tecnologico'
+  description='Últimas noticias de este mundo tecnológico'
 >
-
 <main class="px-4">
-
-
   <div class="space-y-24">
-  <section class="newsletter-section py-8 px-4">
-    <h1 class="newsletter-title text-4xl font-bold mb-4">Join the Newsletter</h1>
-    <p class="newsletter-description text-lg mb-4">
-      Stay updated with my latest tutorials, projects, and coding insights. Subscribe to the newsletter and get exclusive content directly in your inbox!
-    </p>
-    
-    <form id="newsletter-form" class="newsletter-form flex flex-col gap-4 mb-8">
-      <input type="text" id="name" name="name" placeholder="Enter your name" required class="input-field p-2 border rounded">
-      <input type="email" id="email" name="email" placeholder="Enter your email" required class="input-field p-2 border rounded">
-      <button type="submit" class="submit-btn bg-blue-500 text-white px-4 py-2 rounded">
-        Subscribe
-      </button>
-    </form>
-    
-    <div id="newsletter-notification" class="notification"></div>
+    <section class="newsletter-section py-8 px-4">
+      <h1 class="newsletter-title text-4xl font-bold mb-4">Join the Newsletter</h1>
+      <p class="newsletter-description text-lg mb-4">
+        Stay updated with my latest tutorials, projects, and coding insights. Subscribe to the newsletter and get exclusive content directly in your inbox!
+      </p>
+      
+      <form id="newsletter-form" class="newsletter-form flex flex-col gap-4 mb-8">
+        <input type="text" id="name" name="name" placeholder="Enter your name" required class="input-field p-2 border rounded">
+        <input type="email" id="email" name="email" placeholder="Enter your email" required class="input-field p-2 border rounded">
+        <button type="submit" class="submit-btn bg-blue-500 text-white px-4 py-2 rounded">
+          Subscribe
+        </button>
+      </form>
+      
+      <div id="newsletter-notification" class="notification"></div>
 
-    <!-- Listado de posts -->
-    <h2 class="text-3xl font-bold mb-4">Latest Posts</h2>
-    <div class="article-card-grid">
-      {sortedPosts && sortedPosts.length > 0 ? (
-        sortedPosts.map(post => (
-          <ArticleCards
-            href={`/newsletter/${post.slug}`}
-            title={post.data.title}
-            source={post.data.source || "newsletter.com"}  {/* Añadir una fuente predeterminada si no existe */}
-            description={post.data.description}
-          />
-        ))
-      ) : (
-        <p>No posts available.</p>  // Mensaje en caso de que no haya publicaciones.
-      )}
-    </div>
-  </section>
+      <h2 class="text-3xl font-bold mb-4">Latest Posts</h2>
+      <div class="article-card-grid">
+        {currentPosts && currentPosts.length > 0 ? (
+          currentPosts.map(post => (
+            <ArticleCards
+              href={`/newsletter/${post.slug}`}
+              title={post.data.title}
+              source={post.data.source || "newsletter.com"}
+              description={post.data.description}
+            />
+          ))
+        ) : (
+          <p>No posts available.</p>
+        )}
+      </div>
+
+      <div class="pagination">
+        {currentPage > 1 && (
+          <a href={`?page=${currentPage - 1}`} class="pagination-btn">Previous</a>
+        )}
+        <span>Page {currentPage} of {totalPages}</span>
+        {currentPage < totalPages && (
+          <a href={`?page=${currentPage + 1}`} class="pagination-btn">Next</a>
+        )}
+      </div>
+    </section>
   </div>
-  </main>
-
+</main>
 </Layout>
 
 <style>
@@ -64,6 +79,7 @@ const sortedPosts = posts.sort((a, b) => new Date(b.data.date) - new Date(a.data
   flex-direction: column;
   gap: 16px; /* Espacio entre las tarjetas */
 }
+
 .newsletter-section {
   padding: 2rem;
   padding-top: 100px;
@@ -73,11 +89,10 @@ const sortedPosts = posts.sort((a, b) => new Date(b.data.date) - new Date(a.data
   transition: background-color 0.3s ease;
 }
 
-
 /* Título de la newsletter */
 .newsletter-title {
   text-align: center;
-  color: var(--brand-blue);
+  color: var(--text-color-light);
   margin-bottom: 2rem;
 }
 
@@ -141,11 +156,27 @@ html.dark .submit-btn:hover {
   background-color: rgba(var(--accent-light), 0.9);
 }
 
-/* Listado de posts en formato grid */
-.link-card-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 1.5rem;
+/* Estilos de paginación */
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 16px;
+}
+
+.pagination-btn {
+  margin: 0 8px;
+  padding: 8px 12px;
+  background-color: #374364; /* Color del botón */
+  color: white;
+  border: none;
+  border-radius: 5px;
+  text-decoration: none; /* Quitar subrayado */
+  cursor: pointer;
+}
+
+.pagination-btn:hover {
+  background-color: #2a2f3e; /* Color al pasar el ratón */
 }
 
 /* Responsividad */
@@ -208,5 +239,4 @@ function showNotification(message, type) {
     notification.style.display = 'none';
   }, 5000);
 }
-
 </script>

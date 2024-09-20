@@ -1,38 +1,65 @@
 ---
 // Importar el layout y componentes
 import Layout from '../layouts/Layout.astro';
-import { getCollection } from 'astro:content';
 
-// Obtener las publicaciones
-const posts = await getCollection('posts');
-
-// Ordenar los posts por fecha de manera descendente
-const sortedPosts = posts.sort((a, b) => new Date(b.data.date) - new Date(a.data.date));
+// Definir los servicios en un array
+const services = [
+  {
+    title: "Desarrollo de API",
+    description: "Construyo APIs robustas y escalables para integrar sistemas y facilitar la comunicación entre aplicaciones.",
+    image: '/desarrollo-web-a-medida.png'
+  },
+  {
+    title: "Desarrollo Web",
+    description: "Desarrollo sitios web dinámicos y responsivos que ofrecen una experiencia de usuario excepcional.",
+    image: '/desarrollo-web-a-medida.png'
+  },
+  {
+    title: "Desarrollo Frontend",
+    description: "Implemento interfaces intuitivas y atractivas, utilizando las últimas tecnologías y mejores prácticas.",
+    image: '/desarrollo-web-a-medida.png'
+  },
+  {
+    title: "Gestión de Proyectos",
+    description: "Coordino y gestiono proyectos para asegurar que se entreguen a tiempo y cumplan con los requisitos del cliente.",
+    image: '/desarrollo-web-a-medida.png'
+  },
+  {
+    title: "Implementación de Bases de Datos",
+    description: "Diseño e implemento bases de datos eficientes y escalables para almacenar y gestionar datos críticos de tu negocio.",
+    image: '/desarrollo-web-a-medida.png'
+  },
+];
 ---
 
 <Layout   
   title="Servicios"
-  description='Todo lo que te puedo ofrecer como desarrollaodr full-stack.'
+  description='Todo lo que te puedo ofrecer como desarrollador full-stack.'
 >
-
 <main class="px-4">
-
-
   <div class="space-y-24"></div>
   <section class="services-section py-8 px-4">
-    <h1 class="services-title text-4xl font-bold mb-4">Join the Services</h1>
+    <h1 class="services-title text-4xl font-bold mb-4">Nuestros Servicios</h1>
     <p class="services-description text-lg mb-4">
-      Stay updated with my latest tutorials, projects, and coding insights. Subscribe to the services and get exclusive content directly in your inbox!
+      Aquí están los servicios que ofrezco como desarrollador full-stack.
     </p>
-    
+
+    <div class="services-grid">
+      {services.map(service => (
+        <div class="service-box" key={service.title}>
+          <img src={service.image} alt={service.title} class="service-image mb-2"/>
+          <h3>{service.title}</h3>
+          <p>{service.description}</p>
+        </div>
+      ))}
+    </div>
   </section>
 </div>
 </main>
-
 </Layout>
 
 <style>
-/* Estilos generales para la sección de services */
+/* Estilos generales para la sección de servicios */
 .services-section {
   padding: 2rem;
   padding-top: 100px;
@@ -42,16 +69,14 @@ const sortedPosts = posts.sort((a, b) => new Date(b.data.date) - new Date(a.data
   transition: background-color 0.3s ease;
 }
 
-
-
-/* Título de la services */
+/* Título de los servicios */
 .services-title {
   text-align: center;
-  color: var(--brand-blue);
+  color: var(--text-color-light);
   margin-bottom: 2rem;
 }
 
-/* Descripción de la services */
+/* Descripción de los servicios */
 .services-description {
   text-align: center;
   margin-bottom: 2rem;
@@ -62,60 +87,44 @@ html.dark .services-description {
   color: var(--text-color-light);
 }
 
-/* Estilos del formulario */
-.services-form {
-  max-width: 500px;
-  margin: 0 auto 2rem;
-}
-
-.input-field {
-  padding: 0.75rem;
-  border: 1px solid rgba(var(--accent-dark), 0.4);
-  border-radius: 8px;
-  font-size: 1rem;
-  background-color: rgba(var(--accent-light), 0.15);
-  color: var(--text-color-dark);
-}
-
-html.dark .input-field {
-  background-color: rgba(var(--accent-dark), 0.2);
-  color: var(--text-color-light);
-}
-
-.input-field:focus {
-  border-color: var(--accent);
-  outline: none;
-  box-shadow: 0 0 0 2px rgba(var(--accent), 0.5);
-}
-
-.submit-btn {
-  background-color: var(--brand-blue);
-  color: white;
-  font-size: 1.1rem;
-  padding: 0.75rem;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: background-color 0.3s ease, transform 0.2s ease;
-}
-
-.submit-btn:hover {
-  background-color: rgba(var(--brand-blue), 0.8);
-  transform: translateY(-3px);
-}
-
-html.dark .submit-btn {
-  background-color: var(--accent);
-}
-
-html.dark .submit-btn:hover {
-  background-color: rgba(var(--accent-light), 0.9);
-}
-
-/* Listado de posts en formato grid */
-.link-card-grid {
+/* Estilos de la cuadrícula de servicios */
+.services-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 1.5rem;
+  gap: 16px; /* Espacio entre los boxes */
+}
+
+/* Estilos para cada box de servicio */
+.service-box {
+  background-color: #f9f9f9; /* Color de fondo */
+  border: 1px solid #e0e0e0; /* Borde */
+  border-radius: 8px; /* Esquinas redondeadas */
+  padding: 16px; /* Espaciado interno */
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.service-box:hover {
+  transform: translateY(-5px); /* Efecto hover */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Imagen dentro del box de servicio */
+.service-image {
+  display: block;
+  margin: 0 auto;
+  max-width: 100%; /* Asegura que la imagen no desborde */
+  height: auto; /* Mantiene la proporción */
+}
+
+/* Estilos de los títulos y descripciones dentro de los boxes */
+.service-box h3 {
+  font-size: 1.5rem;
+  color: #374364; /* Color del título */
+  margin-bottom: 0.5rem;
+}
+
+.service-box p {
+  color: #555; /* Color de la descripción */
 }
 
 /* Responsividad */
@@ -128,55 +137,8 @@ html.dark .submit-btn:hover {
     font-size: 1rem;
   }
 
-  .input-field {
-    font-size: 0.9rem;
-  }
-
-  .submit-btn {
-    font-size: 1rem;
+  .service-box h3 {
+    font-size: 1.25rem;
   }
 }
 </style>
-
-<script>
-document.getElementById('services-form').addEventListener('submit', async function (e) {
-  e.preventDefault();
-
-  const name = document.getElementById('name').value;
-  const email = document.getElementById('email').value;
-
-  try {
-    const response = await fetch('/api/subscribe', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ name, email }),  // Enviar nombre y email
-    });
-
-    if (response.ok) {
-      showNotification('Te has suscrito correctamente a la services', 'success');
-    } else if (response.status === 409) {
-      showNotification('Este correo ya está suscrito a la services.', 'error');
-    } else if (response.status >= 500) {
-      showNotification('Hubo un error en el servidor. Intenta nuevamente más tarde.', 'error');
-    } else {
-      showNotification('Hubo un error al suscribirte. Intenta nuevamente', 'error');
-    }
-  } catch (error) {
-    console.error('Error de red:', error);
-    showNotification('No se pudo conectar con el servidor. Revisa tu conexión a Internet.', 'error');
-  }
-});
-
-function showNotification(message, type) {
-  const notification = document.getElementById('services-notification');
-  notification.textContent = message;
-  notification.className = `notification ${type}`;
-  notification.style.display = 'block';
-  setTimeout(() => {
-    notification.style.display = 'none';
-  }, 5000);
-}
-
-</script>

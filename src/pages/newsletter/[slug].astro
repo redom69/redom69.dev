@@ -1,44 +1,93 @@
 ---
-import { getEntryBySlug } from 'astro:content';
+import { getCollection, getEntryBySlug } from 'astro:content';
 import Layout from '../../layouts/Layout.astro';
 
-// Obtener el slug desde la URL
-const { slug } = Astro.params;
+export async function getStaticPaths() {
+  const posts = await getCollection('posts');
+  return posts.map((post) => ({
+    params: { slug: post.slug },
+  }));
+}
 
-// Obtener el post usando el slug
+const { slug } = Astro.params;
 const post = await getEntryBySlug('posts', slug);
 
-// Asegurarse de que el post existe y renderizar su contenido
 if (!post) {
   throw new Error(`Post con slug "${slug}" no encontrado`);
 }
 
-const { Content } = await post.render();  
+const { Content } = await post.render();
+export const prerender = true;
+const words = post.body.split(' ').length;
+const readingTime = Math.ceil(words / 200);
 ---
 
-<Layout 
-  title={post.data.title}
-  description={post.data.description}
->
-<main class="px-4 py-10">
-  <div class="flex justify-center">
-    <section class="services-section py-8 px-4 max-w-2xl w-full"> <!-- Centra el contenido -->
-      <h1 class="services-title text-4xl font-bold mb-4 text-center">{post.data.title}</h1>
-      <p class="services-description text-lg mb-4 text-center">
-        {post.data.description}
-      </p>
-      <p class="services-description text-lg mb-4 text-center">
-        Publicado el: {new Date(post.data.date).toLocaleDateString()}
-      </p>
+<script client:load>
+  let likes = 0;
+  const slug = '{{ post.slug }}'; // Usar el slug dinámico del post
 
-      {post.data.image && (
-        <img src={post.data.image} alt={post.data.title} class="max-w-full h-auto block mx-auto my-4" />
-      )}
-      
-      <div class="services-grid"> 
-        <Content /> <!-- Renderiza el contenido en formato Markdown -->
-      </div>
-    </section>
-  </div>
-</main>
+  async function getLikes() {
+    const response = await fetch(`/api/likes/${slug}`);
+    const data = await response.json();
+    likes = data.likes;
+    document.getElementById('likes-count').textContent = `${likes} Likes`;
+
+    const hasLiked = localStorage.getItem(`hasLiked-${slug}`);
+    const heartIcon = document.getElementById('heart-icon');
+    if (hasLiked) {
+      heartIcon.classList.add('fas', 'liked');
+      heartIcon.classList.remove('far');
+    }
+  }
+
+  async function incrementLikes() {
+    const hasLiked = localStorage.getItem(`hasLiked-${slug}`);
+    if (hasLiked) {
+      await fetch(`/api/likes/${slug}`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ action: 'decrement' })
+      });
+      localStorage.removeItem(`hasLiked-${slug}`);
+    } else {
+      await fetch(`/api/likes/${slug}`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ action: 'increment' })
+      });
+      localStorage.setItem(`hasLiked-${slug}`, true);
+    }
+    getLikes();
+  }
+
+  document.addEventListener('DOMContentLoaded', getLikes);
+</script>
+
+
+
+<Layout title={post.data.title} description={post.data.description}>
+  <main class="px-4 py-10">
+    <div class="flex justify-center">
+      <section class="services-section py-8 px-4 max-w-2xl w-full">
+        <h1 class="services-title text-4xl font-bold mb-4 text-center">{post.data.title}</h1>
+        <p class="services-description text-lg mb-4 text-center">{post.data.description}</p>
+        <p class="services-description text-lg mb-4 text-center">
+          {readingTime} min · {new Date(post.data.date).toLocaleDateString()}
+        </p>
+
+        <!-- Botón de likes con icono de corazón -->
+        <button class="like-button" onclick="incrementLikes()">
+          <i class="far fa-heart" id="heart-icon"></i> <span id="likes-count">0 Likes</span>
+        </button>
+
+        {post.data.image && (
+          <img src={post.data.image} alt={post.data.title} class="max-w-full h-auto block mx-auto my-4" />
+        )}
+
+        <div class="article-content">
+          <Content />
+        </div>
+      </section>
+    </div>
+  </main>
 </Layout>

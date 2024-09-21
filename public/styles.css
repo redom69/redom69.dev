@@ -1,0 +1,140 @@
+/* src/styles/content.css */
+
+.article-content h1,
+.article-content h2,
+.article-content h3,
+.article-content h4,
+.article-content h5,
+.article-content h6 {
+  font-weight: 700; /* font-bold */
+  margin-bottom: 1rem; /* mb-4 */
+}
+
+.article-content h1 {
+  font-size: 2.25rem; /* text-4xl */
+}
+
+.article-content h2 {
+  font-size: 1.875rem; /* text-3xl */
+}
+
+.article-content h3 {
+  font-size: 1.5rem; /* text-2xl */
+}
+
+.article-content h4 {
+  font-size: 1.25rem; /* text-xl */
+}
+
+.article-content h5 {
+  font-size: 1.125rem; /* text-lg */
+}
+
+.article-content h6 {
+  font-size: 1rem; /* text-base */
+}
+
+.article-content p {
+  font-size: 1.125rem; /* text-lg */
+  margin-bottom: 1rem; /* mb-4 */
+}
+
+.article-content ul {
+  list-style-type: disc; /* Usar puntos */
+  padding-left: 2rem; /* Aumentar el espacio desde la izquierda */
+  margin-bottom: 1rem;
+}
+
+.article-content ol {
+  list-style-type: decimal; /* Mostrar números */
+  padding-left: 2rem; /* Aumentar el espacio desde la izquierda */
+  margin-bottom: 1rem;
+}
+
+.article-content li {
+  font-size: 1.125rem; /* Tamaño del texto */
+  margin-bottom: 0.5rem; /* Espacio entre elementos */
+  padding-left: 1.5rem; /* Tabulación del texto */
+}
+
+.article-content table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 1rem;
+}
+
+.article-content th,
+.article-content td {
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  text-align: left;
+}
+
+.article-content pre {
+  background: #2d2d2d; /* Fondo oscuro */
+  padding: 1rem;
+  border-radius: 8px;
+  overflow-x: auto; /* Permitir scroll horizontal */
+  font-size: 0.875rem; /* Tamaño de fuente */
+}
+
+.article-content code {
+  color: #f8f8f2; /* Color del texto */
+}
+
+.copy-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: #1a1a1a;
+  color: #fff;
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 0.875rem;
+}
+
+.code-container {
+  position: relative;
+  margin-bottom: 1.5rem;
+}
+
+.like-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.5rem;
+  display: flex;
+  align-items: center;
+}
+
+.like-button i {
+  transition:
+    color 0.3s ease,
+    background-color 0.3s ease,
+    box-shadow 0.3s ease;
+  padding: 10px;
+  border-radius: 50%;
+}
+
+.like-button:hover i {
+  color: #e63946;
+  background-color: rgba(230, 57, 70, 0.1); /* Fondo con transparencia */
+  box-shadow: 0 0 10px rgba(230, 57, 70, 0.3); /* Sombra alrededor */
+}
+
+.liked i::before {
+  color: #e63946 !important; /* Mantener el color de relleno */
+}
+
+.liked i {
+  color: #e63946 !important; /* Forzar color rojo cuando esté "liked" */
+  background-color: rgba(230, 57, 70, 0.1); /* Fondo siempre rojo */
+  box-shadow: 0 0 10px rgba(230, 57, 70, 0.3);
+}
+
+#heart-icon {
+  transition:
+    color 0.3s ease,
+    background-color 0.3s ease;
+}

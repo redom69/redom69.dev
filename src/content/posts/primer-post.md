@@ -1,18 +1,43 @@
 ---
-title: 'Novedades de Diciembre'
-description: 'Actualizaciones importantes del siguiente mes'
+title: "Guía Completa de Desarrollo Web"
+description: "Una guía detallada que cubre los fundamentos y técnicas avanzadas de desarrollo web."
 date: 2024-09-21
-image: '/walpaper.jpg'
+image: "/images/web-development.jpg"
 ---
 
-# Novedades de Septiembre
+# Guía Completa de Desarrollo Web
 
-Este mes hemos estado trabajando duro en varios proyectos emocionantes. Aquí tienes un resumen de lo que hemos logrado:
+El desarrollo web es un campo vasto y en constante evolución. En esta guía, exploraremos desde los conceptos básicos hasta técnicas más avanzadas.
 
-- Implementación de un nuevo sistema de gestión de usuarios.
-- Mejora en el rendimiento del sitio web.
-- Publicación de dos nuevos tutoriales.
+## Introducción al Desarrollo Web
 
-![Novedades de Septiembre](/walpaper.jpg)
+El desarrollo web incluye dos partes principales:
 
-¡Gracias por seguir el progreso!
+1. **Frontend**: Lo que los usuarios ven e interactúan.
+2. **Backend**: Todo lo que sucede detrás de escena para que la web funcione.
+
+## Tecnologías Frontend
+
+Estas son las tecnologías más comunes en el desarrollo frontend:
+
+- **HTML**: Lenguaje de marcado para la estructura de la web.
+- **CSS**: Estilos que definen la apariencia.
+- **JavaScript**: Hace que las páginas sean interactivas.
+
+### Estructura HTML Básica
+
+El HTML define la estructura de las páginas web. Un documento básico se ve así:
+
+```html
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi Sitio Web</title>
+</head>
+<body>
+    <h1>Bienvenido a Mi Sitio Web</h1>
+    <p>Este es un párrafo introductorio sobre mi sitio.</p>
+</body>
+</html>

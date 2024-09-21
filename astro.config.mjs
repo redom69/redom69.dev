@@ -211,6 +211,41 @@ export default defineConfig({
             }
           });
 
+          app.get('/api/likes/:slug', (req, res) => {
+            const { slug } = req.params;
+            const data = fs.readFileSync('likes.json');
+            const likesData = JSON.parse(data);
+
+            if (!likesData.posts[slug]) {
+              likesData.posts[slug] = { likes: 0 };
+              fs.writeFileSync('likes.json', JSON.stringify(likesData));
+            }
+
+            res.json({ likes: likesData.posts[slug].likes });
+          });
+
+          // Ruta para actualizar los likes de un post específico
+          app.post('/api/likes/:slug', (req, res) => {
+            const { slug } = req.params;
+            const { action } = req.body;
+
+            const data = fs.readFileSync('likes.json');
+            const likesData = JSON.parse(data);
+
+            if (!likesData.posts[slug]) {
+              likesData.posts[slug] = { likes: 0 };
+            }
+
+            if (action === 'increment') {
+              likesData.posts[slug].likes++;
+            } else if (action === 'decrement') {
+              likesData.posts[slug].likes--;
+            }
+
+            fs.writeFileSync('likes.json', JSON.stringify(likesData));
+            res.json({ likes: likesData.posts[slug].likes });
+          });
+
           server.middlewares.use(app);
         },
       },

@@ -20,7 +20,9 @@ const { description, title } = Astro.props
     <link href="https://unpkg.com/atropos/css" rel="stylesheet">
     <title>{title}</title>
     <meta name="generator" content={Astro.generator} />
-
+    <link rel="stylesheet" href="/styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/themes/prism-okaidia.min.css" rel="stylesheet" />
+    
     <ViewTransitions />
   </head>
   <body class="relative text-black dark:text-white">

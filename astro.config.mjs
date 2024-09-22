@@ -5,8 +5,14 @@ import sgMail from '@sendgrid/mail';
 import dotenv from 'dotenv';
 import tailwind from '@astrojs/tailwind';
 import robotsTxt from 'astro-robots-txt';
+import sgClient from '@sendgrid/client'; // Reemplaza require con import
 
-dotenv.config();
+dotenv.config(); // Configurar variables de entorno
+
+// Configurar SendGrid con la API Key
+const sendgridApiKey = process.env.SENDGRID_API_KEY;
+sgMail.setApiKey(sendgridApiKey);
+sgClient.setApiKey(sendgridApiKey);
 
 export default defineConfig({
   output: 'server',
@@ -24,24 +30,17 @@ export default defineConfig({
           const app = express();
           app.use(express.json());
 
-          // Configurar SendGrid con tu API Key
-          sgMail.setApiKey(process.env.SENDGRID_API_KEY);
-
-          // Ruta API para enviar el correo de contacto
+          // Ruta para enviar el correo de contacto
           app.post('/api/contact', async (req, res) => {
             const { name, email, message, subject } = req.body;
 
             const msg = {
-              to: process.env.GMAIL_USER, // Destinatario
-              from: process.env.VERIFIED_USER, // Remitente
-              replyTo: email, // Correo del usuario
-              subject: `${subject}`, // Asunto dinámico
-              templateId: process.env.contactoTemplate, // El ID de la plantilla
-              dynamic_template_data: {
-                name: name,
-                email: email,
-                message: message,
-              },
+              to: process.env.GMAIL_USER,
+              from: process.env.VERIFIED_USER,
+              replyTo: email,
+              subject: `${subject}`,
+              templateId: process.env.contactoTemplate,
+              dynamic_template_data: { name, email, message },
             };
 
             try {
@@ -59,11 +58,10 @@ export default defineConfig({
             }
           });
 
-          // Nueva ruta API para suscripción a la newsletter
+          // Ruta para suscribirse a la newsletter
           app.post('/api/subscribe', async (req, res) => {
             const { email, name } = req.body;
 
-            // Verificar que el correo y el nombre están presentes
             if (!email || !name) {
               return res.status(400).json({
                 status: 'error',
@@ -72,39 +70,25 @@ export default defineConfig({
             }
 
             try {
-              // 1. Buscar el contacto en SendGrid para ver si ya está suscrito
-              const searchResponse = await fetch(
-                'https://api.sendgrid.com/v3/marketing/contacts/search',
-                {
-                  method: 'POST',
-                  headers: {
-                    Authorization: `Bearer ${process.env.SENDGRID_API_KEY}`,
-                    'Content-Type': 'application/json',
-                  },
-                  body: JSON.stringify({
-                    query: `email LIKE '${email}'`, // Buscar por correo electrónico
-                  }),
-                }
-              );
-
-              const searchData = await searchResponse.json();
+              // 1. Verificar si el contacto ya está en la lista
+              const requestSearch = {
+                url: '/v3/marketing/contacts/search',
+                method: 'POST',
+                body: { query: `email LIKE '${email}'` },
+              };
+              const [searchResponse, searchData] =
+                await sgClient.request(requestSearch);
 
               if (searchData.result && searchData.result.length > 0) {
-                // Si el correo ya está en la lista de contactos, devolver un mensaje
                 return res.status(409).json({
                   status: 'error',
                   message: 'Este correo ya está suscrito a la newsletter.',
                 });
               }
 
-              // 2. Si el contacto no existe, agregarlo a la lista de contactos de SendGrid con nombre
-              const data = {
-                contacts: [
-                  {
-                    email: email,
-                    first_name: name, // Agregar el nombre al contacto
-                  },
-                ],
+              // 2. Agregar el contacto si no existe
+              const addData = {
+                contacts: [{ email, first_name: name }],
               };
 
               const addResponse = await fetch(
@@ -112,66 +96,56 @@ export default defineConfig({
                 {
                   method: 'PUT',
                   headers: {
-                    Authorization: `Bearer ${process.env.SENDGRID_API_KEY}`,
+                    Authorization: `Bearer ${sendgridApiKey}`,
                     'Content-Type': 'application/json',
                   },
-                  body: JSON.stringify(data),
+                  body: JSON.stringify(addData),
                 }
               );
 
-              if (addResponse.ok) {
-                // 3. Enviar correo de bienvenida
-                const msg = {
-                  to: email,
-                  from: process.env.VERIFIED_USER, // Asegúrate de que sea un correo verificado en SendGrid
-                  templateId: process.env.welcomeTemplateId, // Template ID de SendGrid para el correo de bienvenida
-                  dynamic_template_data: {
-                    email: email,
-                    name: name, // Pasar también el nombre al correo
-                  },
-                };
-
-                await sgMail.send(msg);
-
-                // Responder que se ha suscrito correctamente
-                return res.json({
-                  status: 'success',
-                  message:
-                    'Te has suscrito correctamente a la newsletter y se ha enviado un correo de bienvenida.',
-                });
-              } else {
+              if (!addResponse.ok) {
                 const errorResponse = await addResponse.json();
-                console.error(
-                  'Error de SendGrid al agregar el contacto:',
-                  errorResponse
-                );
+                console.error('Error al agregar el contacto:', errorResponse);
                 return res.status(500).json({
                   status: 'error',
                   message: 'Error al suscribirse a la newsletter',
                 });
               }
+
+              // 3. Enviar correo de bienvenida
+              const msg = {
+                to: email,
+                from: process.env.VERIFIED_USER,
+                templateId: process.env.welcomeTemplateId,
+                dynamic_template_data: { email, name },
+              };
+              await sgMail.send(msg);
+
+              res.json({
+                status: 'success',
+                message: 'Suscripción y correo de bienvenida enviados.',
+              });
             } catch (error) {
-              console.error('Error al suscribir el correo:', error);
-              return res.status(500).json({
+              console.error('Error en suscripción:', error);
+              res.status(500).json({
                 status: 'error',
-                message: 'Error al suscribir el correo',
+                message: 'Error al suscribirse a la newsletter',
               });
             }
           });
 
-          // Api para mandar correo con nuevo post
+          // Ruta para notificar sobre un nuevo post
           app.post('/api/notify-new-post', async (req, res) => {
             const { post1_title, post1_link, post2_title, post2_link } =
               req.body;
 
             try {
-              // Obtener todos los contactos desde SendGrid
               const contactsResponse = await fetch(
                 'https://api.sendgrid.com/v3/marketing/contacts',
                 {
                   method: 'GET',
                   headers: {
-                    Authorization: `Bearer ${process.env.SENDGRID_API_KEY}`,
+                    Authorization: `Bearer ${sendgridApiKey}`,
                     'Content-Type': 'application/json',
                   },
                 }
@@ -182,16 +156,15 @@ export default defineConfig({
                 (contact) => contact.email
               );
 
-              // Enviar el correo a todos los contactos
               const msg = {
-                to: emails, // Lista de correos electrónicos
+                to: emails,
                 from: process.env.VERIFIED_USER,
-                templateId: process.env.newPostsTemplateId, // Plantilla de correo
+                templateId: process.env.newPostsTemplateId,
                 dynamic_template_data: {
-                  post1_title: post1_title,
-                  post1_link: post1_link,
-                  post2_title: post2_title,
-                  post2_link: post2_link,
+                  post1_title,
+                  post1_link,
+                  post2_title,
+                  post2_link,
                 },
               };
 
@@ -200,7 +173,7 @@ export default defineConfig({
               res.json({
                 status: 'success',
                 message:
-                  'Correos enviados correctamente a todos los suscriptores',
+                  'Correos enviados correctamente a todos los suscriptores.',
               });
             } catch (error) {
               console.error('Error al enviar correos:', error);
@@ -211,39 +184,19 @@ export default defineConfig({
             }
           });
 
-          app.get('/api/likes/:slug', (req, res) => {
-            const { slug } = req.params;
-            const data = fs.readFileSync('likes.json');
-            const likesData = JSON.parse(data);
+          // Ruta para desuscribirse
+          app.post('/api/unsubscribe', async (req, res) => {
+            const { email } = req.body;
 
-            if (!likesData.posts[slug]) {
-              likesData.posts[slug] = { likes: 0 };
-              fs.writeFileSync('likes.json', JSON.stringify(likesData));
+            if (!email) {
+              return res.status(400).json({
+                status: 'error',
+                message: 'El correo electrónico es requerido.',
+              });
             }
+            console.log(email);
 
-            res.json({ likes: likesData.posts[slug].likes });
-          });
-
-          // Ruta para actualizar los likes de un post específico
-          app.post('/api/likes/:slug', (req, res) => {
-            const { slug } = req.params;
-            const { action } = req.body;
-
-            const data = fs.readFileSync('likes.json');
-            const likesData = JSON.parse(data);
-
-            if (!likesData.posts[slug]) {
-              likesData.posts[slug] = { likes: 0 };
-            }
-
-            if (action === 'increment') {
-              likesData.posts[slug].likes++;
-            } else if (action === 'decrement') {
-              likesData.posts[slug].likes--;
-            }
-
-            fs.writeFileSync('likes.json', JSON.stringify(likesData));
-            res.json({ likes: likesData.posts[slug].likes });
+            //TODO Falta mejorar esto y hacer que funcione
           });
 
           server.middlewares.use(app);

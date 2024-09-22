@@ -22,49 +22,6 @@ const words = post.body.split(' ').length;
 const readingTime = Math.ceil(words / 200);
 ---
 
-<script client:load>
-  let likes = 0;
-  const slug = '{{ post.slug }}'; // Usar el slug dinámico del post
-
-  async function getLikes() {
-    const response = await fetch(`/api/likes/${slug}`);
-    const data = await response.json();
-    likes = data.likes;
-    document.getElementById('likes-count').textContent = `${likes} Likes`;
-
-    const hasLiked = localStorage.getItem(`hasLiked-${slug}`);
-    const heartIcon = document.getElementById('heart-icon');
-    if (hasLiked) {
-      heartIcon.classList.add('fas', 'liked');
-      heartIcon.classList.remove('far');
-    }
-  }
-
-  async function incrementLikes() {
-    const hasLiked = localStorage.getItem(`hasLiked-${slug}`);
-    if (hasLiked) {
-      await fetch(`/api/likes/${slug}`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ action: 'decrement' })
-      });
-      localStorage.removeItem(`hasLiked-${slug}`);
-    } else {
-      await fetch(`/api/likes/${slug}`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ action: 'increment' })
-      });
-      localStorage.setItem(`hasLiked-${slug}`, true);
-    }
-    getLikes();
-  }
-
-  document.addEventListener('DOMContentLoaded', getLikes);
-</script>
-
-
-
 <Layout title={post.data.title} description={post.data.description}>
   <main class="px-4 py-10">
     <div class="flex justify-center">
@@ -75,10 +32,7 @@ const readingTime = Math.ceil(words / 200);
           {readingTime} min · {new Date(post.data.date).toLocaleDateString()}
         </p>
 
-        <!-- Botón de likes con icono de corazón -->
-        <button class="like-button" onclick="incrementLikes()">
-          <i class="far fa-heart" id="heart-icon"></i> <span id="likes-count">0 Likes</span>
-        </button>
+        
 
         {post.data.image && (
           <img src={post.data.image} alt={post.data.title} class="max-w-full h-auto block mx-auto my-4" />

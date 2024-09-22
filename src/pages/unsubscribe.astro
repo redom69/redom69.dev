@@ -1,0 +1,113 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<script client:load>
+  // Función que se activa cuando el usuario intenta desuscribirse
+  async function handleUnsubscribe(event) {
+    event.preventDefault(); // Evita que el formulario se envíe de manera tradicional
+
+    const emailInput = document.getElementById('email').value;
+
+    if (!emailInput) {
+      showNotification('Por favor, ingresa tu correo electrónico', 'error');
+      return;
+    }
+
+    try {
+      // Enviar solicitud de desuscripción al servidor
+      const response = await fetch('/api/unsubscribe', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: emailInput }),
+      });
+
+      const data = await response.json();
+
+      if (data.status === 'success') {
+        showNotification('Te has desuscrito exitosamente.', 'success');
+      } else {
+        showNotification(`Error: ${data.message}`, 'error');
+      }
+    } catch (error) {
+      showNotification('Hubo un problema al procesar tu solicitud.', 'error');
+    }
+  }
+
+  // Función para mostrar las notificaciones
+  function showNotification(message, type) {
+    const notification = document.getElementById('notification');
+    notification.textContent = message;
+    notification.classList.remove('success', 'error');
+    notification.classList.add(type === 'success' ? 'success' : 'error');
+    notification.style.display = 'block';
+
+    // Ocultar la notificación después de 5 segundos
+    setTimeout(() => {
+      notification.style.display = 'none';
+    }, 5000);
+  }
+</script>
+
+<Layout title="Unsubscribe from Newsletter">
+  <main class="px-4 py-10">
+    <div class="flex justify-center">
+      <section class="unsubscribe-section py-8 px-4 max-w-2xl w-full">
+        <h1 class="text-3xl font-bold mb-4 text-center">Cancelar Suscripción</h1>
+        <p class="text-lg mb-4 text-center">
+          Si ya no deseas recibir nuestras comunicaciones, ingresa tu correo electrónico para desuscribirte.
+        </p>
+
+        <!-- Formulario para ingresar el correo y desuscribirse -->
+        <form onsubmit="handleUnsubscribe(event)">
+          <div class="mb-4">
+            <input 
+              type="email" 
+              id="email" 
+              name="email" 
+              placeholder="Tu correo electrónico" 
+              required 
+              class="input-text w-full p-2 border border-gray-300 rounded"
+            />
+          </div>
+
+          <div class="flex justify-center">
+            <button 
+              type="submit" 
+              class="btn-unsubscribe bg-red-500 text-white py-2 px-4 rounded hover:bg-red-600">
+              Desuscribirme
+            </button>
+          </div>
+        </form>
+        <!-- Contenedor de notificación -->
+        <div id="notification" class="notification" style="display: none;"></div>
+      </section>
+    </div>
+  </main>
+</Layout>
+
+<style>
+    .notification {
+        position: fixed;
+        top: 20px; /* Distancia desde la parte superior */
+        right: 20px; /* Distancia desde el borde derecho */
+        padding: 1rem;
+        margin-bottom: 1rem;
+        text-align: center;
+        border-radius: 5px;
+        display: none;
+        font-size: 1rem;
+        z-index: 9999; /* Para que se muestre por encima de otros elementos */
+        width: 300px; /* Ajusta el ancho de la notificación */
+    }
+
+    .notification.success {
+        background-color: #4caf50; /* Verde para éxito */
+        color: white;
+    }
+
+    .notification.error {
+        background-color: #f44336; /* Rojo para error */
+        color: white;
+    }
+</style>

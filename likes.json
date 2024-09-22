@@ -1,1 +1,7 @@
-{"posts":{"{{ slug }}":{"likes":0},"{{ post.slug }}":{"likes":1}}}
+{
+  "posts": {
+    "{{ slug }}": {
+      "likes": -1
+    }
+  }
+}

@@ -7,11 +7,20 @@ interface Props {
 }
 
 const { href, title, source, description } = Astro.props;
+
+// Función para calcular el tiempo de lectura
+const calculateReadingTime = (text: string): string => {
+  const words = text.split(' ').length;
+  const readingTime = Math.ceil(words / 200); // Suponiendo 200 palabras por minuto
+  return `${readingTime} min`;
+};
+
+const readingTime = calculateReadingTime(description);
 ---
 
 <a href={href} class="article-card">
   <div class="article-content">
-    <small>{source}</small>
+    <small>{readingTime}</small> 
     <h3>{title}</h3>
     <p>{description}</p>
   </div>
@@ -22,7 +31,15 @@ const { href, title, source, description } = Astro.props;
   </div>
 </a>
 
+
 <style>
+
+.article-content small {
+  font-size: 0.75rem;
+  color: #a1a1a1;
+  margin-bottom: 8px;
+}
+
   .h3 {
     color: #374364;
   }

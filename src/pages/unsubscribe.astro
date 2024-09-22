@@ -55,27 +55,27 @@ import Layout from '../layouts/Layout.astro';
       <section class="unsubscribe-section py-8 px-4 max-w-2xl w-full">
         <h1 class="text-3xl font-bold mb-4 text-center">Cancelar Suscripción</h1>
         <p class="text-lg mb-4 text-center">
-          Si ya no deseas recibir nuestras comunicaciones, ingresa tu correo electrónico para desuscribirte.
+          Si ya no deseas pertenecer a esta comunidad y perderte las ultimas noticias tu te lo pierdes.
         </p>
 
         <!-- Formulario para ingresar el correo y desuscribirse -->
         <form onsubmit="handleUnsubscribe(event)">
-          <div class="mb-4">
+          <div class="flex flex-col gap-4 mb-8">
             <input 
               type="email" 
               id="email" 
               name="email" 
               placeholder="Tu correo electrónico" 
               required 
-              class="input-text w-full p-2 border border-gray-300 rounded"
+              class="input-field p-2 border rounded"
             />
           </div>
 
           <div class="flex justify-center">
-            <button 
-              type="submit" 
-              class="btn-unsubscribe bg-red-500 text-white py-2 px-4 rounded hover:bg-red-600">
-              Desuscribirme
+            <button type="submit" class="p-button p-component" id="button-login-submit" style="margin-left: -100px;">
+              <span class="inline-flex items-center justify-center gap-2 px-6 py-1 text-gray-800 transition bg-gray-100 border border-gray-300 rounded-full dark:bg-gray-800 dark:border-gray-600 dark:text-white focus-visible:ring-yellow-500/80 text-md hover:bg-[#E63946] hover:border-[#E63946] hover:text-white dark:hover:bg-[#E63946] dark:hover:border-[#E63946] dark:hover:text-black group focus:outline-none focus-visible:outline-none focus-visible:ring focus-visible:ring-white focus-visible:ring-offset-2 active:bg-black ">    
+                Desuscribirme
+                </span>
             </button>
           </div>
         </form>
@@ -100,6 +100,33 @@ import Layout from '../layouts/Layout.astro';
         z-index: 9999; /* Para que se muestre por encima de otros elementos */
         width: 300px; /* Ajusta el ancho de la notificación */
     }
+
+.input-field {
+  padding: 0.75rem;
+  border: 1px solid rgba(var(--accent-dark), 0.4);
+  border-radius: 8px;
+  font-size: 1rem;
+  background-color: rgba(var(--accent-light), 0.15);
+  color: var(--text-color-dark);
+  border: 1px solid #ccc;
+
+}
+
+html.dark .input-field {
+  background-color: rgba(var(--accent-dark), 0.2);
+  color: var(--text-color-light);
+  border: 1px solid #ccc;
+
+}
+
+.input-field:focus {
+  border-color: var(--accent);
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(var(--accent), 0.5);
+}
+.input-field {
+  font-size: 0.9rem;
+}
 
     .notification.success {
         background-color: #4caf50; /* Verde para éxito */

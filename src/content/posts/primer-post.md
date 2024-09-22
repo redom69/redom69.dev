@@ -1,6 +1,7 @@
 ---
 title: "Guía Completa de Desarrollo Web"
 description: "Una guía detallada que cubre los fundamentos y técnicas avanzadas de desarrollo web."
+source: 'primer-post'
 date: 2024-09-21
 image: "/desarrollo-web-a-medida.png"
 ---

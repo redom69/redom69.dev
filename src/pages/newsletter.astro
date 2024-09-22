@@ -28,16 +28,18 @@ const currentPosts = sortedPosts.slice((currentPage - 1) * postsPerPage, current
 <main class="px-4">
   <div class="space-y-24">
     <section class="newsletter-section py-8 px-4">
-      <h1 class="newsletter-title text-4xl font-bold mb-4">Join the Newsletter</h1>
+      <h1 class="newsletter-title text-4xl font-bold mb-4">Suscribete a la Newsletter</h1>
       <p class="newsletter-description text-lg mb-4">
-        Stay updated with my latest tutorials, projects, and coding insights. Subscribe to the newsletter and get exclusive content directly in your inbox!
+        Esta es tu newsletter de confianza, en ella podras leer post sobre opiniones mias, ultimos avances y relatos de la vida de un desarrollador full-stack.
       </p>
       
       <form id="newsletter-form" class="newsletter-form flex flex-col gap-4 mb-8">
-        <input type="text" id="name" name="name" placeholder="Enter your name" required class="input-field p-2 border rounded">
-        <input type="email" id="email" name="email" placeholder="Enter your email" required class="input-field p-2 border rounded">
-        <button type="submit" class="submit-btn bg-blue-500 text-white px-4 py-2 rounded">
-          Subscribe
+        <input type="text" id="name" name="name" placeholder="Introduce tu nombre" required class="input-field p-2 border rounded">
+        <input type="email" id="email" name="email" placeholder="Introduce tu email" required class="input-field p-2 border rounded">
+        <button type="submit" class="p-button p-component" id="button-login-submit" style="margin-left: -100px;">
+          <span class="inline-flex items-center justify-center gap-2 px-6 py-1 text-gray-800 transition bg-gray-100 border border-gray-300 rounded-full dark:bg-gray-800 dark:border-gray-600 dark:text-white focus-visible:ring-yellow-500/80 text-md hover:bg-[#E63946] hover:border-[#E63946] hover:text-white dark:hover:bg-[#E63946] dark:hover:border-[#E63946] dark:hover:text-black group focus:outline-none focus-visible:outline-none focus-visible:ring focus-visible:ring-white focus-visible:ring-offset-2 active:bg-black ">
+            Suscribirse
+          </span>
         </button>
       </form>
       
@@ -55,7 +57,7 @@ const currentPosts = sortedPosts.slice((currentPage - 1) * postsPerPage, current
             />
           ))
         ) : (
-          <p>No posts available.</p>
+          <p>No hay posts.</p>
         )}
       </div>
 
@@ -113,26 +115,6 @@ html.dark .newsletter-description {
   margin: 0 auto 2rem;
 }
 
-.input-field {
-  padding: 0.75rem;
-  border: 1px solid rgba(var(--accent-dark), 0.4);
-  border-radius: 8px;
-  font-size: 1rem;
-  background-color: rgba(var(--accent-light), 0.15);
-  color: var(--text-color-dark);
-}
-
-html.dark .input-field {
-  background-color: rgba(var(--accent-dark), 0.2);
-  color: var(--text-color-light);
-}
-
-.input-field:focus {
-  border-color: var(--accent);
-  outline: none;
-  box-shadow: 0 0 0 2px rgba(var(--accent), 0.5);
-}
-
 .submit-btn {
   background-color: var(--brand-blue);
   color: white;
@@ -155,6 +137,34 @@ html.dark .submit-btn {
 html.dark .submit-btn:hover {
   background-color: rgba(var(--accent-light), 0.9);
 }
+
+.input-field {
+  padding: 0.75rem;
+  border: 1px solid rgba(var(--accent-dark), 0.4);
+  border-radius: 8px;
+  font-size: 1rem;
+  background-color: rgba(var(--accent-light), 0.15);
+  color: var(--text-color-dark);
+  border: 1px solid #ccc;
+
+}
+
+html.dark .input-field {
+  background-color: rgba(var(--accent-dark), 0.2);
+  color: var(--text-color-light);
+  border: 1px solid #ccc;
+
+}
+
+.input-field:focus {
+  border-color: var(--accent);
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(var(--accent), 0.5);
+}
+.input-field {
+  font-size: 0.9rem;
+}
+
 
 /* Estilos de paginación */
 .pagination {
@@ -189,9 +199,7 @@ html.dark .submit-btn:hover {
     font-size: 1rem;
   }
 
-  .input-field {
-    font-size: 0.9rem;
-  }
+
 
   .submit-btn {
     font-size: 1rem;

@@ -17,25 +17,25 @@ const translations = await import(`../locales/${lang}.json`);
         <!-- Nombre -->
         <div class="field col-12">
             <label for="name">{translations.form.name}</label>
-            <input type="text" id="name" name="name" class="p-inputtext p-component" placeholder={translations.form.placeholder.name} required />
+            <input type="text" id="name" name="name" class="input-field p-2 border rounded" placeholder={translations.form.placeholder.name} required />
         </div>
 
         <!-- Correo electrónico -->
         <div class="field col-12">
             <label for="email">{translations.form.email}</label>
-            <input type="email" id="email" name="email" class="p-inputtext p-component" placeholder={translations.form.placeholder.email} required />
+            <input type="email" id="email" name="email" class="input-field p-2 border rounded" placeholder={translations.form.placeholder.email} required />
         </div>
 
         <!-- Asunto -->
         <div class="field col-12">
             <label for="subject">{translations.form.subject}</label>
-            <input type="text" id="subject" name="subject" class="p-inputtext p-component" placeholder={translations.form.placeholder.subject} required />
+            <input type="text" id="subject" name="subject" class="input-field p-2 border rounded" placeholder={translations.form.placeholder.subject} required />
         </div>
 
         <!-- Mensaje -->
         <div class="field col-12">
             <label for="message">{translations.form.message}</label>
-            <textarea id="message" name="message" rows="6" class="p-inputtext p-component" placeholder={translations.form.placeholder.message} required></textarea>
+            <textarea id="message" name="message" rows="6" class="input-field p-2 border rounded" placeholder={translations.form.placeholder.message} required></textarea>
         </div>
 
         <!-- reCAPTCHA -->
@@ -95,6 +95,29 @@ const translations = await import(`../locales/${lang}.json`);
         color: #333;
         text-align: center; /* Texto centrado en los inputs */
     }
+
+    .input-field {
+  padding: 0.75rem;
+  border: 1px solid rgba(var(--accent-dark), 0.4);
+  border-radius: 8px;
+  font-size: 1rem;
+  background-color: rgba(var(--accent-light), 0.15);
+  color: var(--text-color-dark);
+}
+
+html.dark .input-field {
+  background-color: rgba(var(--accent-dark), 0.2);
+  color: var(--text-color-light);
+}
+
+.input-field:focus {
+  border-color: var(--accent);
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(var(--accent), 0.5);
+}
+.input-field {
+  font-size: 0.9rem;
+}
 
     /* Estilos del enlace de olvidaste tu contraseña */
     .form-container .forgot-password {

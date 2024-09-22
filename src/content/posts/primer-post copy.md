@@ -3,6 +3,7 @@ title: 'Novedades de Octubre'
 description: 'Actualizaciones importantes de este mes'
 date: 2024-09-21
 image: '/walpaper.jpg'
+source: 'primer-post-copy'
 ---
 
 # Novedades de Septiembre

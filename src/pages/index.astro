@@ -7,12 +7,16 @@ import Hero from '../components/Hero.astro';
 import Posts from '../components/Posts.astro';
 import Services from '../components/Services.astro';
 import Contact from '../components/contact.astro';
+import Mail from '../components/icons/Mail.astro';
+import Person from '../components/icons/Person.astro';
+import Work from '../components/icons/Work.astro';
+import NewsletterIcon from '../components/icons/NewsletterIcon.astro';
 
 ---
 
 <Layout 
-  title="Redom69"
-  description='Desarrollador full stack. Especializado en React y NodeJS'
+  title="Code2Learn"
+  description='The best way of learning is coding.'
 >
   <main class="px-4">
 
@@ -26,12 +30,14 @@ import Contact from '../components/contact.astro';
 
       <SectionContainer id="newsletter">
         <TitleSection>
+          <NewsletterIcon class="size-8" />
           Newsletter
         </TitleSection>
         <Posts/>
       </SectionContainer>
       <SectionContainer id="services">
         <TitleSection>
+          <Work class="size-8" />
           Servicios
         </TitleSection>
         <Services/>
@@ -39,6 +45,7 @@ import Contact from '../components/contact.astro';
       
       <SectionContainer id="about">
         <TitleSection>
+          <Person class="size-8" />
           Sobre mí
         </TitleSection>
         <About/>
@@ -46,6 +53,7 @@ import Contact from '../components/contact.astro';
 
       <SectionContainer id="contacto">
         <TitleSection>
+          <Mail class="size-8" />
           Contacto
         </TitleSection>
         <Contact />

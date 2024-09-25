@@ -39,8 +39,8 @@ const services = [
 <main class="px-4">
   <div class="space-y-24"></div>
   <section class="services-section py-8 px-4">
-    <h1 class="services-title text-4xl font-bold mb-4 text-[#1D1D1D] dark:text-[#ECECEC]">Nuestros Servicios</h1>
-    <p class="services-description text-lg mb-4 text-[#1D1D1D] dark:text-gray-300">
+    <h1 class="services-title text-4xl font-bold mb-4 text-[var(--text-color-dark)] dark:text-[var(--text-color-light)]">Nuestros Servicios</h1>
+    <p class="services-description text-lg mb-4 text-[var(--text-color-dark)] dark:text-gray-300">
       Aquí están los servicios que ofrezco como desarrollador full-stack.
     </p>
 
@@ -48,8 +48,8 @@ const services = [
       {services.map(service => (
         <div class="service-box" key={service.title}>
           <img src={service.image} alt={service.title} class="service-image mb-2"/>
-          <h3 class="text-[#1D1D1D] dark:text-[#ECECEC]">{service.title}</h3>
-          <p class="text-[#1D1D1D] dark:text-gray-300">{service.description}</p>
+          <h3 class="text-[var(--text-color-dark)] dark:text-[var(--text-color-light)]">{service.title}</h3>
+          <p class="text-[var(--text-color-dark)] dark:text-gray-300">{service.description}</p>
         </div>
       ))}
     </div>
@@ -108,7 +108,7 @@ html.dark .services-description {
 
 html.dark .service-box {
   background-color: #2a2f3e; /* Fondo oscuro en modo dark */
-  border-color: #374364; /* Borde oscuro en modo dark */
+  border-color: var(--dark-blue); /* Borde oscuro en modo dark */
 }
 
 .service-box:hover {
@@ -131,12 +131,12 @@ html.dark .service-box:hover {
 /* Estilos de los títulos y descripciones dentro de los boxes */
 .service-box h3 {
   font-size: 1.5rem;
-  color: #374364; /* Color del título */
+  color: var(--dark-blue); /* Color del título */
   margin-bottom: 0.5rem;
 }
 
 html.dark .service-box h3 {
-  color: #ECECEC; /* Color del título en modo oscuro */
+  color: var(--text-color-light); /* Color del título en modo oscuro */
 }
 
 .service-box p {

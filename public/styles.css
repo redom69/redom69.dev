@@ -116,21 +116,43 @@
   padding: 10px;
   border-radius: 50%;
 }
-
 .like-button:hover i {
-  color: #e63946;
+  color: var(--red);
   background-color: rgba(230, 57, 70, 0.1); /* Fondo con transparencia */
   box-shadow: 0 0 10px rgba(230, 57, 70, 0.3); /* Sombra alrededor */
 }
 
+html.light .like-button:hover i {
+  color: var(--blue);
+  background-color: rgba(
+    0,
+    123,
+    255,
+    0.1
+  ); /* Fondo azul con transparencia en modo light */
+  box-shadow: 0 0 10px rgba(0, 123, 255, 0.3); /* Sombra azul alrededor en modo light */
+}
+
 .liked i::before {
-  color: #e63946 !important; /* Mantener el color de relleno */
+  color: var(--red) !important; /* Mantener el color de relleno */
+}
+
+html.light .liked i::before {
+  color: var(
+    --blue
+  ) !important; /* Forzar color azul cuando esté "liked" en modo light */
 }
 
 .liked i {
-  color: #e63946 !important; /* Forzar color rojo cuando esté "liked" */
+  color: var(--red) !important; /* Forzar color rojo cuando esté "liked" */
   background-color: rgba(230, 57, 70, 0.1); /* Fondo siempre rojo */
   box-shadow: 0 0 10px rgba(230, 57, 70, 0.3);
+}
+
+html.light .liked i {
+  color: var(--blue) !important; /* Forzar color azul en modo light */
+  background-color: rgba(0, 123, 255, 0.1); /* Fondo azul en modo light */
+  box-shadow: 0 0 10px rgba(0, 123, 255, 0.3); /* Sombra azul en modo light */
 }
 
 #heart-icon {

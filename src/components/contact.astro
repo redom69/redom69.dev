@@ -45,7 +45,7 @@ const translations = await import(`../locales/${lang}.json`);
         <!-- Botón de enviar -->
         <div class="field col-12">
             <button type="submit" class="p-button p-component" id="button-login-submit" style="margin-left: -100px;">
-                <span class="inline-flex items-center justify-center gap-2 px-6 py-1 text-gray-800 transition bg-gray-100 border border-gray-300 rounded-full dark:bg-gray-800 dark:border-gray-600 dark:text-white focus-visible:ring-yellow-500/80 text-md hover:bg-[#E63946] hover:border-[#E63946] hover:text-white dark:hover:bg-[#E63946] dark:hover:border-[#E63946] dark:hover:text-black group focus:outline-none focus-visible:outline-none focus-visible:ring focus-visible:ring-white focus-visible:ring-offset-2 active:bg-black w-[250%]">
+                <span class="inline-flex items-center justify-center gap-2 px-6 py-1 text-gray-800 transition bg-gray-100 border border-gray-300 rounded-full dark:bg-gray-800 dark:border-gray-600 dark:text-white focus-visible:ring-yellow-500/80 text-md hover:bg-[var(--red)] hover:border-[var(--red)] hover:text-white dark:hover:bg-[var(--red)] dark:hover:border-[var(--red)] dark:hover:text-black group focus:outline-none focus-visible:outline-none focus-visible:ring focus-visible:ring-white focus-visible:ring-offset-2 active:bg-black w-[250%]">
                     {translations.form.submit}
                 </span>
             </button>
@@ -79,11 +79,11 @@ const translations = await import(`../locales/${lang}.json`);
         font-weight: bold;
         margin-bottom: 0.5rem;
         padding-bottom: 10px;
-        color: #1D1D1D; /* Modo claro */
+        color: var(--text-color-dark); /* Modo claro */
     }
 
     html.dark .form-container label {
-        color: #ECECEC; /* Modo oscuro */
+        color: var(--text-color-light); /* Modo oscuro */
     }
 
     /* Inputs y textarea */
@@ -94,14 +94,14 @@ const translations = await import(`../locales/${lang}.json`);
         border: 1px solid #ccc;
         border-radius: 5px;
         font-size: 1rem;
-        color: #1D1D1D; /* Texto en modo claro */
+        color: var(--text-color-dark); /* Texto en modo claro */
         background-color: rgba(255, 255, 255, 0.15); /* Fondo claro */
         text-align: center; /* Texto centrado en los inputs */
     }
 
     html.dark .form-container input, 
     html.dark .form-container textarea {
-        color: #ECECEC; /* Texto en modo oscuro */
+        color: var(--text-color-light); /* Texto en modo oscuro */
         background-color: rgba(0, 0, 0, 0.2); /* Fondo en modo oscuro */
     }
 
@@ -111,12 +111,12 @@ const translations = await import(`../locales/${lang}.json`);
         border-radius: 8px;
         font-size: 1rem;
         background-color: rgba(var(--accent-light), 0.15);
-        color: #1D1D1D; /* Modo claro */
+        color: var(--text-color-dark); /* Modo claro */
     }
 
     html.dark .input-field {
         background-color: rgba(var(--accent-dark), 0.2);
-        color: #ECECEC; /* Modo oscuro */
+        color: var(--text-color-light); /* Modo oscuro */
     }
 
     .input-field:focus {
@@ -127,11 +127,11 @@ const translations = await import(`../locales/${lang}.json`);
 
     /* Estilos del botón de enviar */
     #button-login-submit span {
-        color: #1D1D1D; /* Modo claro */
+        color: var(--text-color-dark); /* Modo claro */
     }
 
     html.dark #button-login-submit span {
-        color: #ECECEC; /* Modo oscuro */
+        color: var(--text-color-light); /* Modo oscuro */
     }
 
     /* Estilos del enlace de olvidaste tu contraseña */

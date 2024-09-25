@@ -48,12 +48,12 @@
         text-align: center;
         padding: 20px;
         background-color: transparent;
-        color: #1D1D1D; /* Color por defecto en modo claro */
+        color: var(--text-color-dark); /* Color por defecto en modo claro */
     }
 
     /* Modo oscuro, cuando html tiene la clase 'dark' */
     html.dark footer {
-        color: #ECECEC; /* Color en modo oscuro */
+        color: var(--text-color-light); /* Color en modo oscuro */
     }
 
     /* Flexbox para alinear todo en una fila */
@@ -68,58 +68,58 @@
     .footer-links a {
         margin: 0 10px;
         text-decoration: none;
-        color: #1D1D1D; /* Color de los enlaces en modo claro */
+        color: var(--text-color-dark); /* Color de los enlaces en modo claro */
         font-size: 14px;
         font-weight: bold;
     }
 
     /* Hover en modo claro */
     .footer-links a:hover {
-        color: #E63946;
+        color: var(--red);
     }
 
     /* Modo oscuro: enlaces */
     html.dark .footer-links a {
-        color: #ECECEC; /* Color de los enlaces en modo oscuro */
+        color: var(--text-color-light); /* Color de los enlaces en modo oscuro */
     }
 
     html.dark .footer-links a:hover {
-        color: #E63946;
+        color: var(--red);
     }
 
     /* Social Links */
     .footer-v2__social-link {
         margin-left: 15px;
-        color: #1D1D1D; /* Color de los iconos sociales en modo claro */
+        color: var(--text-color-dark); /* Color de los iconos sociales en modo claro */
         text-decoration: none;
         font-size: 24px;
     }
 
     /* Modo oscuro: iconos sociales */
     html.dark .footer-v2__social-link {
-        color: #ECECEC; /* Color de los iconos sociales en modo oscuro */
+        color: var(--text-color-light); /* Color de los iconos sociales en modo oscuro */
     }
 
     /* Hover para los iconos sociales en ambos modos */
     .footer-v2__social-link:hover {
-        color: #E63946;
+        color: var(--red);
     }
 
     /* Copyright Section */
     .footer-bottom {
         margin-top: 20px;
         font-size: 12px;
-        color: #1D1D1D; /* Color del texto en modo claro */
+        color: var(--text-color-dark); /* Color del texto en modo claro */
     }
 
     .footer-bottom p {
         margin: 0;
-        color: #1D1D1D; /* Color por defecto en modo claro */
+        color: var(--text-color-dark); /* Color por defecto en modo claro */
     }
 
     /* Modo oscuro: cambiar color del párrafo */
     html.dark .footer-bottom p {
-        color: #ECECEC; /* Color del texto en modo oscuro */
+        color: var(--text-color-light); /* Color del texto en modo oscuro */
     }
 
     /* SVG and content alignment */
@@ -149,7 +149,7 @@
     }
 
     .footer-v2__link:hover {
-        color: #E63946;
+        color: var(--red);
     }
 
     /* Redes sociales */
@@ -166,7 +166,7 @@
     }
 
     .footer-v2__social-link:hover {
-        color: #E63946;
+        color: var(--red);
     }
 
     .accessibility-text {

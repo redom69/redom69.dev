@@ -27,17 +27,17 @@ const currentPosts = sortedPosts.slice((currentPage - 1) * postsPerPage, current
 >
 <main class="px-4">
   <div class="space-y-24">
-    <section class="newsletter-section py-8 px-4">
-      <h1 class="newsletter-title text-4xl font-bold mb-4 text-[#1D1D1D] dark:text-[#ECECEC]">Suscríbete a la Newsletter</h1>
-      <p class="newsletter-description text-lg mb-4 text-[#1D1D1D] dark:text-gray-300">
+    <section class="newsletter-section py-8 px-4 ">
+      <h1 class="newsletter-title text-4xl font-bold mb-4 text-[var(--text-color-dark)] dark:text-[var(--text-color-light)] items-center justify-center text-center">Suscríbete a la Newsletter</h1>
+      <p class="newsletter-description text-lg mb-4 text-[var(--text-color-dark)] dark:text-gray-300 items-center justify-center text-center">
         Esta es tu newsletter de confianza, en ella podrás leer posts sobre opiniones mías, últimos avances y relatos de la vida de un desarrollador full-stack.
       </p>
       
-      <form id="newsletter-form" class="newsletter-form flex flex-col gap-4 mb-8">
+      <form id="newsletter-form" class="newsletter-form flex flex-col gap-4 mb-8 ">
         <input type="text" id="name" name="name" placeholder="Introduce tu nombre" required class="input-field p-2 border rounded">
         <input type="email" id="email" name="email" placeholder="Introduce tu email" required class="input-field p-2 border rounded">
         <button type="submit" class="p-button p-component" id="button-login-submit" style="margin-left: -100px;">
-          <span class="inline-flex items-center justify-center gap-2 px-6 py-1 text-gray-800 transition bg-gray-100 border border-gray-300 rounded-full dark:bg-gray-800 dark:border-gray-600 dark:text-white focus-visible:ring-yellow-500/80 text-md hover:bg-[#E63946] hover:border-[#E63946] hover:text-white dark:hover:bg-[#E63946] dark:hover:border-[#E63946] dark:hover:text-black group focus:outline-none focus-visible:outline-none focus-visible:ring focus-visible:ring-white focus-visible:ring-offset-2 active:bg-black">
+          <span class="inline-flex items-center justify-center gap-2 px-6 py-1 text-gray-800 transition bg-gray-100 border border-gray-300 rounded-full dark:bg-gray-800 dark:border-gray-600 dark:text-white focus-visible:ring-yellow-500/80 text-md hover:bg-[var(--red)] hover:border-[var(--red)] hover:text-white dark:hover:bg-[var(--red)] dark:hover:border-[var(--red)] dark:hover:text-black group focus:outline-none focus-visible:outline-none focus-visible:ring focus-visible:ring-white focus-visible:ring-offset-2 active:bg-black" style="margin-left: 70px;">
             Suscribirse
           </span>
         </button>
@@ -45,19 +45,19 @@ const currentPosts = sortedPosts.slice((currentPage - 1) * postsPerPage, current
       
       <div id="newsletter-notification" class="notification"></div>
 
-      <h2 class="text-3xl font-bold mb-4 text-[#1D1D1D] dark:text-[#ECECEC]">Latest Posts</h2>
+      <h2 class="text-3xl font-bold mb-4 text-[var(--text-color-dark)] dark:text-[var(--text-color-light)]">Latest Posts</h2>
       <div class="article-card-grid">
         {currentPosts && currentPosts.length > 0 ? (
-          currentPosts.map(post => (
+          currentPosts.map((post, index) => (
             <ArticleCards
               href={`/newsletter/${post.slug}`}
               title={post.data.title}
-              source={post.data.source || "newsletter.com"}
               description={post.data.description}
-            />
+              index={index+1} 
+              />
           ))
         ) : (
-          <p class="text-[#1D1D1D] dark:text-[#ECECEC]">No hay posts.</p>
+          <p class="text-[var(--text-color-dark)] dark:text-[var(--text-color-light)]">No hay posts.</p>
         )}
       </div>
 
@@ -65,7 +65,7 @@ const currentPosts = sortedPosts.slice((currentPage - 1) * postsPerPage, current
         {currentPage > 1 && (
           <a href={`?page=${currentPage - 1}`} class="pagination-btn">Previous</a>
         )}
-        <span class="text-[#1D1D1D] dark:text-[#ECECEC]">Page {currentPage} of {totalPages}</span>
+        <span class="text-[var(--text-color-dark)] dark:text-[var(--text-color-light)]">Page {currentPage} of {totalPages}</span>
         {currentPage < totalPages && (
           <a href={`?page=${currentPage + 1}`} class="pagination-btn">Next</a>
         )}
@@ -179,7 +179,7 @@ html.dark .input-field {
 .pagination-btn {
   margin: 0 8px;
   padding: 8px 12px;
-  background-color: #374364; /* Color del botón */
+  background-color: var(--dark-blue); /* Color del botón */
   color: white;
   border: none;
   border-radius: 5px;

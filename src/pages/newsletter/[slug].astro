@@ -26,9 +26,9 @@ const readingTime = Math.ceil(words / 200);
   <main class="px-4 py-10">
     <div class="flex justify-center">
       <section class="services-section py-8 px-4 max-w-2xl w-full">
-        <h1 class="services-title text-4xl font-bold mb-4 text-center text-[#1D1D1D] dark:text-[#ECECEC]">{post.data.title}</h1>
-        <p class="services-description text-lg mb-4 text-center text-[#1D1D1D] dark:text-gray-300">{post.data.description}</p>
-        <p class="services-description text-lg mb-4 text-center text-[#1D1D1D] dark:text-gray-300">
+        <h1 class="services-title text-4xl font-bold mb-4 text-center text-[var(--text-color-dark)] dark:text-[var(--text-color-light)]">{post.data.title}</h1>
+        <p class="services-description text-lg mb-4 text-center text-[var(--text-color-dark)] dark:text-gray-300">{post.data.description}</p>
+        <p class="services-description text-lg mb-4 text-center text-[var(--text-color-dark)] dark:text-gray-300">
           {readingTime} min · {new Date(post.data.date).toLocaleDateString()}
         </p>
 
@@ -36,7 +36,7 @@ const readingTime = Math.ceil(words / 200);
           <img src={post.data.image} alt={post.data.title} class="max-w-full h-auto block mx-auto my-4" />
         )}
 
-        <div class="article-content text-[#1D1D1D] dark:text-[#ECECEC]">
+        <div class="article-content text-[var(--text-color-dark)] dark:text-[var(--text-color-light)]">
           <Content />
         </div>
       </section>

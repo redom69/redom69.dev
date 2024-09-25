@@ -6,7 +6,7 @@ const { href } = Astro.props;
     target="_blank"
     href={href}
     role="link"
-    class="inline-flex items-center justify-center gap-2 px-4 py-1 text-gray-800 transition bg-gray-100 border border-gray-300 rounded-full dark:bg-gray-800 dark:border-gray-600 dark:text-white focus-visible:ring-yellow-500/80 text-md hover:bg-[#E63946] hover:border-[#E63946] hover:text-white dark:hover:bg-[#E63946] dark:hover:border-[#E63946] dark:hover:text-black group max-w-fit focus:outline-none focus-visible:outline-none focus-visible:ring focus-visible:ring-white focus-visible:ring-offset-2 active:bg-black"
+    class="inline-flex items-center justify-center gap-2 px-4 py-1 text-gray-800 transition bg-gray-100 border border-gray-300 rounded-full dark:bg-gray-800 dark:border-gray-600 dark:text-white focus-visible:ring-yellow-500/80 text-md hover:bg-[var(--red)] hover:border-[var(--red)] hover:text-white dark:hover:bg-[var(--red)] dark:hover:border-[var(--red)] dark:hover:text-black group max-w-fit focus:outline-none focus-visible:outline-none focus-visible:ring focus-visible:ring-white focus-visible:ring-offset-2 active:bg-black"
 >
     <slot />
 </a>

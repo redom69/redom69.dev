@@ -2,11 +2,11 @@
 interface Props {
   href: string;
   title: string;
-  source: string;
+  index: number;
   description: string;
 }
 
-const { href, title, source, description } = Astro.props;
+const { href, title,  description,index } = Astro.props;
 
 // Función para calcular el tiempo de lectura
 const calculateReadingTime = (text: string): string => {
@@ -17,8 +17,7 @@ const calculateReadingTime = (text: string): string => {
 
 const readingTime = calculateReadingTime(description);
 ---
-
-<a href={href} class="article-card">
+<a href={href} class={`article-card ${Astro.props.index % 2 === 0 ? 'no-border transparent-background' : ''}`}>
   <div class="article-content">
     <small>{readingTime}</small> 
     <h3>{title}</h3>
@@ -31,24 +30,12 @@ const readingTime = calculateReadingTime(description);
   </div>
 </a>
 
-
 <style>
-
-.article-content small {
-  font-size: 0.75rem;
-  color: #a1a1a1;
-  margin-bottom: 8px;
-}
-
-  .h3 {
-    color: #374364;
-  }
-  
   .article-card {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: #ECECEC;
+    background-color: var(--text-color-light);
     border-radius: 10px;
     padding: 16px;
     margin-bottom: 16px;
@@ -57,42 +44,57 @@ const readingTime = calculateReadingTime(description);
     position: relative;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    min-height: 200px; /* Ajusta este valor para que las cajas tengan la misma altura */
   }
-  
+
+  /* Artículos pares */
+  .article-card.no-border {
+    box-shadow: none; /* Sin recuadro ni sombra */
+    background-color: transparent; /* Fondo transparente */
+  }
+
+  .article-card.transparent-background .article-content {
+    background-color: rgba(255, 255, 255, 0.1); /* Fondo blanco con transparencia para el contenido */
+    padding: 16px;
+    border-radius: 10px;
+    min-height: 100%; /* Asegura que el contenido llene el artículo */
+  }
+
   .article-card:hover {
     transform: translateY(-5px);
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
   }
-  
+
   .article-content {
     display: flex;
     flex-direction: column;
+    min-height: 100%; /* Asegura que el contenido use toda la altura disponible */
   }
-  
+
   .article-content small {
     font-size: 0.75rem;
     color: #a1a1a1;
     margin-bottom: 8px;
   }
-  
-  .article-content h3 {
+
+  .article-content h3, .article-content p {
     margin: 0;
     font-size: 1.2rem;
-    color: #374364; 
+    color: var(--text-color-dark); /* Texto rojo en modo claro */
   }
-  
+
   .article-content p {
     margin-top: 8px;
-    color: #374364; 
+    color: var(--text-color-dark); /* Texto rojo en modo claro */
   }
-  
+
   .external-link {
     position: absolute;
     top: 12px;
     right: 12px;
     transition: transform 0.3s ease;
   }
-  
+
   .arrow-icon {
     stroke: #a1a1a1;
     width: 24px;  /* Tamaño de la flecha */
@@ -100,9 +102,24 @@ const readingTime = calculateReadingTime(description);
     transform: rotate(-90deg); /* Gira la flecha 90 grados */
     transition: transform 0.3s ease, stroke 0.3s ease;
   }
-  
+
   .article-card:hover .arrow-icon {
-    transform: rotate(-45deg); /* Gira la flecha 90 grados */
-    stroke: #E63946; /* Cambia el color de la flecha al pasar el ratón */
+    transform: rotate(-45deg); /* Gira la flecha 45 grados */
+    stroke: var(--red); /* Cambia el color de la flecha al pasar el ratón */
   }
-  </style>
+
+  /* Modo oscuro: Cambiar el color del texto a azul */
+  html.dark .article-content h3, html.dark .article-content p {
+    color: var(--text-color-light); /* Texto azul en modo oscuro */
+    
+  }
+
+  html.dark .article-card:not(.no-border) {
+  background-color: #374364; /* Fondo azul oscuro para los artículos impares */
+}
+
+  html.dark .article-card.transparent-background .article-content {
+    
+    background-color: transparent !important; /* Elimina el fondo de los artículos pares en modo oscuro */
+  }
+</style>

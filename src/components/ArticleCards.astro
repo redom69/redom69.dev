@@ -1,4 +1,6 @@
 ---
+const personalImageAlt = "Daniel Hernandez";
+
 interface Props {
   href: string;
   title: string;
@@ -19,10 +21,24 @@ const readingTime = calculateReadingTime(description);
 ---
 <a href={href} class={`article-card ${Astro.props.index % 2 === 0 ? 'no-border transparent-background' : ''}`}>
   <div class="article-content">
-    <small>{readingTime}</small> 
+    <div style="display: flex; align-items: center; justify-content: left; gap: 10px;">
+      <div class="rounded-full w-6 h-6 overflow-hidden shadow-lg">
+        <img
+          class="object-cover w-full h-full"
+          style="object-position: 50% 25%;"
+          src="/profile.jpg"
+          alt={personalImageAlt}
+        />
+      </div>
+      <small>{personalImageAlt}</small> 
+    </div>
+    
+
     <h3>{title}</h3>
     <p>{description}</p>
+    <small style="padding-top: 0px;">{readingTime} read</small> 
   </div>
+
   <div class="external-link">
     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="arrow-icon">
       <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 4.5l15 15m0 0V8.25m0 11.25H8.25" />
@@ -55,7 +71,6 @@ const readingTime = calculateReadingTime(description);
 
   .article-card.transparent-background .article-content {
     background-color: rgba(255, 255, 255, 0.1); /* Fondo blanco con transparencia para el contenido */
-    padding: 16px;
     border-radius: 10px;
     min-height: 100%; /* Asegura que el contenido llene el artículo */
   }

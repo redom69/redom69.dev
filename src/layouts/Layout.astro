@@ -15,6 +15,7 @@ const { description, title } = Astro.props
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/png" href="/favicon.svg" />
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <link href="https://unpkg.com/atropos/css" rel="stylesheet">
@@ -22,7 +23,6 @@ const { description, title } = Astro.props
     <meta name="generator" content={Astro.generator} />
     <link rel="stylesheet" href="/styles.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/themes/prism-okaidia.min.css" rel="stylesheet" />
-    
     <ViewTransitions />
   </head>
   <body class="relative text-black dark:text-white">

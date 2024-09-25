@@ -29,7 +29,7 @@ const currentPosts = sortedPosts.slice((currentPage - 1) * postsPerPage, current
   <div class="space-y-24">
     <section class="newsletter-section py-8 px-4 ">
       <h1 class="newsletter-title text-4xl font-bold mb-4 text-[var(--text-color-dark)] dark:text-[var(--text-color-light)] items-center justify-center text-center">Suscríbete a la Newsletter</h1>
-      <p class="newsletter-description text-lg mb-4 text-[var(--text-color-dark)] dark:text-gray-300 items-center justify-center text-center">
+      <p class="newsletter-description text-lg mb-4 text-[var(--text-color-dark)] dark:text-gray-300  ">
         Esta es tu newsletter de confianza, en ella podrás leer posts sobre opiniones mías, últimos avances y relatos de la vida de un desarrollador full-stack.
       </p>
       
@@ -45,7 +45,7 @@ const currentPosts = sortedPosts.slice((currentPage - 1) * postsPerPage, current
       
       <div id="newsletter-notification" class="notification"></div>
 
-      <h2 class="text-3xl font-bold mb-4 text-[var(--text-color-dark)] dark:text-[var(--text-color-light)]">Latest Posts</h2>
+      <h2 class="text-3xl font-bold mb-4 text-[var(--text-color-dark)] dark:text-[var(--text-color-light)]">Ultimos posts</h2>
       <div class="article-card-grid">
         {currentPosts && currentPosts.length > 0 ? (
           currentPosts.map((post, index) => (
@@ -105,7 +105,6 @@ html.dark .newsletter-title {
 
 /* Descripción de la newsletter */
 .newsletter-description {
-  text-align: center;
   margin-bottom: 2rem;
   color: var(--text-color-dark);
 }

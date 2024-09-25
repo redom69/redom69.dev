@@ -48,7 +48,12 @@
         text-align: center;
         padding: 20px;
         background-color: transparent;
-        color: #7a7a7a;
+        color: #1D1D1D; /* Color por defecto en modo claro */
+    }
+
+    /* Modo oscuro, cuando html tiene la clase 'dark' */
+    html.dark footer {
+        color: #ECECEC; /* Color en modo oscuro */
     }
 
     /* Flexbox para alinear todo en una fila */
@@ -63,61 +68,73 @@
     .footer-links a {
         margin: 0 10px;
         text-decoration: none;
-        color: #333;
+        color: #1D1D1D; /* Color de los enlaces en modo claro */
         font-size: 14px;
         font-weight: bold;
     }
 
+    /* Hover en modo claro */
     .footer-links a:hover {
         color: #E63946;
     }
 
+    /* Modo oscuro: enlaces */
+    html.dark .footer-links a {
+        color: #ECECEC; /* Color de los enlaces en modo oscuro */
+    }
+
+    html.dark .footer-links a:hover {
+        color: #E63946;
+    }
+
     /* Social Links */
-    .social-links a {
-        margin-right: 15px;
-        color: #fff;
+    .footer-v2__social-link {
+        margin-left: 15px;
+        color: #1D1D1D; /* Color de los iconos sociales en modo claro */
+        text-decoration: none;
         font-size: 24px;
-        background-color: #E63946;
-        padding: 10px;
-        border-radius: 50%;
-        transition: background-color 0.3s ease;
     }
 
-    .social-links a.github {
-        background-color: #E63946;
+    /* Modo oscuro: iconos sociales */
+    html.dark .footer-v2__social-link {
+        color: #ECECEC; /* Color de los iconos sociales en modo oscuro */
     }
 
-    .social-links a.linkedin {
-        background-color: #E63946;
-    }
-
-    .social-links a:hover {
-        background-color: #E63946;
+    /* Hover para los iconos sociales en ambos modos */
+    .footer-v2__social-link:hover {
+        color: #E63946;
     }
 
     /* Copyright Section */
     .footer-bottom {
         margin-top: 20px;
         font-size: 12px;
-        color: #555;
+        color: #1D1D1D; /* Color del texto en modo claro */
     }
 
     .footer-bottom p {
         margin: 0;
+        color: #1D1D1D; /* Color por defecto en modo claro */
+    }
+
+    /* Modo oscuro: cambiar color del párrafo */
+    html.dark .footer-bottom p {
+        color: #ECECEC; /* Color del texto en modo oscuro */
     }
 
     /* SVG and content alignment */
     svg {
         display: inline-block;
     }
-        /* Redes sociales */
-        .footer-v2__social-links {
+
+    /* Redes sociales */
+    .footer-v2__social-links {
         display: flex;
         align-items: center;
     }
 
-/* Estilos para la lista de enlaces */
-.footer-v2__links {
+    /* Estilos para la lista de enlaces */
+    .footer-v2__links {
         display: flex;
         list-style: none;
         padding: 0;

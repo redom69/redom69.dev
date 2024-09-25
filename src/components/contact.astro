@@ -8,8 +8,6 @@ const lang = url.searchParams.get('lang') || 'en';
 // Cargar el archivo JSON de traducción correspondiente
 const translations = await import(`../locales/${lang}.json`);
 ---
-
-
 <div class="form-container">
     <form id="contact-form" method="POST" name="formularioContacto">
         <input type="hidden" name="form-name" value="formularioContacto">
@@ -52,11 +50,11 @@ const translations = await import(`../locales/${lang}.json`);
                 </span>
             </button>
         </div>
-        
     </form>
 </div>
 
 <style>
+    /* Estilos generales */
     body {
         display: flex; /* Si eliges flexbox */
         justify-content: center; /* Centrar horizontalmente */
@@ -71,7 +69,7 @@ const translations = await import(`../locales/${lang}.json`);
         width: 100%;
         max-width: 800px;
         text-align: center;
-       padding-left: 100px;
+        padding-left: 100px;
     }
 
     /* Estilos de los labels */
@@ -81,7 +79,11 @@ const translations = await import(`../locales/${lang}.json`);
         font-weight: bold;
         margin-bottom: 0.5rem;
         padding-bottom: 10px;
-        color: var(--text-color-light);
+        color: #1D1D1D; /* Modo claro */
+    }
+
+    html.dark .form-container label {
+        color: #ECECEC; /* Modo oscuro */
     }
 
     /* Inputs y textarea */
@@ -92,32 +94,45 @@ const translations = await import(`../locales/${lang}.json`);
         border: 1px solid #ccc;
         border-radius: 5px;
         font-size: 1rem;
-        color: #333;
+        color: #1D1D1D; /* Texto en modo claro */
+        background-color: rgba(255, 255, 255, 0.15); /* Fondo claro */
         text-align: center; /* Texto centrado en los inputs */
     }
 
+    html.dark .form-container input, 
+    html.dark .form-container textarea {
+        color: #ECECEC; /* Texto en modo oscuro */
+        background-color: rgba(0, 0, 0, 0.2); /* Fondo en modo oscuro */
+    }
+
     .input-field {
-  padding: 0.75rem;
-  border: 1px solid rgba(var(--accent-dark), 0.4);
-  border-radius: 8px;
-  font-size: 1rem;
-  background-color: rgba(var(--accent-light), 0.15);
-  color: var(--text-color-dark);
-}
+        padding: 0.75rem;
+        border: 1px solid rgba(var(--accent-dark), 0.4);
+        border-radius: 8px;
+        font-size: 1rem;
+        background-color: rgba(var(--accent-light), 0.15);
+        color: #1D1D1D; /* Modo claro */
+    }
 
-html.dark .input-field {
-  background-color: rgba(var(--accent-dark), 0.2);
-  color: var(--text-color-light);
-}
+    html.dark .input-field {
+        background-color: rgba(var(--accent-dark), 0.2);
+        color: #ECECEC; /* Modo oscuro */
+    }
 
-.input-field:focus {
-  border-color: var(--accent);
-  outline: none;
-  box-shadow: 0 0 0 2px rgba(var(--accent), 0.5);
-}
-.input-field {
-  font-size: 0.9rem;
-}
+    .input-field:focus {
+        border-color: var(--accent);
+        outline: none;
+        box-shadow: 0 0 0 2px rgba(var(--accent), 0.5);
+    }
+
+    /* Estilos del botón de enviar */
+    #button-login-submit span {
+        color: #1D1D1D; /* Modo claro */
+    }
+
+    html.dark #button-login-submit span {
+        color: #ECECEC; /* Modo oscuro */
+    }
 
     /* Estilos del enlace de olvidaste tu contraseña */
     .form-container .forgot-password {
@@ -132,7 +147,6 @@ html.dark .input-field {
         text-decoration: underline;
     }
 </style>
-
 
 <script>
 document.getElementById('contact-form').addEventListener('submit', async function (e) {
@@ -177,4 +191,3 @@ function showNotification(message, type) {
     }, 5000);
 }
 </script>
-  

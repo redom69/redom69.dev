@@ -39,8 +39,8 @@ const services = [
 <main class="px-4">
   <div class="space-y-24"></div>
   <section class="services-section py-8 px-4">
-    <h1 class="services-title text-4xl font-bold mb-4">Nuestros Servicios</h1>
-    <p class="services-description text-lg mb-4">
+    <h1 class="services-title text-4xl font-bold mb-4 text-[#1D1D1D] dark:text-[#ECECEC]">Nuestros Servicios</h1>
+    <p class="services-description text-lg mb-4 text-[#1D1D1D] dark:text-gray-300">
       Aquí están los servicios que ofrezco como desarrollador full-stack.
     </p>
 
@@ -48,8 +48,8 @@ const services = [
       {services.map(service => (
         <div class="service-box" key={service.title}>
           <img src={service.image} alt={service.title} class="service-image mb-2"/>
-          <h3>{service.title}</h3>
-          <p>{service.description}</p>
+          <h3 class="text-[#1D1D1D] dark:text-[#ECECEC]">{service.title}</h3>
+          <p class="text-[#1D1D1D] dark:text-gray-300">{service.description}</p>
         </div>
       ))}
     </div>
@@ -72,8 +72,11 @@ const services = [
 /* Título de los servicios */
 .services-title {
   text-align: center;
-  color: var(--text-color-light);
+  color: var(--text-color-dark);
   margin-bottom: 2rem;
+}
+html.dark .services-title {
+  color: var(--text-color-light);
 }
 
 /* Descripción de los servicios */
@@ -103,9 +106,18 @@ html.dark .services-description {
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
+html.dark .service-box {
+  background-color: #2a2f3e; /* Fondo oscuro en modo dark */
+  border-color: #374364; /* Borde oscuro en modo dark */
+}
+
 .service-box:hover {
   transform: translateY(-5px); /* Efecto hover */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+html.dark .service-box:hover {
+  box-shadow: 0 4px 8px rgba(255, 255, 255, 0.1);
 }
 
 /* Imagen dentro del box de servicio */
@@ -123,8 +135,16 @@ html.dark .services-description {
   margin-bottom: 0.5rem;
 }
 
+html.dark .service-box h3 {
+  color: #ECECEC; /* Color del título en modo oscuro */
+}
+
 .service-box p {
   color: #555; /* Color de la descripción */
+}
+
+html.dark .service-box p {
+  color: #CCCCCC; /* Color de la descripción en modo oscuro */
 }
 
 /* Responsividad */

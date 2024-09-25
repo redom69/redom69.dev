@@ -28,16 +28,16 @@ const currentPosts = sortedPosts.slice((currentPage - 1) * postsPerPage, current
 <main class="px-4">
   <div class="space-y-24">
     <section class="newsletter-section py-8 px-4">
-      <h1 class="newsletter-title text-4xl font-bold mb-4">Suscribete a la Newsletter</h1>
-      <p class="newsletter-description text-lg mb-4">
-        Esta es tu newsletter de confianza, en ella podras leer post sobre opiniones mias, ultimos avances y relatos de la vida de un desarrollador full-stack.
+      <h1 class="newsletter-title text-4xl font-bold mb-4 text-[#1D1D1D] dark:text-[#ECECEC]">Suscríbete a la Newsletter</h1>
+      <p class="newsletter-description text-lg mb-4 text-[#1D1D1D] dark:text-gray-300">
+        Esta es tu newsletter de confianza, en ella podrás leer posts sobre opiniones mías, últimos avances y relatos de la vida de un desarrollador full-stack.
       </p>
       
       <form id="newsletter-form" class="newsletter-form flex flex-col gap-4 mb-8">
         <input type="text" id="name" name="name" placeholder="Introduce tu nombre" required class="input-field p-2 border rounded">
         <input type="email" id="email" name="email" placeholder="Introduce tu email" required class="input-field p-2 border rounded">
         <button type="submit" class="p-button p-component" id="button-login-submit" style="margin-left: -100px;">
-          <span class="inline-flex items-center justify-center gap-2 px-6 py-1 text-gray-800 transition bg-gray-100 border border-gray-300 rounded-full dark:bg-gray-800 dark:border-gray-600 dark:text-white focus-visible:ring-yellow-500/80 text-md hover:bg-[#E63946] hover:border-[#E63946] hover:text-white dark:hover:bg-[#E63946] dark:hover:border-[#E63946] dark:hover:text-black group focus:outline-none focus-visible:outline-none focus-visible:ring focus-visible:ring-white focus-visible:ring-offset-2 active:bg-black ">
+          <span class="inline-flex items-center justify-center gap-2 px-6 py-1 text-gray-800 transition bg-gray-100 border border-gray-300 rounded-full dark:bg-gray-800 dark:border-gray-600 dark:text-white focus-visible:ring-yellow-500/80 text-md hover:bg-[#E63946] hover:border-[#E63946] hover:text-white dark:hover:bg-[#E63946] dark:hover:border-[#E63946] dark:hover:text-black group focus:outline-none focus-visible:outline-none focus-visible:ring focus-visible:ring-white focus-visible:ring-offset-2 active:bg-black">
             Suscribirse
           </span>
         </button>
@@ -45,7 +45,7 @@ const currentPosts = sortedPosts.slice((currentPage - 1) * postsPerPage, current
       
       <div id="newsletter-notification" class="notification"></div>
 
-      <h2 class="text-3xl font-bold mb-4">Latest Posts</h2>
+      <h2 class="text-3xl font-bold mb-4 text-[#1D1D1D] dark:text-[#ECECEC]">Latest Posts</h2>
       <div class="article-card-grid">
         {currentPosts && currentPosts.length > 0 ? (
           currentPosts.map(post => (
@@ -57,7 +57,7 @@ const currentPosts = sortedPosts.slice((currentPage - 1) * postsPerPage, current
             />
           ))
         ) : (
-          <p>No hay posts.</p>
+          <p class="text-[#1D1D1D] dark:text-[#ECECEC]">No hay posts.</p>
         )}
       </div>
 
@@ -65,7 +65,7 @@ const currentPosts = sortedPosts.slice((currentPage - 1) * postsPerPage, current
         {currentPage > 1 && (
           <a href={`?page=${currentPage - 1}`} class="pagination-btn">Previous</a>
         )}
-        <span>Page {currentPage} of {totalPages}</span>
+        <span class="text-[#1D1D1D] dark:text-[#ECECEC]">Page {currentPage} of {totalPages}</span>
         {currentPage < totalPages && (
           <a href={`?page=${currentPage + 1}`} class="pagination-btn">Next</a>
         )}
@@ -94,9 +94,14 @@ const currentPosts = sortedPosts.slice((currentPage - 1) * postsPerPage, current
 /* Título de la newsletter */
 .newsletter-title {
   text-align: center;
-  color: var(--text-color-light);
+  color: var(--text-color-dark);
   margin-bottom: 2rem;
 }
+
+html.dark .newsletter-title {
+  color: var(--text-color-light);
+}
+
 
 /* Descripción de la newsletter */
 .newsletter-description {
@@ -146,14 +151,12 @@ html.dark .submit-btn:hover {
   background-color: rgba(var(--accent-light), 0.15);
   color: var(--text-color-dark);
   border: 1px solid #ccc;
-
 }
 
 html.dark .input-field {
   background-color: rgba(var(--accent-dark), 0.2);
   color: var(--text-color-light);
   border: 1px solid #ccc;
-
 }
 
 .input-field:focus {
@@ -164,7 +167,6 @@ html.dark .input-field {
 .input-field {
   font-size: 0.9rem;
 }
-
 
 /* Estilos de paginación */
 .pagination {
@@ -199,36 +201,34 @@ html.dark .input-field {
     font-size: 1rem;
   }
 
-
-
   .submit-btn {
     font-size: 1rem;
   }
 }
 
 .notification {
-        position: fixed;
-        top: 20px; /* Distancia desde la parte superior */
-        right: 20px; /* Distancia desde el borde derecho */
-        padding: 1rem;
-        margin-bottom: 1rem;
-        text-align: center;
-        border-radius: 5px;
-        display: none;
-        font-size: 1rem;
-        z-index: 9999; /* Para que se muestre por encima de otros elementos */
-        width: 300px; /* Ajusta el ancho de la notificación */
-    }
+  position: fixed;
+  top: 20px; /* Distancia desde la parte superior */
+  right: 20px; /* Distancia desde el borde derecho */
+  padding: 1rem;
+  margin-bottom: 1rem;
+  text-align: center;
+  border-radius: 5px;
+  display: none;
+  font-size: 1rem;
+  z-index: 9999; /* Para que se muestre por encima de otros elementos */
+  width: 300px; /* Ajusta el ancho de la notificación */
+}
 
-    .notification.success {
-        background-color: #4caf50; /* Verde para éxito */
-        color: white;
-    }
+.notification.success {
+  background-color: #4caf50; /* Verde para éxito */
+  color: white;
+}
 
-    .notification.error {
-        background-color: #f44336; /* Rojo para error */
-        color: white;
-    }
+.notification.error {
+  background-color: #f44336; /* Rojo para error */
+  color: white;
+}
 </style>
 
 <script>

@@ -19,14 +19,12 @@
 
         <!-- Iconos sociales -->
         <div class="footer-v2__social-links">
-            <a href="https://github.com/redom69" class="footer-v2__social-link">
+            <a href="https://github.com/redom69" class="footer-v2__social-link" aria-label="GitHub">
                 <i class="fab fa-github"></i>
-                <span class="accessibility-text">GitHub</span>
             </a>
-    
-            <a href="https://www.linkedin.com/in/daniel-hernandez-puerto-57a093194/" class="footer-v2__social-link">
+
+            <a href="https://www.linkedin.com/in/daniel-hernandez-puerto-57a093194/" class="footer-v2__social-link" aria-label="LinkedIn">
                 <i class="fab fa-linkedin"></i>
-                <span class="accessibility-text">LinkedIn</span>
             </a>
         </div>
     </div>
@@ -59,9 +57,10 @@
     /* Flexbox para alinear todo en una fila */
     .footer-content {
         display: flex;
-        justify-content: center;
+        justify-content: space-between;
         align-items: center;
-        gap: 40px; /* Espacio entre los elementos */
+        gap: 40px;
+        flex-wrap: wrap;
     }
 
     /* Footer Links */
@@ -114,12 +113,25 @@
 
     .footer-bottom p {
         margin: 0;
+        font-size: 12px; 
         color: var(--text-color-dark); /* Color por defecto en modo claro */
     }
 
     /* Modo oscuro: cambiar color del párrafo */
     html.dark .footer-bottom p {
         color: var(--text-color-light); /* Color del texto en modo oscuro */
+    }
+
+    /* Responsivo */
+    @media (max-width: 768px) {
+        .footer-content {
+            flex-direction: column;
+            gap: 20px;
+        }
+        
+        .footer-links {
+            margin-top: 10px;
+        }
     }
 
     /* SVG and content alignment */
@@ -131,45 +143,5 @@
     .footer-v2__social-links {
         display: flex;
         align-items: center;
-    }
-
-    /* Estilos para la lista de enlaces */
-    .footer-v2__links {
-        display: flex;
-        list-style: none;
-        padding: 0;
-        margin: 0 20px;
-    }
-
-    .footer-v2__link {
-        margin: 0 15px;
-        text-decoration: none;
-        color: #333;
-        font-size: 14px;
-    }
-
-    .footer-v2__link:hover {
-        color: var(--red);
-    }
-
-    /* Redes sociales */
-    .footer-v2__social-links {
-        display: flex;
-        align-items: center;
-    }
-
-    .footer-v2__social-link {
-        margin-left: 15px;
-        color: #333;
-        text-decoration: none;
-        font-size: 24px;
-    }
-
-    .footer-v2__social-link:hover {
-        color: var(--red);
-    }
-
-    .accessibility-text {
-        display: none; 
     }
 </style>

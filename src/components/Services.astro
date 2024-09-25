@@ -1,4 +1,4 @@
----
+--- 
 import LinkButton from "./LinkButton.astro";
 
 const services = [
@@ -31,33 +31,46 @@ const services = [
 ---
 
 <div class="flex flex-col gap-y-16">
-  {
-    services.slice(0, 3).map(({ image, title, description }) => (
-    <article class="flex flex-col space-x-0 space-y-8 group md:flex-row md:space-x-8 md:space-y-0">
+  {services.slice(0, 3).map(({ image, title, description }) => (
+    <article class="flex flex-col space-y-8 group md:flex-row md:space-x-8 md:space-y-0">
+      <!-- Imagen -->
       <div class="w-full md:w-1/2">
-        <div class="relative flex flex-col items-center col-span-6 row-span-5 gap-8 transition duration-500 ease-in-out transform shadow-xl overflow-clip rounded-xl sm:rounded-xl md:group-hover:-translate-y-1 md:group-hover:shadow-2xl lg:border lg:border-gray-800 lg:hover:border-gray-700 lg:hover:bg-gray-800/50">
-          <img alt="Recién llegado vs 5 años en Nueva Zelanda" class="object-cover object-top w-full h-56 transition duration-500 sm:h-full md:scale-110 md:group-hover:scale-105" loading="lazy" src={image} />
+        <div class="relative flex flex-col items-center gap-8 transition transform shadow-xl overflow-clip rounded-xl md:group-hover:translate-y-1 md:group-hover:shadow-2xl lg:border lg:border-gray-800 lg:hover:border-gray-700 lg:hover:bg-gray-800/50">
+          <img alt={title} class="object-cover object-top w-full h-56 transition sm:h-full md:scale-110 md:group-hover:scale-105" loading="lazy" src={image} />
         </div>
       </div>
 
+      <!-- Título y Descripción -->
       <div class="w-full md:w-1/2 md:max-w-lg">
         <h3 class="text-2xl font-bold text-[var(--text-color-dark)] dark:text-[var(--text-color-light)]">
           {title}
         </h3>
         <div class="flex flex-wrap mt-2">
-          <div class="mt-2 text-[var(--text-color-dark)] dark:text-[var(--text-color-light)]">
+          <p class="mt-2 text-[var(--text-color-dark)] dark:text-[var(--text-color-light)]">
             {description}
-          </div>
+          </p>
         </div>
       </div>
     </article>
-    ))
-  }
+  ))}
 </div>
 
+<!-- Botón para Ver más -->
 <div class="flex justify-center mt-8">
   <LinkButton href="/services">Ver más</LinkButton>
 </div>
 
+<style>
+  /* Asegura que las imágenes mantengan su relación de aspecto en pantallas más pequeñas */
+  @media (max-width: 768px) {
+    img {
+      height: auto; /* Ajusta la altura automáticamente para pantallas móviles */
+    }
+  }
 
-
+  /* Opcional: Mejora el diseño del botón en modo oscuro */
+  .dark .btn {
+    background-color: var(--dark-blue);
+    color: var(--text-color-light);
+  }
+</style>

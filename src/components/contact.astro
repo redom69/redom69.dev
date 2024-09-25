@@ -8,6 +8,7 @@ const lang = url.searchParams.get('lang') || 'en';
 // Cargar el archivo JSON de traducción correspondiente
 const translations = await import(`../locales/${lang}.json`);
 ---
+
 <div class="form-container">
     <form id="contact-form" method="POST" name="formularioContacto">
         <input type="hidden" name="form-name" value="formularioContacto">
@@ -44,15 +45,20 @@ const translations = await import(`../locales/${lang}.json`);
 
         <!-- Botón de enviar -->
         <div class="field col-12">
-            <button type="submit" class="p-button p-component" id="button-login-submit" style="margin-left: -100px;">
+            <button type="submit" class="p-button p-component" id="button-login-submit" style="margin-left: -150px;">
                 <span class="inline-flex items-center justify-center gap-2 px-6 py-1 text-gray-800 transition bg-gray-100 border border-gray-300 rounded-full dark:bg-gray-800 dark:border-gray-600 dark:text-white focus-visible:ring-yellow-500/80 text-md hover:bg-[var(--red)] hover:border-[var(--red)] hover:text-white dark:hover:bg-[var(--red)] dark:hover:border-[var(--red)] dark:hover:text-black group focus:outline-none focus-visible:outline-none focus-visible:ring focus-visible:ring-white focus-visible:ring-offset-2 active:bg-black w-[250%]">
                     {translations.form.submit}
                 </span>
             </button>
+            
         </div>
     </form>
+
+    <!-- Contenedor de notificaciones -->
+    <div id="notification" class="notification" style="display: none;"></div>
 </div>
 
+<!-- Estilos -->
 <style>
     /* Estilos generales */
     body {
@@ -146,8 +152,32 @@ const translations = await import(`../locales/${lang}.json`);
     .form-container .forgot-password:hover {
         text-decoration: underline;
     }
+
+    /* Estilos para las notificaciones */
+    .notification {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        padding: 1rem;
+        background-color: #4caf50;
+        color: white;
+        border-radius: 5px;
+        display: none;
+        font-size: 1rem;
+        z-index: 9999;
+        width: 300px;
+    }
+
+    .notification.success {
+        background-color: #4caf50;
+    }
+
+    .notification.error {
+        background-color: #f44336;
+    }
 </style>
 
+<!-- Scripts -->
 <script>
 document.getElementById('contact-form').addEventListener('submit', async function (e) {
     e.preventDefault();

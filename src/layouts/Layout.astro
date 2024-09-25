@@ -113,6 +113,89 @@ const { description, title } = Astro.props
           }
         }
       }
+
+      /* Responsividad */
+      @media (max-width: 1024px) {
+        /* Ajuste de fuentes */
+        html {
+          font-size: 90%; /* Reducir tamaño de fuente en pantallas medianas */
+        }
+        body {
+          flex-direction: column;
+        }
+
+        /* Ajuste de navegación y otros elementos */
+        .navbar, .footer {
+          padding: 1rem;
+          text-align: center;
+        }
+      }
+
+      @media (max-width: 640px) {
+        /* Estilos para móviles */
+        html {
+          font-size: 85%; /* Reducir tamaño de fuente aún más */
+        }
+
+        /* Ajuste de elementos individuales */
+        .navbar, .footer {
+          padding: 0.5rem;
+        }
+
+        /* Ajuste del padding en elementos clave */
+        body {
+          padding: 0 1rem;
+        }
+
+        /* Botones y elementos interactivos más grandes */
+        button {
+          padding: 0.75rem 1.25rem;
+        }
+
+        /* Ajuste de fondo y elementos visuales */
+        .absolute {
+          background-position: center; /* Centrar el fondo en pantallas pequeñas */
+          background-size: cover; /* Asegurar que el fondo cubre toda la pantalla */
+        }
+
+        /* Ajustes en la sección principal */
+        .content {
+          flex-direction: column;
+          padding: 0.5rem;
+        }
+
+        /* Ajuste de textos e imágenes */
+        h1, p {
+          text-align: center; /* Centrar el texto */
+        }
+      }
+
+      /* Tipografía adaptable */
+      h1 {
+        font-size: 2.5rem;
+      }
+      p {
+        font-size: 1.25rem;
+      }
+
+      @media (max-width: 640px) {
+        h1 {
+          font-size: 1.75rem;
+        }
+        p {
+          font-size: 1rem;
+        }
+      }
+
+      /* Ajuste de imágenes y fondos */
+      img {
+        max-width: 100%;
+        height: auto;
+      }
+      .absolute {
+        background-position: center;
+        background-size: cover;
+      }
     </style>
   </body>
 </html>

@@ -4,11 +4,11 @@ import Badge from "./Badge.astro";
 import LinkedInIcon from "./icons/LinkedIn.astro";
 import MailIcon from "./icons/Mail.astro";
 import SocialPill from "./SocialPill.astro";
-
 ---
 
-<div class="max-w-xl">
-  <div class="flex gap-4 mb-4">
+<div class="max-w-xl mx-auto">
+  <div class="flex flex-col sm:flex-row gap-4 mb-4 items-center">
+    <!-- Imagen de perfil -->
     <div class="rounded-full w-24 h-24 overflow-hidden shadow-lg">
       <img
         class="object-cover w-full h-full"
@@ -17,23 +17,30 @@ import SocialPill from "./SocialPill.astro";
         alt={personalImageAlt}
       />
     </div>
-    
+
+    <!-- Botón de "Trabajemos juntos" -->
     <a
       href="https://www.malt.es/profile/danielhernandez4?overview"
       target="_blank"
       rel="noopener"
-      class="flex items-center transition md:justify-center md:hover:scale-105"
+      class="mt-4 sm:mt-0 flex items-center transition md:justify-center md:hover:scale-105"
     >
       <Badge>Trabajemos juntos</Badge>
     </a>
   </div>
-  <h1 class="text-4xl font-bold tracking-tight text-[var(--text-color-dark)] sm:text-5xl dark:text-[var(--text-color-light)]">
+
+  <!-- Título principal -->
+  <h1 class="text-center sm:text-left text-4xl font-bold tracking-tight text-[var(--text-color-dark)] sm:text-5xl dark:text-[var(--text-color-light)]">
     Hola, soy redom
   </h1>
-  <p class="mt-6 text-xl text-[var(--text-color-dark)] dark:text-gray-300 [&>strong]:text-[var(--red)] [&>strong]:font-semibold">
-    +4 años de experiencia. <strong>Ingeniero de Informatico</strong> de Madrid, España. Desarrollador full-stack especializado en el desarrollo web.
+
+  <!-- Descripción -->
+  <p class="mt-6 text-center sm:text-left text-xl text-[var(--text-color-dark)] dark:text-gray-300 [&>strong]:text-[var(--red)] [&>strong]:font-semibold">
+    +4 años de experiencia. <strong>Ingeniero de Informático</strong> de Madrid, España. Desarrollador full-stack especializado en el desarrollo web.
   </p>
-  <nav class="flex flex-wrap gap-4 mt-8">
+
+  <!-- Navegación social -->
+  <nav class="flex flex-col sm:flex-row gap-4 mt-8 justify-center sm:justify-start">
     <SocialPill href="mailto:sirdanielsan64@gmail.com">
       <MailIcon class="size-4" />
       Contáctame
@@ -44,3 +51,20 @@ import SocialPill from "./SocialPill.astro";
     </SocialPill>
   </nav>
 </div>
+
+<style>
+  /* Estilos adicionales para la responsividad */
+  @media (max-width: 640px) {
+    /* Alineación central en pantallas pequeñas */
+    .text-center {
+      text-align: center;
+    }
+  }
+
+  @media (min-width: 640px) {
+    /* Alineación izquierda en pantallas medianas y grandes */
+    .text-left {
+      text-align: left;
+    }
+  }
+</style>

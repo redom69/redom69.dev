@@ -1,5 +1,4 @@
 ---
-
 import { getCollection } from 'astro:content';
 import Card from './Card.astro';
 import LinkButton from './LinkButton.astro';
@@ -9,12 +8,12 @@ const posts = await getCollection('posts');
 // Ordenar los posts por fecha de manera descendente
 const sortedPosts = posts.sort((a, b) => new Date(b.data.date) - new Date(a.data.date));
 
-// Obtener solo las dos últimas publicaciones ya ordenadas por fecha
+// Obtener solo las tres últimas publicaciones
 const latestPosts = sortedPosts.slice(0, 3);
 ---
 
 <div class="flex flex-col gap-y-16">
-    <div class={`flex ${latestPosts.length < 3 ? 'justify-center' : 'md:flex-row'} gap-y-8 md:gap-x-8`}>
+    <div class={`flex ${latestPosts.length < 3 ? 'justify-center' : 'flex-col md:flex-row'} gap-y-8 md:gap-x-8`}>
         {latestPosts.map(post => ( 
             <article class="flex flex-col space-y-8 group">
                 <Card
@@ -34,5 +33,21 @@ const latestPosts = sortedPosts.slice(0, 3);
     </div>
 </div>
 
+<style>
+  .card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
 
+  .card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+  }
 
+  /* Responsive styling */
+  @media (max-width: 768px) {
+    .card {
+      margin: 0 auto;
+    }
+  }
+
+</style>

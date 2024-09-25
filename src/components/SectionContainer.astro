@@ -1,11 +1,48 @@
 ---
-const { class: className, id } = Astro.props
+const { class: className, id } = Astro.props;
 ---
 
 <section
   id={id}
   data-section={id}
-  class={`section ${className} scroll-m-20 w-full mx-auto container lg:max-w-4xl md:max-w-2xl`}
+  class={`section ${className} scroll-m-20 w-full mx-auto container lg:max-w-4xl md:max-w-2xl px-4 sm:px-6 lg:px-8`}
 >
   <slot />
 </section>
+
+<style>
+  /* Asegurarse de que la sección tenga márgenes y padding adecuados en pantallas pequeñas y grandes */
+  .container {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  @media (min-width: 640px) {
+    /* Padding adicional para pantallas medianas */
+    .container {
+      padding-left: 1.5rem;
+      padding-right: 1.5rem;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    /* Ajuste para pantallas más grandes */
+    .container {
+      padding-left: 2rem;
+      padding-right: 2rem;
+    }
+  }
+
+  .scroll-m-20 {
+    scroll-margin-top: 5rem;
+  }
+
+  /* Para asegurarse de que el contenido se ajuste bien en dispositivos móviles */
+  @media (max-width: 640px) {
+    .container {
+      width: 100%;
+      padding-left: 1rem;
+      padding-right: 1rem;
+    }
+  }
+</style>

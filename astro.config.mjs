@@ -82,7 +82,7 @@ export default defineConfig({
               if (searchData.result && searchData.result.length > 0) {
                 return res.status(409).json({
                   status: 'error',
-                  message: 'Este correo ya está suscrito a la newsletter.',
+                  message: 'Este correo ya está suscrito a la newsletter',
                 });
               }
 
@@ -123,7 +123,7 @@ export default defineConfig({
 
               res.json({
                 status: 'success',
-                message: 'Suscripción y correo de bienvenida enviados.',
+                message: 'Te has suscrito correctamente',
               });
             } catch (error) {
               console.error('Error en suscripción:', error);
@@ -194,9 +194,43 @@ export default defineConfig({
                 message: 'El correo electrónico es requerido.',
               });
             }
-            console.log(email);
 
-            //TODO Falta mejorar esto y hacer que funcione
+            try {
+              // Verificar si el contacto existe en SendGrid
+              const requestSearch = {
+                url: '/v3/marketing/contacts/search',
+                method: 'POST',
+                body: { query: `email LIKE '${email}'` },
+              };
+              const [searchResponse, searchData] =
+                await sgClient.request(requestSearch);
+
+              if (!searchData || searchData.result.length === 0) {
+                return res.status(404).json({
+                  status: 'error',
+                  message: 'El correo no está suscrito.',
+                });
+              }
+
+              // Si existe, eliminar el contacto de SendGrid
+              const deleteRequest = {
+                url: '/v3/marketing/contacts',
+                method: 'DELETE',
+                qs: { ids: searchData.result[0].id }, // ID del contacto encontrado
+              };
+              await sgClient.request(deleteRequest);
+
+              res.json({
+                status: 'success',
+                message: 'Te has desuscrito correctamente.',
+              });
+            } catch (error) {
+              console.error('Error al desuscribirse:', error);
+              res.status(500).json({
+                status: 'error',
+                message: 'Error al procesar tu solicitud de desuscripción.',
+              });
+            }
           });
 
           server.middlewares.use(app);

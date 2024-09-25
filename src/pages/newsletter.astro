@@ -247,20 +247,21 @@ document.getElementById('newsletter-form').addEventListener('submit', async func
       body: JSON.stringify({ name, email }),  // Enviar nombre y email
     });
 
+    const data = await response.json(); // Aquí obtiene la respuesta como JSON
+
     if (response.ok) {
-      showNotification('Te has suscrito correctamente a la newsletter', 'success');
+      showNotification(data.message || 'Te has suscrito correctamente a la newsletter', 'success');
     } else if (response.status === 409) {
-      showNotification('Este correo ya está suscrito a la newsletter.', 'error');
-    } else if (response.status >= 500) {
-      showNotification('Hubo un error en el servidor. Intenta nuevamente más tarde.', 'error');
+      showNotification(data.message || 'Este correo ya está suscrito a la newsletter', 'error');
     } else {
-      showNotification('Hubo un error al suscribirte. Intenta nuevamente', 'error');
+      showNotification(data.message || 'Hubo un error al suscribirte. Intenta nuevamente', 'error');
     }
   } catch (error) {
     console.error('Error de red:', error);
-    showNotification('No se pudo conectar con el servidor. Revisa tu conexión a Internet.', 'error');
+    showNotification('No se pudo conectar con el servidor. Revisa tu conexión a Internet', 'error');
   }
 });
+
 
 function showNotification(message, type) {
   const notification = document.getElementById('newsletter-notification');

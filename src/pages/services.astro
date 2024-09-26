@@ -5,29 +5,26 @@ import Layout from '../layouts/Layout.astro';
 // Definir los servicios en un array
 const services = [
   {
-    title: "Desarrollo de API",
-    description: "Construyo APIs robustas y escalables para integrar sistemas y facilitar la comunicación entre aplicaciones.",
-    image: '/desarrollo-web-a-medida.png'
-  },
-  {
     title: "Desarrollo Web",
-    description: "Desarrollo sitios web dinámicos y responsivos que ofrecen una experiencia de usuario excepcional.",
-    image: '/desarrollo-web-a-medida.png'
+    description: "Transformo diseños establecidos en experiencias web de alto impacto, creando sitios bien estructurados, rápidos y optimizados para el usuario. Con un enfoque en las mejores prácticas de desarrollo, soy experto en React y Angular, asegurando soluciones escalables, modernas y de calidad profesional. ¡Convierto tus ideas en productos digitales excepcionales!",
+    image: '/web.jpg'
+
   },
   {
-    title: "Desarrollo Frontend",
-    description: "Implemento interfaces intuitivas y atractivas, utilizando las últimas tecnologías y mejores prácticas.",
-    image: '/desarrollo-web-a-medida.png'
+    title: "Desarrollo de API",
+    description: "Desarrollo APIs poderosas y escalables que conectan y optimizan la comunicación entre sistemas y aplicaciones. Experto en NodeJS y NestJS, diseño soluciones eficientes que garantizan alto rendimiento, seguridad y facilidad de integración en cualquier entorno.",
+    image: '/back.jpg'
   },
-  {
-    title: "Gestión de Proyectos",
-    description: "Coordino y gestiono proyectos para asegurar que se entreguen a tiempo y cumplan con los requisitos del cliente.",
-    image: '/desarrollo-web-a-medida.png'
-  },
+
   {
     title: "Implementación de Bases de Datos",
-    description: "Diseño e implemento bases de datos eficientes y escalables para almacenar y gestionar datos críticos de tu negocio.",
-    image: '/desarrollo-web-a-medida.png'
+    description: "Diseño e implemento bases de datos altamente eficientes y escalables, optimizadas para almacenar y gestionar los datos más críticos de tu negocio. Con experiencia en PostgreSQL, MongoDB y MySQL, garantizo soluciones robustas, seguras y adaptadas a las necesidades de cada proyecto.",
+    image: '/bbdd.jpg'
+  },
+  {
+  title: "Soluciones Cloud Especializadas en Azure",
+  description: "Ofrezco soluciones cloud integrales y especializadas en Azure, diseñadas para optimizar la infraestructura, mejorar la escalabilidad y garantizar la seguridad de tus sistemas en la nube. Con experiencia en la implementación y gestión de servicios Azure, puedo ayudarte a aprovechar todo el potencial de esta plataforma.",
+  image: '/azure.jpg'
   },
 ];
 ---
@@ -41,20 +38,26 @@ const services = [
   <section class="services-section py-8 px-4">
     <h1 class="services-title text-4xl font-bold mb-4 text-[var(--text-color-dark)] dark:text-[var(--text-color-light)]">Nuestros Servicios</h1>
     <p class="services-description text-lg mb-4 text-[var(--text-color-dark)] dark:text-gray-300">
-      Aquí están los servicios que ofrezco como desarrollador full-stack.
+      En esta sección te presento los servicios que ofrezco, diseñados para cubrir todas tus necesidades tecnológicas.
     </p>
 
-    <div class="services-grid">
+    <div class="services-grid ">
       {services.map(service => (
         <div class="service-box" key={service.title}>
           <img src={service.image} alt={service.title} class="service-image mb-2"/>
-          <h3 class="text-[var(--text-color-dark)] dark:text-[var(--text-color-light)]">{service.title}</h3>
+          <h3 class="text-2xl py-4 font-bold text-[var(--text-color-dark)] dark:text-[var(--text-color-light)]">{service.title}</h3>
           <p class=" text-lg mb-4 text-[var(--text-color-dark)] dark:text-gray-300">
             {service.description}</p>
         </div>
       ))}
     </div>
+    <div
+      class=" py-6 [&>p]:mb-4 [&>p>strong]:text-[var(--red)] dark:[&>p>strong]:text-[var(--red)] [&>p>strong]:font-normal [&>p>strong]:font-mono text-pretty order-2 md:order-1"
+    >
+      <p><strong>Para cualquier otro tipo de servicio</strong>, no dudes en contactarme. Estoy disponible para explorar tus necesidades y encontrar la mejor solución personalizada para ti.</p>
+    </div>
   </section>
+ 
 </div>
 </main>
 </Layout>
@@ -65,7 +68,7 @@ const services = [
   padding: 2rem;
   padding-top: 100px;
   border-radius: 12px;
-  max-width: 900px;
+  max-width: 1000px;
   margin: 0 auto;
   transition: background-color 0.3s ease;
 }
@@ -94,8 +97,8 @@ html.dark .services-description {
 /* Estilos de la cuadrícula de servicios */
 .services-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 16px; /* Espacio entre los boxes */
+  grid-template-columns: repeat(2, 1fr); /* Dos columnas */
+  gap: 50px; /* Espacio entre los boxes */
 }
 
 /* Estilos para cada box de servicio */
@@ -104,6 +107,8 @@ html.dark .services-description {
   border: 1px solid #e0e0e0; /* Borde */
   border-radius: 8px; /* Esquinas redondeadas */
   padding: 16px; /* Espaciado interno */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra suave */
+
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
@@ -127,6 +132,7 @@ html.dark .service-box:hover {
   margin: 0 auto;
   max-width: 100%; /* Asegura que la imagen no desborde */
   height: auto; /* Mantiene la proporción */
+  border-radius: 12px; /* Bordes redondeados para las imágenes */
 }
 
 /* Estilos de los títulos y descripciones dentro de los boxes */
@@ -160,6 +166,11 @@ html.dark .service-box p {
 
   .service-box h3 {
     font-size: 1.25rem;
+  }
+
+  .services-grid {
+    grid-template-columns: 1fr; /* Una columna en pantallas pequeñas */
+    
   }
 }
 </style>

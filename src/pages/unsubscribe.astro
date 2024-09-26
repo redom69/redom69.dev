@@ -2,54 +2,59 @@
 import Layout from '../layouts/Layout.astro';
 ---
 
-<script client:load>
+<script>
   // Función que se activa cuando el usuario intenta desuscribirse
-  async function handleUnsubscribe(event) {
+  async function handleUnsubscribe(event: { preventDefault: () => void; }) {
     event.preventDefault(); // Evita que el formulario se envíe de manera tradicional
 
-    const emailInput = document.getElementById('email').value;
+    const emailElement = document.getElementById('email') as HTMLInputElement | null;
+    if (emailElement  ) {
+      const email = emailElement.value.trim();
 
-    if (!emailInput) {
-      showNotification('Por favor, ingresa tu correo electrónico', 'error');
-      return;
-    }
-
-    try {
-      // Enviar solicitud de desuscripción al servidor
-      const response = await fetch('/api/unsubscribe', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email: emailInput }),
-      });
-
-      const data = await response.json();
-
-      if (data.status === 'success') {
-        showNotification('Te has desuscrito exitosamente.', 'success');
-      } else {
-        showNotification(`Error: ${data.message}`, 'error');
+      if (!email) {
+        showNotification('Por favor, ingresa tu correo electrónico', 'error');
+        return;
       }
-    } catch (error) {
-      showNotification('Hubo un problema al procesar tu solicitud.', 'error');
-    }
+
+      try {
+        // Enviar solicitud de desuscripción al servidor
+        const response = await fetch('/api/unsubscribe', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email: email }),
+        });
+
+        const data = await response.json();
+
+        if (data.status === 'success') {
+          showNotification('Te has desuscrito exitosamente.', 'success');
+        } else {
+          showNotification(`Error: ${data.message}`, 'error');
+        }
+      } catch (error) {
+        showNotification('Hubo un problema al procesar tu solicitud.', 'error');
+      }
+  }
   }
 
   // Función para mostrar las notificaciones
-  function showNotification(message, type) {
+  function showNotification(message:string, type:string) {
     const notification = document.getElementById('notification');
-    notification.textContent = message;
-    notification.classList.remove('success', 'error');
-    notification.classList.add(type === 'success' ? 'success' : 'error');
-    notification.style.display = 'block';
+    notification!.textContent = message;
+    notification!.classList.remove('success', 'error');
+    notification!.classList.add(type === 'success' ? 'success' : 'error');
+    notification!.style.display = 'block';
 
     // Ocultar la notificación después de 5 segundos
     setTimeout(() => {
-      notification.style.display = 'none';
+      notification!.style.display = 'none';
     }, 5000);
   }
 </script>
 
-<Layout title="Unsubscribe from Newsletter">
+<Layout title="Unsubscribe from Newsletter"
+  description='Una lastima que te vayas :('
+>
   <main class="px-4 py-10">
     <div class="flex justify-center">
       <section class="unsubscribe-section py-8 px-4 max-w-2xl w-full">

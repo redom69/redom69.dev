@@ -3,11 +3,10 @@
 interface Props {
   href: string;
   title: string;
-  body: string;
   image?: string;
 }
 
-const { href, title, body, image } = Astro.props;
+const { href, title, image } = Astro.props;
 ---
 <a href={href} class="card">
   {image && (

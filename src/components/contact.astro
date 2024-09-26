@@ -1,6 +1,4 @@
 ---
-import { useState } from 'react';
-
 // Detectar el idioma seleccionado a partir de la URL
 const url = new URL(Astro.url);
 const lang = url.searchParams.get('lang') || 'en';
@@ -179,45 +177,52 @@ const translations = await import(`../locales/${lang}.json`);
 
 <!-- Scripts -->
 <script>
-document.getElementById('contact-form').addEventListener('submit', async function (e) {
+document.getElementById('contact-form')!.addEventListener('submit', async function (e) {
     e.preventDefault();
 
-    const name = document.getElementById('name').value;
-    const email = document.getElementById('email').value;
-    const subject = document.getElementById('subject').value;
-    const message = document.getElementById('message').value;
+    const nameElement = document.getElementById('name') as HTMLInputElement | null;
+    const emailElement = document.getElementById('email') as HTMLInputElement | null;
+    const subjectElement = document.getElementById('subject') as HTMLInputElement | null;
+    const messageElement = document.getElementById('message') as HTMLTextAreaElement | null;
 
-    try {
-        const response = await fetch('/api/contact', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ name, email, subject, message }),
-        });
+    if (nameElement && emailElement && subjectElement && messageElement) {
+        const name = nameElement.value;
+        const email = emailElement.value;
+        const subject = subjectElement.value;
+        const message = messageElement.value;
 
-        if (response.ok) {
-            const data = await response.json();
-            showNotification('Correo enviado: ' + data.message, 'success');
-        } else {
+        try {
+            const response = await fetch('/api/contact', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ name, email, subject, message }),
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                showNotification('Correo enviado: ' + data.message, 'success');
+            } else {
+                showNotification('Error al enviar el correo', 'error');
+            }
+        } catch (error) {
+            console.error('Error:', error);
             showNotification('Error al enviar el correo', 'error');
         }
-    } catch (error) {
-        console.error('Error:', error);
-        showNotification('Error al enviar el correo', 'error');
-    }
+    }   
 });
 
 // Función para mostrar la notificación
-function showNotification(message, type) {
+function showNotification(message:string, type:string) {
     const notification = document.getElementById('notification');
-    notification.textContent = message;
-    notification.classList.remove('success', 'error');
-    notification.classList.add(type === 'success' ? 'success' : 'error');
-    notification.style.display = 'block';
+    notification!.textContent = message;
+    notification!.classList.remove('success', 'error');
+    notification!.classList.add(type === 'success' ? 'success' : 'error');
+    notification!.style.display = 'block';
 
     setTimeout(() => {
-        notification.style.display = 'none';
+        notification!.style.display = 'none';
     }, 5000);
 }
 </script>

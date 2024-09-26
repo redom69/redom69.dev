@@ -8,14 +8,14 @@ import ArticleCards from '../components/ArticleCards.astro';
 const posts = await getCollection('posts');
 
 // Ordenar los posts por fecha de manera descendente
-const sortedPosts = posts.sort((a, b) => new Date(b.data.date) - new Date(a.data.date));
+const sortedPosts = posts.sort((a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime());
 
 // Paginación
 const postsPerPage = 10; // Número de posts por página
 const totalPages = Math.ceil(sortedPosts.length / postsPerPage); // Total de páginas
 
 // Obtener el número de página de los parámetros de consulta
-const currentPage = parseInt(new URL(Astro.request.url).searchParams.get('page')) || 1;
+const currentPage = parseInt(new URL(Astro.request.url).searchParams.get('page') as string) || 1;
 
 // Obtener los posts de la página actual
 const currentPosts = sortedPosts.slice((currentPage - 1) * postsPerPage, currentPage * postsPerPage);
@@ -231,44 +231,49 @@ html.dark .input-field {
 </style>
 
 <script>
-document.getElementById('newsletter-form').addEventListener('submit', async function (e) {
+document.getElementById('newsletter-form')?.addEventListener('submit', async function (e) {
   e.preventDefault();
 
-  const name = document.getElementById('name').value;
-  const email = document.getElementById('email').value;
+  const nameElement = document.getElementById('name') as HTMLInputElement | null;
+  const emailElement = document.getElementById('email') as HTMLInputElement | null;
 
-  try {
-    const response = await fetch('/api/subscribe', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ name, email }),  // Enviar nombre y email
-    });
+  if (nameElement && emailElement) {
+    const name = nameElement.value.trim();
+    const email = emailElement.value.trim();
 
-    const data = await response.json(); // Aquí obtiene la respuesta como JSON
+    try {
+      const response = await fetch('/api/subscribe', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ name, email }),  // Enviar nombre y email
+      });
 
-    if (response.ok) {
-      showNotification(data.message || 'Te has suscrito correctamente a la newsletter', 'success');
-    } else if (response.status === 409) {
-      showNotification(data.message || 'Este correo ya está suscrito a la newsletter', 'error');
-    } else {
-      showNotification(data.message || 'Hubo un error al suscribirte. Intenta nuevamente', 'error');
+      const data = await response.json(); // Aquí obtiene la respuesta como JSON
+
+      if (response.ok) {
+        showNotification(data.message || 'Te has suscrito correctamente a la newsletter', 'success');
+      } else if (response.status === 409) {
+        showNotification(data.message || 'Este correo ya está suscrito a la newsletter', 'error');
+      } else {
+        showNotification(data.message || 'Hubo un error al suscribirte. Intenta nuevamente', 'error');
+      }
+    } catch (error) {
+      console.error('Error de red:', error);
+      showNotification('No se pudo conectar con el servidor. Revisa tu conexión a Internet', 'error');
     }
-  } catch (error) {
-    console.error('Error de red:', error);
-    showNotification('No se pudo conectar con el servidor. Revisa tu conexión a Internet', 'error');
   }
 });
 
 
-function showNotification(message, type) {
+function showNotification(message: string, type: string) {
   const notification = document.getElementById('newsletter-notification');
-  notification.textContent = message;
-  notification.className = `notification ${type}`;
-  notification.style.display = 'block';
+  notification!.textContent = message;
+  notification!.className = `notification ${type}`;
+  notification!.style.display = 'block';
   setTimeout(() => {
-    notification.style.display = 'none';
+    notification!.style.display = 'none';
   }, 5000);
 }
 </script>

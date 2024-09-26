@@ -99,29 +99,29 @@ const readingTime = Math.ceil(words / 200);
 
 <!-- JavaScript para manejar el copiado al portapapeles -->
 <script>
-  document.getElementById('shareButton').addEventListener('click', function() {
+  document.getElementById('shareButton')?.addEventListener('click', function() {
     const postUrl = window.location.href; // Obtiene el URL del post actual
 
     // Copia el enlace al portapapeles
     navigator.clipboard.writeText(postUrl).then(() => {
       // Muestra la notificación de éxito
       const notification = document.getElementById('notification');
-      notification.textContent = '¡Enlace copiado al portapapeles!';
-      notification.classList.add('show');
+      notification!.textContent = '¡Enlace copiado al portapapeles!';
+      notification!.classList.add('show');
 
       // Oculta la notificación después de 3 segundos
       setTimeout(() => {
-        notification.classList.remove('show');
+        notification?.classList.remove('show');
       }, 3000);
     }).catch(err => {
       // Maneja errores si la copia falla
       const notification = document.getElementById('notification');
-      notification.textContent = 'Error al copiar el enlace';
-      notification.classList.add('error', 'show');
+      notification!.textContent = 'Error al copiar el enlace';
+      notification!.classList.add('error', 'show');
 
       // Oculta la notificación después de 3 segundos
       setTimeout(() => {
-        notification.classList.remove('show');
+        notification!.classList.remove('show');
       }, 3000);
     });
   });

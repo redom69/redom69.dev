@@ -6,7 +6,7 @@ import LinkButton from './LinkButton.astro';
 const posts = await getCollection('posts');
 
 // Ordenar los posts por fecha de manera descendente
-const sortedPosts = posts.sort((a, b) => new Date(b.data.date) - new Date(a.data.date));
+const sortedPosts = posts.sort((a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime());
 
 // Obtener solo las tres últimas publicaciones
 const latestPosts = sortedPosts.slice(0, 3);
@@ -19,7 +19,6 @@ const latestPosts = sortedPosts.slice(0, 3);
                 <Card
                     href={`/newsletter/${post.slug}`}
                     title={post.data.title}
-                    body={post.data.description}
                     image={post.data.image}
                 />
             </article>

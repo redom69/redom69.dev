@@ -1,6 +1,5 @@
 ---
 import LogoWhite from "./icons/LogoWhite.astro";
-import LogoBlack from "./icons/LogoBlack.astro";
 ---
 
 <!-- Footer -->
@@ -37,8 +36,12 @@ import LogoBlack from "./icons/LogoBlack.astro";
 </footer>
 
 <script>
-    // Script para obtener el año actual y ponerlo en el span con id "year"
-    document.getElementById("year").textContent = new Date().getFullYear();
+const yearElement = document.getElementById("year");
+
+if (yearElement) {
+    yearElement.textContent = new Date().getFullYear().toString();
+}
+
 </script>
 
 

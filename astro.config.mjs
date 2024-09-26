@@ -76,8 +76,7 @@ export default defineConfig({
                 method: 'POST',
                 body: { query: `email LIKE '${email}'` },
               };
-              const [searchResponse, searchData] =
-                await sgClient.request(requestSearch);
+              const [searchData] = await sgClient.request(requestSearch);
 
               if (searchData.result && searchData.result.length > 0) {
                 return res.status(409).json({
@@ -202,8 +201,7 @@ export default defineConfig({
                 method: 'POST',
                 body: { query: `email LIKE '${email}'` },
               };
-              const [searchResponse, searchData] =
-                await sgClient.request(requestSearch);
+              const [searchData] = await sgClient.request(requestSearch);
 
               if (!searchData || searchData.result.length === 0) {
                 return res.status(404).json({

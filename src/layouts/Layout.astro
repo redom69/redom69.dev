@@ -2,6 +2,7 @@
 import Footer from '../components/Footer.astro';
 import Navbar from '../components/Navbar.astro';
 import { ViewTransitions } from "astro:transitions"
+import  SpeedInsights  from "@vercel/speed-insights/astro"
 
 interface Props {
   title: string
@@ -33,6 +34,7 @@ const { description, title } = Astro.props
     <Navbar />
     <slot />
     <Footer />
+    <SpeedInsights/>
     <style is:global>
       :root {
       --text-color-light: #ECECEC; /* Ajustado para mayor contraste en modo oscuro */

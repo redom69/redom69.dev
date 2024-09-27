@@ -16,25 +16,50 @@ const { description, title } = Astro.props
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Explora los últimos avances en desarrollo full-stack con tutoriales, noticias tecnológicas y servicios de desarrollo web personalizados. ¡Únete a nuestra newsletter y mantente al día en el mundo tecnológico!" />
+    <meta name="keywords" content="full stack, desarrollo web, programación, JavaScript, Node.js, React, Angular, Vue, CSS, HTML, tutoriales full stack, servicios de desarrollo web, front-end, back-end, tecnologías web, newsletters de tecnología, noticias de programación, guías didácticas, tips de programación, desarrollo de aplicaciones web, web apps, backend, frontend, frameworks de JavaScript, desarrollo profesional full stack, APIs, bases de datos, optimización web, SEO para desarrolladores, servicios web" />
+    <meta name="author" content="Redom69" />
+
+    <!-- Open Graph para redes sociales -->
+    <meta property="og:title" content="Redom69 - Noticias Full Stack y Servicios de Desarrollo Web" />
+    <meta property="og:description" content="Descubre lo último en desarrollo web full stack con nuestros tutoriales y noticias. Ofrecemos servicios de desarrollo web personalizados." />
+    <meta property="og:image" content="https://redom69.dev/profile.jpg" />
+    <meta property="og:url" content="https://redom69.dev" />
+    <meta property="og:type" content="website" />
+    
+    <!-- Manifest para móviles -->
+    <link rel="manifest" href="/site.webmanifest">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <meta name="theme-color" content="#374364" />
     <link rel="icon" type="image/png" href="/favicon.svg" />
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" as="style" onload="this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap"></noscript>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <link href="https://unpkg.com/atropos/css" rel="stylesheet">
     <title>{title}</title>
     <meta name="generator" content={Astro.generator} />
-    <link rel="stylesheet" href="/styles.css">
+    <link rel="stylesheet" href="/styles.css" media="print" onload="this.media='all'" />
+    <noscript><link rel="stylesheet" href="/styles.css"></noscript>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/themes/prism-okaidia.min.css" rel="stylesheet" />
     <ViewTransitions />
+
+    <!-- Google Tag Manager -->
+    <script async src="https://www.googletagmanager.com/gtm.js?id=GTM-K7WHQKP6"></script>
+    <!-- End Google Tag Manager -->
   </head>
   <body class="relative text-black dark:text-white">
     <div class="absolute top-0 bottom-0 z-[-2] min-h-screen w-full bg-gray-50 dark:bg-gray-950
     bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,#CFD8EE,#ECECEC)]
     dark:bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,#374364,#1D1D1D)]"/>
+    
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-K7WHQKP6" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
 
     <Navbar />
     <slot />
     <Footer />
-    <SpeedInsights/>
+    <SpeedInsights />
     <style is:global>
       :root {
       --text-color-light: #ECECEC; /* Ajustado para mayor contraste en modo oscuro */

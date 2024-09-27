@@ -45,7 +45,7 @@ const readingTime = Math.ceil(words / 200);
         <div id="notification" class="notification"></div>
         
         {post.data.image && (
-          <img src={post.data.image} alt={post.data.title} class="max-w-full h-auto block mx-auto my-4" />
+          <img src={post.data.image} alt={post.data.title} class="max-w-full h-auto block mx-auto my-4" loading="lazy"/>
         )}
 
         <div class="article-content text-[var(--text-color-dark)] dark:text-[var(--text-color-light)]">

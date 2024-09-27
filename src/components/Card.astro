@@ -10,7 +10,7 @@ const { href, title, image } = Astro.props;
 ---
 <a href={href} class="card">
   {image && (
-    <img src={image} alt={title} class="card-image" />
+    <img src={image} alt={title} class="card-image" loading="lazy"/>
   )}
   <h3>{title}</h3>
 </a>

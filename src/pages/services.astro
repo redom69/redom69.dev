@@ -44,7 +44,7 @@ const services = [
     <div class="services-grid ">
       {services.map(service => (
         <div class="service-box" >
-          <img src={service.image} alt={service.title} class="service-image mb-2"/>
+          <img src={service.image} alt={service.title} class="service-image mb-2" loading="lazy"/>
           <h3 class="text-2xl py-4 font-bold text-[var(--text-color-dark)] dark:text-[var(--text-color-light)]">{service.title}</h3>
           <p class=" text-lg mb-4 text-[var(--text-color-dark)] dark:text-gray-300">
             {service.description}</p>

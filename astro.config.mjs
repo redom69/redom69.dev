@@ -7,6 +7,7 @@ import tailwind from '@astrojs/tailwind';
 import robotsTxt from 'astro-robots-txt';
 import sgClient from '@sendgrid/client';
 import vercel from '@astrojs/vercel/serverless';
+import sitemap from '@astrojs/sitemap';
 
 dotenv.config(); // Configurar variables de entorno
 
@@ -17,7 +18,7 @@ sgClient.setApiKey(sendgridApiKey);
 
 export default defineConfig({
   output: 'server',
-  integrations: [react(), tailwind(), robotsTxt()],
+  integrations: [react(), tailwind(), robotsTxt(), sitemap()],
   adapter: vercel(),
   site: 'https://redom69.dev',
   markdown: {

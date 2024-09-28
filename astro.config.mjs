@@ -20,7 +20,7 @@ export default defineConfig({
   output: 'server',
   integrations: [react(), tailwind(), robotsTxt(), sitemap()],
   adapter: vercel(),
-  site: 'https://redom69.dev',
+  site: 'https://www.redom69.dev',
   markdown: {
     remarkPlugins: [],
     rehypePlugins: [],

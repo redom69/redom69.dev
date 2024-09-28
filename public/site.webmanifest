@@ -1,0 +1,22 @@
+{
+  "name": "Redom69 - Desarrollo Full Stack",
+  "short_name": "Redom69",
+  "description": "Explora lo último en desarrollo full-stack con tutoriales, noticias tecnológicas y servicios personalizados.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#FFFFFF",
+  "theme_color": "#374364",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/favicon.svg",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

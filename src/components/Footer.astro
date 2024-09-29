@@ -7,7 +7,8 @@ import LogoWhite from "./icons/LogoWhite.astro";
     <div class="footer-content">
         <!-- LogoWhite y LogoBlack -->
         <div class="logo-container">
-            <LogoWhite class="footer-logo logo-white" />
+            <LogoWhite class="footer-logo logo-white mt-4" />
+            <p class="text-2xl text-bold mt-2">Code2Learn</p>
         </div>
 
         <!-- Enlaces -->
@@ -46,7 +47,14 @@ if (yearElement) {
 
 
 <style>
-    /* Footer */
+
+@font-face {
+    font-family: 'HarbingerCaps';
+    src: url('/fonts/Harbinger_Caps.otf') format('opentype');
+    font-weight: normal;
+    font-style: normal;
+}
+
     footer {
         text-align: center;
         padding: 20px;
@@ -54,6 +62,7 @@ if (yearElement) {
         color: var(--text-color-dark); /* Color por defecto en modo claro */
     }
 
+    
     /* Modo oscuro, cuando html tiene la clase 'dark' */
     html.dark footer {
         color: var(--text-color-light); /* Color en modo oscuro */
@@ -65,6 +74,31 @@ if (yearElement) {
         justify-content: center;
         align-items: center;
         gap: 40px; /* Espacio entre los elementos */
+    }
+    
+
+    /* Alineación de logo y texto en la misma línea */
+    .logo-container {
+        display: flex;
+        align-items: center;
+        gap: 20px; /* Espacio entre el logo y el texto */
+    }
+
+    html.dark .logo-container p{
+        color: var(--text-color-light);
+    }
+
+    .logo-container p{
+        color:  var(--text-color-dark);
+        font-family: 'HarbingerCaps', sans-serif;
+        font-size: 24px; /* Ajusta el tamaño de la fuente según tus necesidades */
+
+    }
+
+    .text-2xl.text-bold {
+        font-family: 'HarbingerCaps', sans-serif;
+        font-size: 24px; /* Ajusta según tus necesidades */
+        font-weight: 500; /* Semi bold */
     }
 
     /* Footer Links */
@@ -155,6 +189,5 @@ if (yearElement) {
 html.dark .footer-v2__social-link:hover i {
     color: var(--red); /* Asegura que el mismo hover funcione en modo oscuro */
 }
-
 
 </style>

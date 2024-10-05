@@ -47,6 +47,8 @@ null === undefined; // false
 
 Sabiendo todo esto, ¿cuándo deberíamos utilizar uno u otro? La elección depende del programador, pero si seguimos las **buenas prácticas** en JavaScript o TypeScript, se recomienda usar siempre (`===`). Esto nos permite evitar errores relacionados con la conversión automática de tipos. Utilizar (`===`) hace que tu código sea más **predecible** y menos propenso a errores difíciles de detectar, especialmente aquellos que tienen que ver con los tipos de datos, que suelen ser una fuente constante de dolores de cabeza.
 
+<img alt="meme de spiderman señalando" title="spiderman meme señalando" loading="lazy" width="4096" height="3072" decoding="async" data-nimg="1" style="color:transparent;width:100%;height:auto;" sizes="100vw" srcset="https://hips.hearstapps.com/hmg-prod/images/spiderman-meme-1630319444.jpg?resize=640:* 640w, https://hips.hearstapps.com/hmg-prod/images/spiderman-meme-1630319444.jpg?resize=768:* 980w, https://hips.hearstapps.com/hmg-prod/images/spiderman-meme-1630319444.jpg?resize=980:* 1120w" src="https://hips.hearstapps.com/hmg-prod/images/spiderman-meme-1630319444.jpg?resize=980:*" class="css-0 e193vzwj0">
+
 ---
 
 Para finalizar este post, me gustaría pedirte que, si te ha gustado este pequeño consejo, dejes un comentario en [**LinkedIn**](https://www.linkedin.com/in/daniel-hernandez-puerto-57a093194/) o compartas la newsletter para que más personas puedan aprender estos conceptos.

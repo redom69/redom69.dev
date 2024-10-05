@@ -5,9 +5,9 @@ date: 2024-09-21
 image: "/posts/image.webp"
 ---
 
-Este será mi primera contribución a esta nueva newsletter. Este es un proyecto que estoy intentando llevar a cabo con el objetivo de que personas dentro del mundo de la programación puedan compartir y aprender nuevos conocimientos de manera colaborativa.
+Esta será mi primera contribución a esta nueva newsletter. Este es un proyecto que estoy intentando llevar a cabo con el objetivo de que personas dentro del mundo de la programación puedan compartir y aprender nuevos conocimientos de manera colaborativa.
 
-El propósito principal de la newsletter es transmitirles aquellos conceptos que en su momento me ayudaron a entender mejor el porqué de ciertas prácticas y, poco a poco, me permitieron convertirme en un mejor desarrollador.
+El propósito principal de la newsletter es transmitiros aquellos conceptos que en su momento me ayudaron a entender mejor el porqué de ciertas prácticas y, poco a poco, me permitieron convertirme en un mejor desarrollador.
 
 Yo comencé en el mundo de la programación con **Java**, un lenguaje orientado a objetos. Al no tener ninguna noción previa de lógica de programación, mi forma de pensar automáticamente se alineaba con la programación orientada a objetos. Más tarde, me encontré con **JavaScript** cuando decidí enfocar mi carrera hacia el desarrollo web, especializándome en este lenguaje. Al principio, me resultaba complicado asimilar el concepto de los **tipos de datos** en JavaScript, especialmente cuando descubrí que no solo comparas el valor, sino también el tipo. En ese momento, mi mente explotó y pensé: "¡Guau, qué potente es esto!". Fue entonces cuando decidí profundizar y aprender todo lo que pudiera sobre este lenguaje, lo que despertó aún más mi curiosidad por sus capacidades.
 

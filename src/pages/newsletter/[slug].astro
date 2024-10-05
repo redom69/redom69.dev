@@ -1,6 +1,7 @@
 ---
 import { getCollection, getEntryBySlug } from 'astro:content';
 import Layout from '../../layouts/Layout.astro';
+import LinkButton from '../../components/LinkButton.astro';
 
 export async function getStaticPaths() {
   const posts = await getCollection('posts');
@@ -25,11 +26,11 @@ const readingTime = Math.ceil(words / 200);
   <main class="px-4 py-10">
     <div class="flex justify-center">
       <section class="services-section py-8 px-4 max-w-2xl w-full">
-        <h1 class="services-title text-4xl font-bold mb-4 text-center text-[var(--text-color-dark)] dark:text-[var(--text-color-light)]">{post.data.title}</h1>
+        <h1 class="services-title text-4xl font-bold mb-4 text-center text-[var(--text-color-dark)] dark:text-[var(--text-color-light)] pb-6">{post.data.title}</h1>
        
-        <div class="post-info-container border-t border-b border-gray-300 py-2">
+        <div class="post-info-container border-t border-b">
           <div class="flex justify-between items-center">
-            <p class="text-sm text-left py-2 ml-4 text-[var(--text-color-dark)] dark:text-gray-300">
+            <p class="text-sm text-left ml-4 text-[var(--text-color-dark)] dark:text-gray-300">
               {readingTime} min · {new Date(post.data.date).toLocaleDateString()}
             </p>
             <!-- Botón de compartir -->
@@ -45,12 +46,18 @@ const readingTime = Math.ceil(words / 200);
         <div id="notification" class="notification"></div>
         
         {post.data.image && (
-          <img src={post.data.image} alt={post.data.title} class="max-w-full h-auto block mx-auto my-4" loading="lazy"/>
+          <img src={post.data.image} alt={post.data.title} class="max-w-full h-auto block mx-auto py-5" loading="lazy"/>
         )}
 
         <div class="article-content text-[var(--text-color-dark)] dark:text-[var(--text-color-light)]">
           <Content />
         </div>
+        <div class="left-align py-3">
+          <LinkButton href="/newsletter">
+            <i class="fas fa-arrow-left"></i> Volver a la newsletter
+          </LinkButton>
+        </div>
+        
       </section>
     </div>
   </main>
@@ -59,8 +66,8 @@ const readingTime = Math.ceil(words / 200);
 <!-- Estilos -->
 <style>
 .post-info-container {
-  border-top: 1px solid #e5e7eb;
-  border-bottom: 1px solid #e5e7eb;
+  border-top: 1px solid #999a9b; /* Color gris para el borde superior */
+  border-bottom: 1px solid #999a9b; /* Color gris para el borde inferior */
   padding: 10px 0;
 }
 

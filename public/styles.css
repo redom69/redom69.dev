@@ -8,10 +8,19 @@
 .article-content h6 {
   font-weight: 700; /* font-bold */
   margin-bottom: 1rem; /* mb-4 */
+  margin-top: 2rem; /* mb-4 */
 }
 
 .article-content h1 {
   font-size: 2.25rem; /* text-4xl */
+}
+
+.article-content code {
+  color: var(--text-color-dark);
+}
+
+html.dark .article-content code {
+  color: var(--text-color-ligth);
 }
 
 .article-content h2 {
@@ -32,6 +41,16 @@
 
 .article-content h6 {
   font-size: 1rem; /* text-base */
+}
+
+.article-content hr {
+  margin-bottom: 2rem;
+  margin-top: 2rem;
+  border-color: #999a9b;
+}
+
+html.dark .article-content hr {
+  border-color: var(--text-color-ligth);
 }
 
 .article-content p {
@@ -76,10 +95,6 @@
   border-radius: 8px;
   overflow-x: auto; /* Permitir scroll horizontal */
   font-size: 0.875rem; /* Tamaño de fuente */
-}
-
-.article-content code {
-  color: #f8f8f2; /* Color del texto */
 }
 
 .copy-button {

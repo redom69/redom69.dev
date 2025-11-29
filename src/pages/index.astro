@@ -6,10 +6,12 @@ import TitleSection from '../components/TitleSection.astro';
 import Hero from '../components/Hero.astro';
 import Posts from '../components/Posts.astro';
 import Services from '../components/Services.astro';
+import Projects from '../components/Projects.astro';
 import Contact from '../components/Contact.astro';
 import Mail from '../components/icons/Mail.astro';
 import Person from '../components/icons/Person.astro';
 import Work from '../components/icons/Work.astro';
+import ProjectsIcon from '../components/icons/Projects.astro';
 import NewsletterIcon from '../components/icons/NewsletterIcon.astro';
 
 ---
@@ -26,6 +28,14 @@ import NewsletterIcon from '../components/icons/NewsletterIcon.astro';
 
     <div class="space-y-24">
 
+      <SectionContainer id="projects">
+        <TitleSection>
+          <ProjectsIcon class="size-8" />
+          Proyectos
+        </TitleSection>
+        <Projects/>
+      </SectionContainer>
+
       <SectionContainer id="newsletter">
         <TitleSection>
           <NewsletterIcon class="size-8" />
@@ -33,7 +43,7 @@ import NewsletterIcon from '../components/icons/NewsletterIcon.astro';
         </TitleSection>
         <Posts/>
       </SectionContainer>
-      
+
       <SectionContainer id="services">
         <TitleSection>
           <Work class="size-8" />
@@ -41,7 +51,7 @@ import NewsletterIcon from '../components/icons/NewsletterIcon.astro';
         </TitleSection>
         <Services/>
       </SectionContainer>
-      
+
       <SectionContainer id="about">
         <TitleSection>
           <Person class="size-8" />

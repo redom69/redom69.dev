@@ -50,10 +50,10 @@ const currentPosts = sortedPosts.slice((currentPage - 1) * postsPerPage, current
         {currentPosts && currentPosts.length > 0 ? (
           currentPosts.map((post, index) => (
             <ArticleCards
-              href={`/newsletter/${post.slug}`}
+              href={`/newsletter/${post.id}`}
               title={post.data.title}
               description={post.data.description}
-              index={index+1} 
+              index={index+1}
               />
           ))
         ) : (

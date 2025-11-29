@@ -14,10 +14,10 @@ const latestPosts = sortedPosts.slice(0, 3);
 
 <div class="flex flex-col gap-y-16">
     <div class={`flex ${latestPosts.length < 3 ? 'justify-center' : 'flex-col md:flex-row'} gap-y-8 md:gap-x-8`}>
-        {latestPosts.map(post => ( 
+        {latestPosts.map(post => (
             <article class="flex flex-col space-y-8 group">
                 <Card
-                    href={`/newsletter/${post.slug}`}
+                    href={`/newsletter/${post.id}`}
                     title={post.data.title}
                     image={post.data.image}
                 />

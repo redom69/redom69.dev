@@ -1,25 +1,26 @@
 ---
-import { getCollection, getEntryBySlug } from 'astro:content';
+import { getCollection, render } from 'astro:content';
 import Layout from '../../layouts/Layout.astro';
 import LinkButton from '../../components/LinkButton.astro';
 
 export async function getStaticPaths() {
   const posts = await getCollection('posts');
   return posts.map((post) => ({
-    params: { slug: post.slug },
+    params: { slug: post.id },
+    props: { post },
   }));
 }
 
-const { slug } = Astro.params;
-const post = await getEntryBySlug('posts', slug);
+export const prerender = true;
+
+const { post } = Astro.props;
 
 if (!post) {
-  throw new Error(`Post con slug "${slug}" no encontrado`);
+  throw new Error(`Post no encontrado`);
 }
 
-const { Content } = await post.render();
-export const prerender = true;
-const words = post.body.split(' ').length;
+const { Content } = await render(post);
+const words = post.body ? post.body.split(' ').length : 0;
 const readingTime = Math.ceil(words / 200);
 ---
 <Layout title={post.data.title} description={post.data.description}>

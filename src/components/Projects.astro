@@ -3,7 +3,7 @@ const projects = [
   {
     title: "Club Voleibol Arganda",
     description: "Sitio web completo para un club de voleibol con gestión de equipos, competiciones, noticias y sistema de administración. Desarrollado con React, Vite, Supabase y TailwindCSS.",
-    image: '/projects/voleibol-arganda.png',
+    url: "https://clubvoleibolarganda.es",
     link: "https://clubvoleibolarganda.es",
     tags: ["React", "Supabase", "TailwindCSS", "Vite"]
   }
@@ -11,13 +11,30 @@ const projects = [
 ---
 
 <div class="flex flex-col gap-y-16">
-  {projects.map(({ image, title, description, link, tags }) => (
+  {projects.map(({ url, title, description, link, tags }) => (
     <article class="flex flex-col space-y-8 group md:flex-row md:space-x-8 md:space-y-0">
-      <!-- Imagen -->
+      <!-- Preview dinámico del sitio -->
       <div class="w-full md:w-1/2">
-        <div class="relative flex flex-col items-center gap-8 transition transform shadow-xl overflow-clip rounded-xl md:group-hover:translate-y-1 md:group-hover:shadow-2xl lg:border lg:border-gray-800 lg:hover:border-gray-700 lg:hover:bg-gray-800/50">
-          <img alt={title} class="object-cover object-top w-full h-56 transition sm:h-full md:scale-110 md:group-hover:scale-105" loading="lazy" src={image} />
-        </div>
+        <a
+          href={link}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="relative flex flex-col items-center gap-8 transition transform shadow-xl overflow-clip rounded-xl md:group-hover:translate-y-1 md:group-hover:shadow-2xl lg:border lg:border-gray-800 lg:hover:border-gray-700 lg:hover:bg-gray-800/50 block"
+        >
+          <!-- Preview dinámico usando microlink.io -->
+          <img
+            alt={`Preview de ${title}`}
+            class="object-cover object-top w-full h-56 transition sm:h-full md:scale-110 md:group-hover:scale-105"
+            loading="lazy"
+            src={`https://api.microlink.io/?url=${encodeURIComponent(url)}&screenshot=true&meta=false&embed=screenshot.url`}
+            onerror="this.src='/projects/voleibol-arganda.png'"
+          />
+          <!-- Badge de "Live Preview" -->
+          <div class="absolute top-4 right-4 bg-green-500 text-white px-3 py-1 rounded-full text-xs font-medium flex items-center gap-1">
+            <span class="w-2 h-2 bg-white rounded-full animate-pulse"></span>
+            Live
+          </div>
+        </a>
       </div>
 
       <!-- Título y Descripción -->

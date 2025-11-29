@@ -21,12 +21,13 @@ const projects = [
           rel="noopener noreferrer"
           class="relative flex flex-col items-center gap-8 transition transform shadow-xl overflow-clip rounded-xl md:group-hover:translate-y-1 md:group-hover:shadow-2xl lg:border lg:border-gray-800 lg:hover:border-gray-700 lg:hover:bg-gray-800/50 block"
         >
-          <!-- Preview estático -->
+          <!-- Preview dinámico sin cache -->
           <img
             alt={`Preview de ${title}`}
             class="object-cover object-top w-full h-56 transition sm:h-full md:scale-110 md:group-hover:scale-105"
             loading="lazy"
-            src="/projects/voleibol-arganda.png"
+            src={`https://api.microlink.io/?url=${encodeURIComponent(url)}&screenshot=true&meta=false&embed=screenshot.url&force=true&waitUntil=networkidle2`}
+            onerror="this.src='/projects/voleibol-arganda.png'"
           />
         </a>
       </div>

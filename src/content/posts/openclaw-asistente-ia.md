@@ -2,6 +2,7 @@
 title: "Cómo crear y configurar tu propio asistente de IA con OpenClaw"
 description: "Te cuento cómo monté mi propio agente de IA personal desde cero, con personalidad, memoria y acceso desde Telegram."
 date: 2026-03-18
+image: "/posts/openclaw-ia.jpg"
 ---
 
 Hace poco decidí montar mi propio asistente de IA personal, uno que realmente fuera *mío*: con mi personalidad, mis preferencias, acceso a mis herramientas y disponible desde Telegram. Después de investigar un rato, di con **OpenClaw** y la verdad es que me voló la cabeza.

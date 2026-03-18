@@ -1,96 +1,77 @@
 ---
-title: "Cómo crear y configurar tu propio asistente de IA con OpenClaw"
-description: "Te cuento cómo monté mi propio agente de IA personal desde cero, con personalidad, memoria y acceso desde Telegram."
+title: "Cómo monté mi propio asistente de IA personal con OpenClaw"
+description: "Llevo un tiempo con ganas de tener un asistente que realmente fuera mío. Te cuento cómo lo hice y qué me encontré por el camino."
 date: 2026-03-18
 image: "/posts/openclaw-ia.jpg"
 ---
 
-Hace poco decidí montar mi propio asistente de IA personal, uno que realmente fuera *mío*: con mi personalidad, mis preferencias, acceso a mis herramientas y disponible desde Telegram. Después de investigar un rato, di con **OpenClaw** y la verdad es que me voló la cabeza.
+Llevaba tiempo con ganas de montar algo así. No un chatbot genérico, sino algo que fuera realmente *mío*: que me conociera, que recordara lo que le digo, que pudiera hablarle desde el móvil y que tuviera acceso a mis herramientas. La típica idea que tienes en la cabeza pero que vas postergando porque "hay cosas más urgentes".
 
-En este post te cuento cómo lo configuré desde cero, por qué lo elegí y qué puedes hacer con él.
+Pues bien, me puse a ello. Y di con **OpenClaw**.
 
-## **¿Qué es OpenClaw?**
+## Lo que quería (y por qué no me servía lo de siempre)
 
-OpenClaw es una plataforma que te permite desplegar tu propio agente de IA en un servidor (o tu propia máquina), conectarlo a modelos como Claude o GPT, y hablarle desde canales como **Telegram, Signal o WhatsApp**.
+Había probado cosas antes. ChatGPT está bien para consultas rápidas, pero no tiene memoria real entre conversaciones y no puede tocar nada de mi entorno. Claude igual. Los wrappers de n8n o Make me parecían demasiado complejos para lo que quería montar.
 
-No es solo un chatbot. Es un sistema con memoria, personalidad configurable, skills instalables y acceso a herramientas reales: puede ejecutar código, buscar en la web, leer archivos, y mucho más.
+Lo que yo necesitaba era algo que corriera **en mi propio servidor**, que pudiera personalizar a fondo y que me hablara por **Telegram** sin que yo tuviera que abrir ninguna aplicación extra. OpenClaw cumplía exactamente eso.
 
-## **Instalación**
+## La instalación, más fácil de lo que pensaba
 
-Lo primero es tener **Node.js** (v18+) en tu máquina o VPS. Después, instalar OpenClaw es tan sencillo como:
+Tengo un VPS en Hetzner donde ya tenía varias cosas corriendo, así que lo monté ahí directamente. Solo necesitas **Node.js v18 o superior** instalado.
 
 ```bash
 npm install -g openclaw
-```
-
-Una vez instalado, arrancas el gateway:
-
-```bash
 openclaw gateway start
 ```
 
-Y ya tienes el núcleo funcionando.
+Y ya está. El gateway arranca y tu agente está escuchando. La primera vez me sorprendió lo rápido que fue, la verdad.
 
-## **Configuración básica**
+## El workspace: aquí es donde pasa la magia
 
-OpenClaw usa un workspace de archivos Markdown para definir cómo se comporta tu agente. Los más importantes son:
+Lo que más me gustó de OpenClaw es que se configura con archivos Markdown. Nada de interfaces raras ni paneles de admin. Editas ficheros de texto y el agente los lee.
 
-- **`SOUL.md`** → La personalidad de tu asistente. Aquí defines su nombre, tono, cómo habla, qué puede hacer.
-- **`USER.md`** → Información sobre ti: tu nombre, zona horaria, preferencias, tecnologías que usas.
-- **`MEMORY.md`** → Memoria persistente. El agente la actualiza y consulta para recordar contexto entre conversaciones.
-- **`AGENTS.md`** → Reglas de seguridad: qué puede hacer solo y qué necesita tu confirmación.
+Los más importantes son:
 
-Ejemplo de `SOUL.md` básico:
+**`SOUL.md`** — La personalidad. Aquí decides quién es tu asistente: cómo habla, qué tono tiene, qué puede y qué no puede hacer sin pedirte permiso. Yo le puse bastante detalle y la diferencia es brutal comparado con dejarlo por defecto.
 
-```markdown
-# Mi Asistente
+**`USER.md`** — Información sobre ti. Tu zona horaria, tus preferencias, las tecnologías que usas, cómo quieres que te trate. Al principio me pareció raro escribir sobre mí mismo para que me lo leyera mi propio asistente, pero tiene mucho sentido.
 
-Eres un asistente técnico especializado en desarrollo web.
+**`MEMORY.md`** — Memoria persistente entre conversaciones. El agente la actualiza y la consulta. Esto es lo que hace que no tengas que repetirte cada vez que empiezas una nueva sesión.
 
-## Personalidad
-- Directo y eficiente
-- Técnico pero claro
-- Respondes en español
+**`AGENTS.md`** — Las reglas de seguridad. Qué puede hacer solo y qué necesita que tú confirmes. Aquí me puse bastante estricto: nada de enviar emails, hacer push a repos o borrar archivos sin que yo lo apruebe primero.
 
-## Reglas
-- Pide confirmación antes de enviar emails o borrar archivos
-- Nunca compartas credenciales
-```
+## Conectarlo a Telegram
 
-## **Conectarlo a Telegram**
+Este paso me lo esperaba más complicado y fue lo más rápido de todo.
 
-Una de las cosas que más me gustó: conectarlo a Telegram en minutos.
-
-1. Habla con **@BotFather** en Telegram y crea un bot nuevo (`/newbot`)
-2. Copia el token que te da
-3. Configúralo en OpenClaw:
+Hablas con **@BotFather** en Telegram, creas un bot nuevo con `/newbot`, copias el token y lo configuras:
 
 ```bash
-openclaw config set telegram.token TU_TOKEN_AQUI
+openclaw config set telegram.token TU_TOKEN
 openclaw gateway restart
 ```
 
-Y listo. Puedes hablarle desde Telegram como si fuera un contacto más, y tiene acceso a todo lo que hayas configurado en tu workspace.
+Y ya tienes a tu asistente en Telegram como si fuera un contacto más. Le mandé un mensaje de prueba y respondió al momento. Esa sensación de tener algo tuyo funcionando en tu servidor y responderte en el móvil tiene algo especial.
 
-## **Skills: extendiendo las capacidades**
+## Las skills
 
-OpenClaw tiene un sistema de skills que amplía lo que puede hacer tu agente. Se instalan con el CLI de ClawHub:
+OpenClaw tiene un sistema de skills que puedes instalar para ampliar lo que hace tu agente. Hay de todo: clima, control de sesiones tmux, búsqueda web...
 
 ```bash
 npx clawhub install weather
 npx clawhub install tmux
 ```
 
-Puedes encontrar más skills en [clawhub.com](https://clawhub.com).
+Puedes ver todas las disponibles en [clawhub.com](https://clawhub.com). También puedes crear las tuyas propias, que es algo que tengo pendiente de explorar.
 
-## **¿Por qué OpenClaw y no otra cosa?**
+## ¿Vale la pena montarlo?
 
-Hay muchas alternativas (n8n, AutoGPT, etc.), pero lo que me convenció de OpenClaw es que el agente vive *en tu servidor*, tiene *tu personalidad*, y tú controlas exactamente qué puede y qué no puede hacer. No dependes de ningún servicio externo para la lógica del agente.
+Depende de lo que busques. Si quieres algo rápido sin complicaciones, probablemente ChatGPT o Claude te sirva. Pero si eres developer, te gusta tener el control de tus herramientas y la idea de tener un agente que vive en tu infra y hace cosas reales en tu nombre te llama la atención, OpenClaw merece mucho la pena.
 
-Si eres developer y te gusta tener el control de tus herramientas, merece la pena probarlo.
+Yo llevo usándolo a diario y ya no concibo no tenerlo. Desde que le mandé el primer audio por Telegram y me respondió correctamente, supe que esto era lo que quería.
 
 ---
 
-Para cualquier duda, déjame un comentario en [**LinkedIn**](https://www.linkedin.com/in/daniel-hernandez-puerto-57a093194/) o comparte la newsletter si te ha resultado útil.
+Si tienes dudas o quieres que profundice en alguna parte del proceso, déjame un comentario en [**LinkedIn**](https://www.linkedin.com/in/daniel-hernandez-puerto-57a093194/) o comparte la newsletter si te ha resultado útil.
 
 ¡Hasta la próxima! 👋🏽

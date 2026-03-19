@@ -162,6 +162,36 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
         max-width: 100%;
         height: auto;
       }
+
+      /* Animaciones de scroll para secciones */
+      .section-animate {
+        opacity: 0;
+        transform: translateY(32px);
+        transition: opacity 0.6s ease, transform 0.6s ease;
+      }
+
+      .section-animate.visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
     </style>
+
+    <script>
+      // Intersection Observer para animaciones de scroll
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('visible');
+            }
+          });
+        },
+        { threshold: 0.1 }
+      );
+
+      document.querySelectorAll('.section-animate').forEach((el) => {
+        observer.observe(el);
+      });
+    </script>
   </body>
 </html>

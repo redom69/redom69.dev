@@ -6,10 +6,10 @@ import MailIcon from "./icons/Mail.astro";
 import SocialPill from "./SocialPill.astro";
 ---
 
-<div class="max-w-xl mx-auto">
-  <div class="flex flex-col sm:flex-row gap-4 mb-4 items-center">
+<div class="max-w-xl mx-auto hero-container">
+  <div class="flex flex-col sm:flex-row gap-4 mb-6 items-center">
     <!-- Imagen de perfil -->
-    <div class="rounded-full w-24 h-24 overflow-hidden shadow-lg">
+    <div class="rounded-full w-24 h-24 overflow-hidden shadow-lg ring-2 ring-[var(--red)] ring-offset-2 ring-offset-transparent">
       <img
         class="object-cover w-full h-full"
         style={{ objectPosition: "50% 25%" }}
@@ -31,14 +31,30 @@ import SocialPill from "./SocialPill.astro";
   </div>
 
   <!-- Título principal -->
-  <h1 class="text-center sm:text-left text-4xl font-bold tracking-tight text-[var(--text-color-dark)] sm:text-5xl dark:text-[var(--text-color-light)]">
-    Hola, soy Daniel
+  <h1 class="text-center sm:text-left text-5xl sm:text-6xl font-bold tracking-tight text-[var(--text-color-dark)] dark:text-[var(--text-color-light)] leading-tight">
+    Hola, soy <span class="text-[var(--red)]">Daniel</span>
   </h1>
 
   <!-- Descripción -->
-  <p class="mt-6 text-center sm:text-left text-xl text-[var(--text-color-dark)] dark:text-gray-300 [&>strong]:text-[var(--red)] [&>strong]:font-semibold">
-    +5 años de experiencia. <strong>Ingeniero informático con máster en visión artificial</strong> de Madrid, España. Desarrollador full-stack especializado en el desarrollo web.
+  <p class="mt-6 text-center sm:text-left text-xl text-[var(--text-color-dark)] dark:text-gray-300 [&>strong]:text-[var(--red)] [&>strong]:font-semibold leading-relaxed">
+    Ingeniero informático y <strong>desarrollador full-stack</strong> con +5 años de experiencia construyendo productos web desde Madrid.
   </p>
+
+  <!-- Stats -->
+  <div class="flex gap-8 mt-8 justify-center sm:justify-start">
+    <div class="text-center sm:text-left">
+      <span class="block text-3xl font-bold text-[var(--red)]">+5</span>
+      <span class="text-sm text-gray-500 dark:text-gray-400">años de experiencia</span>
+    </div>
+    <div class="text-center sm:text-left">
+      <span class="block text-3xl font-bold text-[var(--red)]">+10</span>
+      <span class="text-sm text-gray-500 dark:text-gray-400">proyectos entregados</span>
+    </div>
+    <div class="text-center sm:text-left">
+      <span class="block text-3xl font-bold text-[var(--red)]">MERN</span>
+      <span class="text-sm text-gray-500 dark:text-gray-400">stack principal</span>
+    </div>
+  </div>
 
   <!-- Navegación social -->
   <nav class="flex flex-col sm:flex-row gap-4 mt-8 justify-center sm:justify-start">
@@ -54,18 +70,18 @@ import SocialPill from "./SocialPill.astro";
 </div>
 
 <style>
-  /* Estilos adicionales para la responsividad */
-  @media (max-width: 640px) {
-    /* Alineación central en pantallas pequeñas */
-    .text-center {
-      text-align: center;
-    }
+  .hero-container {
+    animation: fadeInUp 0.6s ease-out both;
   }
 
-  @media (min-width: 640px) {
-    /* Alineación izquierda en pantallas medianas y grandes */
-    .text-left {
-      text-align: left;
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(24px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
     }
   }
 </style>

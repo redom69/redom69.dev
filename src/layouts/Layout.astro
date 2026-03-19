@@ -2,7 +2,7 @@
 import Footer from '../components/Footer.astro';
 import Navbar from '../components/Navbar.astro';
 import { ViewTransitions } from "astro:transitions"
-import  SpeedInsights  from "@vercel/speed-insights/astro"
+import SpeedInsights from "@vercel/speed-insights/astro"
 
 interface Props {
   title: string
@@ -10,67 +10,72 @@ interface Props {
 }
 
 const { description, title } = Astro.props
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 ---
 <!doctype html>
 <html lang="es">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="Explora los últimos avances en desarrollo full-stack con tutoriales, noticias tecnológicas y servicios de desarrollo web personalizados. ¡Únete a nuestra newsletter y mantente al día en el mundo tecnológico!" />
-    <meta name="keywords" content="full stack, desarrollo web, programación, JavaScript, Node.js, React, Angular, Vue, CSS, HTML, tutoriales full stack, servicios de desarrollo web, front-end, back-end, tecnologías web, newsletters de tecnología, noticias de programación, guías didácticas, tips de programación, desarrollo de aplicaciones web, web apps, backend, frontend, frameworks de JavaScript, desarrollo profesional full stack, APIs, bases de datos, optimización web, SEO para desarrolladores, servicios web" />
+    <meta name="description" content={description} />
+    <meta name="keywords" content="full stack, desarrollo web, programación, JavaScript, Node.js, React, Angular, tutoriales, servicios de desarrollo web, front-end, back-end, newsletters de tecnología" />
     <meta name="author" content="Redom69" />
 
-    <!-- Open Graph para redes sociales -->
-    <meta property="og:title" content="Redom69 - Noticias del mundo de la programación y Servicios de Desarrollo Web" />
-    <meta property="og:description" content="Descubre lo último en desarrollo web full stack con nuestros tutoriales y noticias. Ofrecemos servicios de desarrollo web personalizados." />
-    <meta property="og:image" content="https://redom69.dev/profile.webp" />
-    <meta property="og:url" content="https://redom69.dev" />
+    <!-- Open Graph -->
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content="https://www.redom69.dev/profile.webp" />
+    <meta property="og:url" content={canonicalURL.href} />
     <meta property="og:type" content="website" />
 
-    <link rel="canonical" href={Astro.url} />
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content="https://www.redom69.dev/profile.webp" />
 
-    
-    <!-- Manifest para móviles -->
+    <link rel="canonical" href={canonicalURL.href} />
+
+    <!-- Manifest -->
     <link rel="manifest" href="/site.webmanifest">
-    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
     <meta name="theme-color" content="#374364" />
-    <link rel="icon" type="image/png" href="/favicon.svg" />
-    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" as="style" onload="this.rel='stylesheet'">
-    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap"></noscript>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-    <link href="https://unpkg.com/atropos/css" rel="stylesheet">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <title>{title}</title>
     <meta name="generator" content={Astro.generator} />
     <link rel="stylesheet" href="/styles.css" media="print" onload="this.media='all'" />
     <noscript><link rel="stylesheet" href="/styles.css"></noscript>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/themes/prism-okaidia.min.css" rel="stylesheet" />
     <ViewTransitions />
 
     <!-- Google Tag Manager -->
     <script async src="https://www.googletagmanager.com/gtm.js?id=GTM-K7WHQKP6"></script>
-    <!-- End Google Tag Manager -->
   </head>
   <body class="relative text-black dark:text-white">
+    <!-- Skip to content -->
+    <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-white focus:text-black focus:rounded">
+      Saltar al contenido
+    </a>
+
     <div class="absolute top-0 bottom-0 z-[-2] min-h-screen w-full bg-gray-50 dark:bg-gray-950
     bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,#CFD8EE,#ECECEC)]
     dark:bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,#374364,#1D1D1D)]"/>
-    
+
     <!-- Google Tag Manager (noscript) -->
     <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-K7WHQKP6" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-    <!-- End Google Tag Manager (noscript) -->
 
     <Navbar />
-    <slot />
+    <main id="main-content">
+      <slot />
+    </main>
     <Footer />
     <SpeedInsights />
     <style is:global>
       :root {
-      --text-color-light: #ECECEC; /* Ajustado para mayor contraste en modo oscuro */
-      --text-color-dark: #1D1D1D; /* Color oscuro ajustado para mayor contraste */    
+      --text-color-light: #ECECEC;
+      --text-color-dark: #1D1D1D;
 
       --red : #E63946;
       --dark-blue: #374364;
-      --ligth-blue: #CFD8EE;
+      --light-blue: #CFD8EE;
     }
 
     html {
@@ -144,70 +149,6 @@ const { description, title } = Astro.props
         }
       }
 
-      /* Responsividad */
-      @media (max-width: 1024px) {
-        /* Ajuste de fuentes */
-        html {
-          font-size: 90%; /* Reducir tamaño de fuente en pantallas medianas */
-        }
-        body {
-          flex-direction: column;
-        }
-
-        /* Ajuste de navegación y otros elementos */
-        .navbar, .footer {
-          padding: 1rem;
-          text-align: center;
-        }
-      }
-
-      @media (max-width: 640px) {
-        /* Estilos para móviles */
-        html {
-          font-size: 85%; /* Reducir tamaño de fuente aún más */
-        }
-
-        /* Ajuste de elementos individuales */
-        .navbar, .footer {
-          padding: 0.5rem;
-        }
-
-        /* Ajuste del padding en elementos clave */
-        body {
-          padding: 0 1rem;
-        }
-
-        /* Botones y elementos interactivos más grandes */
-        button {
-          padding: 0.75rem 1.25rem;
-        }
-
-        /* Ajuste de fondo y elementos visuales */
-        .absolute {
-          background-position: center; /* Centrar el fondo en pantallas pequeñas */
-          background-size: cover; /* Asegurar que el fondo cubre toda la pantalla */
-        }
-
-        /* Ajustes en la sección principal */
-        .content {
-          flex-direction: column;
-          padding: 0.5rem;
-        }
-
-        /* Ajuste de textos e imágenes */
-        h1, p {
-          text-align: center; /* Centrar el texto */
-        }
-      }
-
-      /* Tipografía adaptable */
-      h1 {
-        font-size: 2.5rem;
-      }
-      p {
-        font-size: 1.25rem;
-      }
-
       @media (max-width: 640px) {
         h1 {
           font-size: 1.75rem;
@@ -217,14 +158,9 @@ const { description, title } = Astro.props
         }
       }
 
-      /* Ajuste de imágenes y fondos */
       img {
         max-width: 100%;
         height: auto;
-      }
-      .absolute {
-        background-position: center;
-        background-size: cover;
       }
     </style>
   </body>

@@ -17,7 +17,7 @@ const latestPosts = sortedPosts.slice(0, 3);
         {latestPosts.map(post => (
             <article class="flex flex-col space-y-8 group">
                 <Card
-                    href={`/newsletter/${post.id}`}
+                    href={`/newsletter/${post.id.replace(/\.md$/, '')}`}
                     title={post.data.title}
                     image={post.data.image}
                 />

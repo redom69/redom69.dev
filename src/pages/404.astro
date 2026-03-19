@@ -1,12 +1,12 @@
 ---
-import Layout from '../layouts/Layout.astro'; // Si usas un layout general
+import Layout from '../layouts/Layout.astro';
+
+export const prerender = true;
 ---
 
-<Layout title="Page Not Found"
-description='Notfound'
->
+<Layout title="Página no encontrada" description="La página que buscas no existe.">
   <section class="error-page">
-    <h1>404 - Page Not Found</h1>
+    <h1>404</h1>
     <p>Lo sentimos, la página que estás buscando no existe.</p>
     <a href="/" class="btn">Volver al Inicio</a>
   </section>
@@ -14,30 +14,37 @@ description='Notfound'
   <style>
     .error-page {
       text-align: center;
-      padding: 3rem;
+      padding: 6rem 2rem;
     }
 
     .error-page h1 {
-      font-size: 4rem;
-      color: #ff4757;
+      font-size: 6rem;
+      font-weight: 800;
+      color: var(--red);
     }
 
     .error-page p {
       font-size: 1.5rem;
-      margin: 1rem 0;
-      color: #333;
+      margin: 1rem 0 2rem;
+      color: var(--text-color-dark);
+    }
+
+    html.dark .error-page p {
+      color: var(--text-color-light);
     }
 
     .btn {
-      background-color: #0277bd;
+      display: inline-block;
+      background-color: var(--dark-blue);
       color: white;
       padding: 0.75rem 1.5rem;
-      border-radius: 5px;
+      border-radius: 9999px;
       text-decoration: none;
+      transition: background-color 0.3s ease;
     }
 
     .btn:hover {
-      background-color: #01579b;
+      background-color: var(--red);
     }
   </style>
 </Layout>

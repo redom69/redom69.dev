@@ -1,6 +1,7 @@
 ---
-// Importar el layout y componentes
 import Layout from '../layouts/Layout.astro';
+
+export const prerender = true;
 
 // Definir los servicios en un array
 const services = [
@@ -33,7 +34,7 @@ const services = [
   title="Servicios"
   description='Todo lo que te puedo ofrecer como desarrollador full-stack.'
 >
-<main class="px-4">
+<div class="px-4">
   <div class="space-y-24"></div>
   <section class="services-section py-8 px-4">
     <h1 class="services-title text-4xl font-bold mb-4 text-[var(--text-color-dark)] dark:text-[var(--text-color-light)]">Nuestros Servicios</h1>
@@ -59,7 +60,7 @@ const services = [
   </section>
  
 </div>
-</main>
+</div>
 </Layout>
 
 <style>

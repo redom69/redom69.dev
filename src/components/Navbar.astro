@@ -28,6 +28,8 @@ const navItems = [
     url: "/#contacto",
   }
 ]
+
+const currentPath = Astro.url.pathname;
 ---
 
 <header
@@ -35,12 +37,14 @@ const navItems = [
 >
   <nav
     class="flex px-3 text-sm font-medium rounded-full text-gray-600 dark:text-gray-200 justify-center items-center"
+    aria-label="Principal"
   >
     {
       navItems.map((link) => (
         <a
-          class="relative block px-2 py-2 transition "
+          class="relative block px-2 py-2 transition"
           aria-label={link.label}
+          aria-current={currentPath === link.url ? "page" : undefined}
           href={link.url}
         >
           {link.title}
@@ -56,7 +60,7 @@ const navItems = [
     const sections = document.querySelectorAll("section")
     const navItems = document.querySelectorAll("header nav a")
 
-    const callback = (entries: any[]) => {
+    const callback = (entries: IntersectionObserverEntry[]) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
           navItems.forEach((item) => {
@@ -80,7 +84,6 @@ const navItems = [
       observer.observe(section)
     })
 
-    // Cleanup function
     document.onvisibilitychange = () => {
       if (document.visibilityState === "hidden") {
         observer.disconnect()
@@ -113,14 +116,12 @@ const navItems = [
     }
   }
 
-
-/* Color del enlace activo */
-  nav a.text-blue-500 {
-      color: var(--red); 
+  nav a.text-blue-500,
+  nav a[aria-current="page"] {
+    color: var(--red);
   }
 
-  nav a:hover{
+  nav a:hover {
     color: var(--red);
-
   }
 </style>

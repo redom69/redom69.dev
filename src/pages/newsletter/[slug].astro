@@ -6,7 +6,7 @@ import LinkButton from '../../components/LinkButton.astro';
 export async function getStaticPaths() {
   const posts = await getCollection('posts');
   return posts.map((post) => ({
-    params: { slug: post.id },
+    params: { slug: post.id.replace(/\.md$/, '') },
     props: { post },
   }));
 }
@@ -24,28 +24,26 @@ const words = post.body ? post.body.split(' ').length : 0;
 const readingTime = Math.ceil(words / 200);
 ---
 <Layout title={post.data.title} description={post.data.description}>
-  <main class="px-4 py-10">
+  <section class="px-4 py-10">
     <div class="flex justify-center">
-      <section class="services-section py-8 px-4 max-w-2xl w-full">
-        <h1 class="services-title text-4xl font-bold mb-4 text-center text-[var(--text-color-dark)] dark:text-[var(--text-color-light)] pb-6">{post.data.title}</h1>
-       
-        <div class="post-info-container border-t border-b">
+      <article class="py-8 px-4 max-w-2xl w-full">
+        <h1 class="text-4xl font-bold mb-4 text-center text-[var(--text-color-dark)] dark:text-[var(--text-color-light)] pb-6">{post.data.title}</h1>
+
+        <div class="post-info-container">
           <div class="flex justify-between items-center">
             <p class="text-sm text-left ml-4 text-[var(--text-color-dark)] dark:text-gray-300">
               {readingTime} min · {new Date(post.data.date).toLocaleDateString()}
             </p>
-            <!-- Botón de compartir -->
-            <button id="shareButton" aria-label="Share Post" class="be cg bf bg bh as bi vx at au av fz ou ov ow ox we wf wg wh af wi wj wk wl wm wn wo ah wp wq wr">
-              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                <path fill="currentColor" fill-rule="evenodd" d="M15.218 4.931a.4.4 0 0 1-.118.132l.012.006a.45.45 0 0 1-.292.074.5.5 0 0 1-.3-.13l-2.02-2.02v7.07c0 .28-.23.5-.5.5s-.5-.22-.5-.5v-7.04l-2 2a.45.45 0 0 1-.57.04h-.02a.4.4 0 0 1-.16-.3.4.4 0 0 1 .1-.32l2.8-2.8a.5.5 0 0 1 .7 0l2.8 2.79a.42.42 0 0 1 .068.498m-.106.138.008.004v-.01zM16 7.063h1.5a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-11c-1.1 0-2-.9-2-2v-10a2 2 0 0 1 2-2H8a.5.5 0 0 1 .35.15.5.5 0 0 1 .15.35.5.5 0 0 1-.15.35.5.5 0 0 1-.35.15H6.4c-.5 0-.9.4-.9.9v10.2a.9.9 0 0 0 .9.9h11.2c.5 0 .9-.4.9-.9v-10.2c0-.5-.4-.9-.9-.9H16a.5.5 0 0 1 0-1"></path>
+            <button id="shareButton" aria-label="Compartir post" class="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M4 12v8a2 2 0 002 2h12a2 2 0 002-2v-8M16 6l-4-4-4 4M12 2v13" />
               </svg>
             </button>
           </div>
         </div>
 
-        <!-- Notificación de copiado -->
-        <div id="notification" class="notification"></div>
-        
+        <div id="share-notification" class="notification" role="alert" aria-live="polite"></div>
+
         {post.data.image && (
           <img src={post.data.image} alt={post.data.title} class="max-w-full h-auto block mx-auto py-5" loading="lazy"/>
         )}
@@ -53,40 +51,22 @@ const readingTime = Math.ceil(words / 200);
         <div class="article-content text-[var(--text-color-dark)] dark:text-[var(--text-color-light)]">
           <Content />
         </div>
-        <div class="left-align py-3">
+        <div class="py-3">
           <LinkButton href="/newsletter">
-            <i class="fas fa-arrow-left"></i> Volver a la newsletter
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-block mr-1"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+            Volver a la newsletter
           </LinkButton>
         </div>
-        
-      </section>
+      </article>
     </div>
-  </main>
+  </section>
 </Layout>
 
-<!-- Estilos -->
 <style>
 .post-info-container {
-  border-top: 1px solid #999a9b; /* Color gris para el borde superior */
-  border-bottom: 1px solid #999a9b; /* Color gris para el borde inferior */
+  border-top: 1px solid #999a9b;
+  border-bottom: 1px solid #999a9b;
   padding: 10px 0;
-}
-
-.post-info-container p {
-  text-align: left;
-  font-size: 0.875rem; /* Tamaño de texto pequeño */
-}
-
-.post-info-container p.dark {
-  color: #d1d5db; /* Color del texto en modo oscuro */
-}
-
-#shareButton:hover svg path {
-    fill: var(--red); /* Cambia el color del ícono SVG */
-}
-
-#shareButton:hover {
-  color: var(--red); /* Cambia el color del texto y del SVG */
 }
 
 .notification {
@@ -94,42 +74,44 @@ const readingTime = Math.ceil(words / 200);
   position: fixed;
   top: 20px;
   right: 20px;
-  padding: 10px;
-  background-color: #4caf50; /* Verde para éxito */
+  padding: 10px 16px;
+  background-color: #4caf50;
   color: white;
   border-radius: 5px;
+  z-index: 9999;
 }
 
 .notification.show {
   display: block;
 }
+
+.notification.error {
+  background-color: #f44336;
+}
 </style>
 
-<!-- JavaScript para manejar el copiado al portapapeles -->
 <script>
   document.getElementById('shareButton')?.addEventListener('click', function() {
-    const postUrl = window.location.href; // Obtiene el URL del post actual
+    const postUrl = window.location.href;
 
-    // Copia el enlace al portapapeles
     navigator.clipboard.writeText(postUrl).then(() => {
-      // Muestra la notificación de éxito
-      const notification = document.getElementById('notification');
-      notification!.textContent = '¡Enlace copiado al portapapeles!';
-      notification!.classList.add('show');
+      const notification = document.getElementById('share-notification');
+      if (!notification) return;
+      notification.textContent = 'Enlace copiado al portapapeles';
+      notification.classList.remove('error');
+      notification.classList.add('show');
 
-      // Oculta la notificación después de 3 segundos
       setTimeout(() => {
-        notification?.classList.remove('show');
+        notification.classList.remove('show');
       }, 3000);
-    }).catch(err => {
-      // Maneja errores si la copia falla
-      const notification = document.getElementById('notification');
-      notification!.textContent = 'Error al copiar el enlace';
-      notification!.classList.add('error', 'show');
+    }).catch(() => {
+      const notification = document.getElementById('share-notification');
+      if (!notification) return;
+      notification.textContent = 'Error al copiar el enlace';
+      notification.classList.add('error', 'show');
 
-      // Oculta la notificación después de 3 segundos
       setTimeout(() => {
-        notification!.classList.remove('show');
+        notification.classList.remove('show');
       }, 3000);
     });
   });

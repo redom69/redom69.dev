@@ -1,9 +1,6 @@
 ---
-// Detectar el idioma seleccionado a partir de la URL
 const url = new URL(Astro.url);
 const lang = url.searchParams.get('lang') || 'en';
-
-// Cargar el archivo JSON de traducción correspondiente
 const translations = await import(`../locales/${lang}.json`);
 ---
 
@@ -11,179 +8,121 @@ const translations = await import(`../locales/${lang}.json`);
     <form id="contact-form" method="POST" name="formularioContacto">
         <input type="hidden" name="form-name" value="formularioContacto">
 
-        <!-- Nombre -->
         <div class="field col-12">
-            <label for="name">{translations.form.name}</label>
-            <input type="text" id="name" name="name" class="input-field p-2 border rounded" placeholder={translations.form.placeholder.name} required />
+            <label for="contact-name">{translations.form.name}</label>
+            <input type="text" id="contact-name" name="name" class="input-field p-2 border rounded" placeholder={translations.form.placeholder.name} required aria-required="true" />
         </div>
 
-        <!-- Correo electrónico -->
         <div class="field col-12">
-            <label for="email">{translations.form.email}</label>
-            <input type="email" id="email" name="email" class="input-field p-2 border rounded" placeholder={translations.form.placeholder.email} required />
+            <label for="contact-email">{translations.form.email}</label>
+            <input type="email" id="contact-email" name="email" class="input-field p-2 border rounded" placeholder={translations.form.placeholder.email} required aria-required="true" />
         </div>
 
-        <!-- Asunto -->
         <div class="field col-12">
-            <label for="subject">{translations.form.subject}</label>
-            <input type="text" id="subject" name="subject" class="input-field p-2 border rounded" placeholder={translations.form.placeholder.subject} required />
+            <label for="contact-subject">{translations.form.subject}</label>
+            <input type="text" id="contact-subject" name="subject" class="input-field p-2 border rounded" placeholder={translations.form.placeholder.subject} required aria-required="true" />
         </div>
 
-        <!-- Mensaje -->
         <div class="field col-12">
-            <label for="message">{translations.form.message}</label>
-            <textarea id="message" name="message" rows="6" class="input-field p-2 border rounded" placeholder={translations.form.placeholder.message} required></textarea>
+            <label for="contact-message">{translations.form.message}</label>
+            <textarea id="contact-message" name="message" rows="6" class="input-field p-2 border rounded" placeholder={translations.form.placeholder.message} required aria-required="true"></textarea>
         </div>
 
-        <!-- reCAPTCHA -->
         <div class="field col-12">
             <script src="https://www.google.com/recaptcha/api.js"></script>
             <div class="g-recaptcha" data-sitekey="6LdAvUIUAAAAAHjrjmjtNTcXyKm0WKwefLp-dQv9"></div>
         </div>
 
-        <!-- Botón de enviar -->
         <div class="field col-12">
-            <button type="submit" class="p-button p-component" id="button-login-submit" style="margin-left: -150px;">
-                <span class="inline-flex items-center justify-center gap-2 px-6 py-1 text-gray-800 transition bg-gray-100 border border-gray-300 rounded-full dark:bg-gray-800 dark:border-gray-600 dark:text-white focus-visible:ring-yellow-500/80 text-md hover:bg-[var(--red)] hover:border-[var(--red)] hover:text-white dark:hover:bg-[var(--red)] dark:hover:border-[var(--red)] dark:hover:text-black group focus:outline-none focus-visible:outline-none focus-visible:ring focus-visible:ring-white focus-visible:ring-offset-2 active:bg-black w-[250%]">
+            <button type="submit" class="submit-button">
+                <span class="inline-flex items-center justify-center gap-2 px-6 py-2 text-gray-800 transition bg-gray-100 border border-gray-300 rounded-full dark:bg-gray-800 dark:border-gray-600 dark:text-white text-md hover:bg-[var(--red)] hover:border-[var(--red)] hover:text-white dark:hover:bg-[var(--red)] dark:hover:border-[var(--red)] dark:hover:text-black focus:outline-none focus-visible:ring focus-visible:ring-white focus-visible:ring-offset-2 active:bg-black w-full">
                     {translations.form.submit}
                 </span>
             </button>
-            
         </div>
     </form>
 
-    <!-- Contenedor de notificaciones -->
-    <div id="notification" class="notification" style="display: none;"></div>
+    <div id="contact-notification" class="notification" role="alert" aria-live="polite" style="display: none;"></div>
 </div>
 
-<!-- Estilos -->
 <style>
-    /* Estilos generales */
-    body {
-        display: flex; /* Si eliges flexbox */
-        justify-content: center; /* Centrar horizontalmente */
-        align-items: center; /* Centrar verticalmente */
-        min-height: 100vh; /* Ocupa toda la altura de la ventana */
-        margin: 0; /* Quitar márgenes predeterminados */
-    }
-
     .form-container {
         padding: 2rem;
         border-radius: 10px;
         width: 100%;
-        max-width: 800px;
-        text-align: center;
-        padding-left: 100px;
+        max-width: 600px;
+        margin: 0 auto;
     }
 
-    /* Estilos de los labels */
     .form-container label {
         display: block;
         text-align: left;
         font-weight: bold;
         margin-bottom: 0.5rem;
         padding-bottom: 10px;
-        color: var(--text-color-dark); /* Modo claro */
+        color: var(--text-color-dark);
     }
 
     html.dark .form-container label {
-        color: var(--text-color-light); /* Modo oscuro */
+        color: var(--text-color-light);
     }
 
-    /* Inputs y textarea */
     .form-container input, .form-container textarea {
-        width: 90%;
+        width: 100%;
         padding: 0.75rem;
         margin-bottom: 1.5rem;
         border: 1px solid #ccc;
         border-radius: 5px;
         font-size: 1rem;
-        color: var(--text-color-dark); /* Texto en modo claro */
-        background-color: rgba(255, 255, 255, 0.15); /* Fondo claro */
-        text-align: center; /* Texto centrado en los inputs */
+        color: var(--text-color-dark);
+        background-color: rgba(255, 255, 255, 0.15);
     }
 
-    html.dark .form-container input, 
+    html.dark .form-container input,
     html.dark .form-container textarea {
-        color: var(--text-color-light); /* Texto en modo oscuro */
-        background-color: rgba(0, 0, 0, 0.2); /* Fondo en modo oscuro */
+        color: var(--text-color-light);
+        background-color: rgba(0, 0, 0, 0.2);
     }
 
-    .input-field {
-        padding: 0.75rem;
-        border: 1px solid rgba(var(--accent-dark), 0.4);
-        border-radius: 8px;
-        font-size: 1rem;
-        background-color: rgba(var(--accent-light), 0.15);
-        color: var(--text-color-dark); /* Modo claro */
+    .submit-button {
+        width: 100%;
+        background: none;
+        border: none;
+        cursor: pointer;
+        padding: 0;
     }
 
-    html.dark .input-field {
-        background-color: rgba(var(--accent-dark), 0.2);
-        color: var(--text-color-light); /* Modo oscuro */
-    }
-
-    .input-field:focus {
-        border-color: var(--accent);
-        outline: none;
-        box-shadow: 0 0 0 2px rgba(var(--accent), 0.5);
-    }
-
-    /* Estilos del botón de enviar */
-    #button-login-submit span {
-        color: var(--text-color-dark); /* Modo claro */
-    }
-
-    html.dark #button-login-submit span {
-        color: var(--text-color-light); /* Modo oscuro */
-    }
-
-    /* Estilos del enlace de olvidaste tu contraseña */
-    .form-container .forgot-password {
-        color: #0277BD;
-        text-decoration: none;
-        font-size: 0.875rem;
-        margin-bottom: 1.5rem;
-        display: block;
-    }
-
-    .form-container .forgot-password:hover {
-        text-decoration: underline;
-    }
-
-    /* Estilos para las notificaciones */
     .notification {
         position: fixed;
         top: 20px;
         right: 20px;
         padding: 1rem;
-        background-color: #4caf50;
-        color: white;
         border-radius: 5px;
         display: none;
         font-size: 1rem;
         z-index: 9999;
-        width: 300px;
+        max-width: 350px;
     }
 
     .notification.success {
         background-color: #4caf50;
+        color: white;
     }
 
     .notification.error {
         background-color: #f44336;
+        color: white;
     }
 </style>
 
-<!-- Scripts -->
 <script>
-document.getElementById('contact-form')!.addEventListener('submit', async function (e) {
+document.getElementById('contact-form')?.addEventListener('submit', async function (e) {
     e.preventDefault();
 
-    const nameElement = document.getElementById('name') as HTMLInputElement | null;
-    const emailElement = document.getElementById('email') as HTMLInputElement | null;
-    const subjectElement = document.getElementById('subject') as HTMLInputElement | null;
-    const messageElement = document.getElementById('message') as HTMLTextAreaElement | null;
+    const nameElement = document.getElementById('contact-name') as HTMLInputElement | null;
+    const emailElement = document.getElementById('contact-email') as HTMLInputElement | null;
+    const subjectElement = document.getElementById('contact-subject') as HTMLInputElement | null;
+    const messageElement = document.getElementById('contact-message') as HTMLTextAreaElement | null;
 
     if (nameElement && emailElement && subjectElement && messageElement) {
         const name = nameElement.value;
@@ -191,38 +130,44 @@ document.getElementById('contact-form')!.addEventListener('submit', async functi
         const subject = subjectElement.value;
         const message = messageElement.value;
 
+        // Obtener token de reCAPTCHA
+        const recaptchaResponse = document.querySelector('.g-recaptcha-response') as HTMLTextAreaElement | null;
+        const recaptchaToken = recaptchaResponse?.value || '';
+
         try {
             const response = await fetch('/api/contact', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ name, email, subject, message }),
+                body: JSON.stringify({ name, email, subject, message, recaptchaToken }),
             });
 
             if (response.ok) {
                 const data = await response.json();
-                showNotification('Correo enviado: ' + data.message, 'success');
+                showContactNotification('Correo enviado correctamente', 'success');
+                (document.getElementById('contact-form') as HTMLFormElement).reset();
             } else {
-                showNotification('Error al enviar el correo', 'error');
+                const data = await response.json();
+                showContactNotification(data.message || 'Error al enviar el correo', 'error');
             }
         } catch (error) {
             console.error('Error:', error);
-            showNotification('Error al enviar el correo', 'error');
+            showContactNotification('Error al enviar el correo', 'error');
         }
-    }   
+    }
 });
 
-// Función para mostrar la notificación
-function showNotification(message:string, type:string) {
-    const notification = document.getElementById('notification');
-    notification!.textContent = message;
-    notification!.classList.remove('success', 'error');
-    notification!.classList.add(type === 'success' ? 'success' : 'error');
-    notification!.style.display = 'block';
+function showContactNotification(message: string, type: string) {
+    const notification = document.getElementById('contact-notification');
+    if (!notification) return;
+    notification.textContent = message;
+    notification.classList.remove('success', 'error');
+    notification.classList.add(type === 'success' ? 'success' : 'error');
+    notification.style.display = 'block';
 
     setTimeout(() => {
-        notification!.style.display = 'none';
+        notification.style.display = 'none';
     }, 5000);
 }
 </script>

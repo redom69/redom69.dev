@@ -31,4 +31,6 @@ Meterse en el mundillo. No para depender de la IA, sino para saber usarla y no q
 
 Para cualquier duda o si quieres debatir sobre esto, déjame un comentario en [**LinkedIn**](https://www.linkedin.com/in/daniel-hernandez-puerto-57a093194/) o comparte la newsletter si te ha resultado útil.
 
+<img src="/posts/meme-ia-chatgpt.jpg" alt="Meme: Me saying please to ChatGPT stopping the robot apocalypse" style="max-width: 100%; border-radius: 8px; margin-top: 1rem;" />
+
 ¡Hasta la próxima! 👋🏽

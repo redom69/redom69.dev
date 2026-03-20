@@ -5,13 +5,22 @@ const projects = [
     description: "Sitio web completo para un club de voleibol con gestión de equipos, competiciones, noticias y sistema de administración. Desarrollado con React, Vite, Supabase y TailwindCSS.",
     url: "https://clubvoleibolarganda.es",
     link: "https://clubvoleibolarganda.es",
-    tags: ["React", "Supabase", "TailwindCSS", "Vite"]
+    tags: ["React", "Supabase", "TailwindCSS", "Vite"],
+    fallback: "/projects/voleibol-arganda.png"
+  },
+  {
+    title: "Camila Paz Neurofisio",
+    description: "Web profesional para fisioterapeuta especializada en neurofisiología. Incluye presentación de servicios, información de contacto y diseño responsive adaptado a la identidad de marca. Desarrollado con Vite, React, TypeScript y Tailwind CSS v4.",
+    url: "https://www.camilapazneurofisio.com",
+    link: "https://www.camilapazneurofisio.com",
+    tags: ["React", "TypeScript", "Tailwind CSS v4", "Vite"],
+    fallback: "/projects/camila-fisio.jpg"
   }
 ];
 ---
 
 <div class="flex flex-col gap-y-16">
-  {projects.map(({ url, title, description, link, tags }) => (
+  {projects.map(({ url, title, description, link, tags, fallback }) => (
     <article class="flex flex-col space-y-8 group md:flex-row md:space-x-8 md:space-y-0">
       <!-- Preview dinámico del sitio -->
       <div class="w-full md:w-1/2">
@@ -27,7 +36,7 @@ const projects = [
             class="object-cover object-top w-full h-56 transition sm:h-full md:scale-110 md:group-hover:scale-105"
             loading="lazy"
             src={`https://api.microlink.io/?url=${encodeURIComponent(url)}&screenshot=true&meta=false&embed=screenshot.url&force=true&waitUntil=networkidle2`}
-            onerror="this.src='/projects/voleibol-arganda.png'"
+            onerror={`this.src='${fallback}'`}
           />
         </a>
       </div>

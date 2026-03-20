@@ -2,6 +2,7 @@
 const url = new URL(Astro.url);
 const lang = url.searchParams.get('lang') || 'en';
 const translations = await import(`../locales/${lang}.json`);
+const recaptchaSiteKey = import.meta.env.PUBLIC_RECAPTCHA_SITE_KEY;
 ---
 
 <div class="form-container">
@@ -29,8 +30,8 @@ const translations = await import(`../locales/${lang}.json`);
         </div>
 
         <div class="field col-12">
-            <script src="https://www.google.com/recaptcha/api.js"></script>
-            <div class="g-recaptcha" data-sitekey="6LdAvUIUAAAAAHjrjmjtNTcXyKm0WKwefLp-dQv9"></div>
+            <script is:inline src="https://www.google.com/recaptcha/api.js"></script>
+            <div class="g-recaptcha" data-sitekey={recaptchaSiteKey}></div>
         </div>
 
         <div class="field col-12">

@@ -177,20 +177,21 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
     </style>
 
     <script>
-      // Intersection Observer para animaciones de scroll
-      const observer = new IntersectionObserver(
-        (entries) => {
-          entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-              entry.target.classList.add('visible');
-            }
-          });
-        },
-        { threshold: 0.1 }
-      );
+      document.addEventListener('astro:page-load', () => {
+        const observer = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+              }
+            });
+          },
+          { threshold: 0.1 }
+        );
 
-      document.querySelectorAll('.section-animate').forEach((el) => {
-        observer.observe(el);
+        document.querySelectorAll('.section-animate').forEach((el) => {
+          observer.observe(el);
+        });
       });
     </script>
   </body>

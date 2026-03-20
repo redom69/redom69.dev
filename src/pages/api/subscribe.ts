@@ -28,21 +28,28 @@ export const POST: APIRoute = async ({ request }) => {
       }), { status: 400, headers: { 'Content-Type': 'application/json' } });
     }
 
-    // Verificar si el contacto ya existe (sanitized query)
+    // Verificar si el contacto ya existe
     const sanitizedEmail = email.replace(/'/g, "\\'");
     const requestSearch = {
       url: '/v3/marketing/contacts/search' as const,
       method: 'POST' as const,
       body: { query: `email LIKE '${sanitizedEmail}'` },
     };
-    const [searchData] = await sgClient.request(requestSearch);
-    const searchBody = searchData.body as { result?: Array<{ email: string }> };
 
-    if (searchBody.result && searchBody.result.length > 0) {
-      return new Response(JSON.stringify({
-        status: 'error',
-        message: 'Este correo ya está suscrito a la newsletter',
-      }), { status: 409, headers: { 'Content-Type': 'application/json' } });
+    try {
+      const [searchData] = await sgClient.request(requestSearch);
+      const searchBody = searchData.body as { result?: Array<{ email: string }> };
+
+      if (searchBody.result && searchBody.result.length > 0) {
+        return new Response(JSON.stringify({
+          status: 'error',
+          message: 'Este correo ya está suscrito a la newsletter',
+        }), { status: 409, headers: { 'Content-Type': 'application/json' } });
+      }
+    } catch (searchError) {
+      console.error('Error al buscar contacto en SendGrid:', searchError);
+      // Si la búsqueda falla, continuamos con la suscripción
+      // para no bloquear al usuario por un error de búsqueda
     }
 
     // Agregar el contacto
@@ -67,14 +74,21 @@ export const POST: APIRoute = async ({ request }) => {
       }), { status: 500, headers: { 'Content-Type': 'application/json' } });
     }
 
-    // Enviar correo de bienvenida
-    const msg = {
-      to: email,
-      from: import.meta.env.VERIFIED_USER,
-      templateId: import.meta.env.welcomeTemplateId,
-      dynamic_template_data: { email, name: String(name).slice(0, 100) },
-    };
-    await sgMail.send(msg);
+    // Enviar correo de bienvenida (no bloquea la suscripción si falla)
+    const welcomeTemplateId = import.meta.env.welcomeTemplateId;
+    if (welcomeTemplateId) {
+      try {
+        const msg = {
+          to: email,
+          from: import.meta.env.VERIFIED_USER,
+          templateId: welcomeTemplateId,
+          dynamic_template_data: { email, name: String(name).slice(0, 100) },
+        };
+        await sgMail.send(msg);
+      } catch (emailError) {
+        console.error('Error al enviar correo de bienvenida (la suscripción fue exitosa):', emailError);
+      }
+    }
 
     return new Response(JSON.stringify({
       status: 'success',

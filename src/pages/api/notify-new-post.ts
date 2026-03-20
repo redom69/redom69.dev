@@ -18,6 +18,14 @@ export const POST: APIRoute = async ({ request }) => {
 
     const { post1_title, post1_link, post2_title, post2_link } = await request.json();
 
+    const templateId = import.meta.env.newPostsTemplateId;
+    if (!templateId) {
+      return new Response(JSON.stringify({
+        status: 'error',
+        message: 'Template de notificación no configurado',
+      }), { status: 500, headers: { 'Content-Type': 'application/json' } });
+    }
+
     // Obtener todos los contactos
     const contactsResponse = await fetch('https://api.sendgrid.com/v3/marketing/contacts', {
       method: 'GET',
@@ -27,13 +35,30 @@ export const POST: APIRoute = async ({ request }) => {
       },
     });
 
+    if (!contactsResponse.ok) {
+      console.error('Error al obtener contactos:', await contactsResponse.text());
+      return new Response(JSON.stringify({
+        status: 'error',
+        message: 'Error al obtener la lista de suscriptores',
+      }), { status: 500, headers: { 'Content-Type': 'application/json' } });
+    }
+
     const contactsData = await contactsResponse.json();
-    const emails = contactsData.result.map((contact: { email: string }) => contact.email);
+    const contacts = contactsData.result;
+
+    if (!Array.isArray(contacts) || contacts.length === 0) {
+      return new Response(JSON.stringify({
+        status: 'success',
+        message: 'No hay suscriptores a los que notificar',
+      }), { status: 200, headers: { 'Content-Type': 'application/json' } });
+    }
+
+    const emails = contacts.map((contact: { email: string }) => contact.email);
 
     const msg = {
       to: emails,
       from: import.meta.env.VERIFIED_USER,
-      templateId: import.meta.env.newPostsTemplateId,
+      templateId,
       dynamic_template_data: {
         post1_title,
         post1_link,
@@ -46,7 +71,7 @@ export const POST: APIRoute = async ({ request }) => {
 
     return new Response(JSON.stringify({
       status: 'success',
-      message: 'Correos enviados correctamente a todos los suscriptores.',
+      message: `Correos enviados correctamente a ${emails.length} suscriptores.`,
     }), { status: 200, headers: { 'Content-Type': 'application/json' } });
   } catch (error) {
     console.error('Error al enviar correos:', error);

@@ -1,8 +1,8 @@
 import type { APIRoute } from 'astro';
-import sgClient from '@sendgrid/client';
+import { Resend } from 'resend';
 
-const sendgridApiKey = import.meta.env.SENDGRID_API_KEY;
-sgClient.setApiKey(sendgridApiKey);
+const resend = new Resend(import.meta.env.RESEND_API_KEY);
+const audienceId = import.meta.env.RESEND_AUDIENCE_ID;
 
 function isValidEmail(email: string): boolean {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
@@ -26,17 +26,14 @@ export const POST: APIRoute = async ({ request }) => {
       }), { status: 400, headers: { 'Content-Type': 'application/json' } });
     }
 
-    // Verificar si el contacto existe (sanitized query)
-    const sanitizedEmail = email.replace(/'/g, "\\'");
-    const requestSearch = {
-      url: '/v3/marketing/contacts/search' as const,
-      method: 'POST' as const,
-      body: { query: `email LIKE '${sanitizedEmail}'` },
-    };
-    const [searchData] = await sgClient.request(requestSearch);
-    const searchBody = searchData.body as { result?: Array<{ id: string }> };
+    // Verificar si el contacto existe
+    const { data: contactsList } = await resend.contacts.list({ audienceId });
 
-    if (!searchBody.result || searchBody.result.length === 0) {
+    const existing = contactsList?.data?.find(
+      (c: { email: string }) => c.email.toLowerCase() === email.toLowerCase()
+    );
+
+    if (!existing) {
       return new Response(JSON.stringify({
         status: 'error',
         message: 'El correo no está suscrito.',
@@ -44,12 +41,18 @@ export const POST: APIRoute = async ({ request }) => {
     }
 
     // Eliminar el contacto
-    const deleteRequest = {
-      url: '/v3/marketing/contacts' as const,
-      method: 'DELETE' as const,
-      qs: { ids: searchBody.result[0].id },
-    };
-    await sgClient.request(deleteRequest);
+    const { error: removeError } = await resend.contacts.remove({
+      audienceId,
+      id: existing.id,
+    });
+
+    if (removeError) {
+      console.error('Error al eliminar contacto:', removeError);
+      return new Response(JSON.stringify({
+        status: 'error',
+        message: 'Error al procesar tu solicitud de desuscripción.',
+      }), { status: 500, headers: { 'Content-Type': 'application/json' } });
+    }
 
     return new Response(JSON.stringify({
       status: 'success',

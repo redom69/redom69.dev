@@ -1,9 +1,7 @@
 import type { APIRoute } from 'astro';
-import sgMail from '@sendgrid/mail';
+import { Resend } from 'resend';
 
-const sendgridApiKey = import.meta.env.SENDGRID_API_KEY;
-sgMail.setApiKey(sendgridApiKey);
-
+const resend = new Resend(import.meta.env.RESEND_API_KEY);
 const RECAPTCHA_SECRET_KEY = import.meta.env.RECAPTCHA_SECRET_KEY;
 
 function isValidEmail(email: string): boolean {
@@ -45,20 +43,24 @@ export const POST: APIRoute = async ({ request }) => {
       }
     }
 
-    const msg = {
-      to: import.meta.env.GMAIL_USER,
-      from: import.meta.env.VERIFIED_USER,
-      replyTo: email,
-      subject: String(subject).slice(0, 200),
-      templateId: import.meta.env.contactoTemplate,
-      dynamic_template_data: {
-        name: String(name).slice(0, 100),
-        email,
-        message: String(message).slice(0, 5000),
-      },
-    };
+    const sanitizedName = String(name).slice(0, 100);
+    const sanitizedSubject = String(subject).slice(0, 200);
+    const sanitizedMessage = String(message).slice(0, 5000);
 
-    await sgMail.send(msg);
+    await resend.emails.send({
+      from: import.meta.env.VERIFIED_USER,
+      to: import.meta.env.GMAIL_USER,
+      replyTo: email,
+      subject: sanitizedSubject,
+      template: {
+        id: 'feedback-notification',
+        variables: {
+          name: sanitizedName,
+          subject: sanitizedSubject,
+          message: sanitizedMessage,
+        },
+      },
+    });
 
     return new Response(JSON.stringify({
       status: 'success',

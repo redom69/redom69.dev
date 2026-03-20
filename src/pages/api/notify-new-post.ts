@@ -1,9 +1,9 @@
 import type { APIRoute } from 'astro';
-import sgMail from '@sendgrid/mail';
+import { Resend } from 'resend';
 
-const sendgridApiKey = import.meta.env.SENDGRID_API_KEY;
+const resend = new Resend(import.meta.env.RESEND_API_KEY);
+const audienceId = import.meta.env.RESEND_AUDIENCE_ID;
 const NOTIFY_SECRET = import.meta.env.NOTIFY_SECRET;
-sgMail.setApiKey(sendgridApiKey);
 
 export const POST: APIRoute = async ({ request }) => {
   try {
@@ -18,33 +18,18 @@ export const POST: APIRoute = async ({ request }) => {
 
     const { post1_title, post1_link, post2_title, post2_link } = await request.json();
 
-    const templateId = import.meta.env.newPostsTemplateId;
-    if (!templateId) {
-      return new Response(JSON.stringify({
-        status: 'error',
-        message: 'Template de notificación no configurado',
-      }), { status: 500, headers: { 'Content-Type': 'application/json' } });
-    }
+    // Obtener todos los contactos de la audiencia
+    const { data: contactsList, error: listError } = await resend.contacts.list({ audienceId });
 
-    // Obtener todos los contactos
-    const contactsResponse = await fetch('https://api.sendgrid.com/v3/marketing/contacts', {
-      method: 'GET',
-      headers: {
-        Authorization: `Bearer ${sendgridApiKey}`,
-        'Content-Type': 'application/json',
-      },
-    });
-
-    if (!contactsResponse.ok) {
-      console.error('Error al obtener contactos:', await contactsResponse.text());
+    if (listError) {
+      console.error('Error al obtener contactos:', listError);
       return new Response(JSON.stringify({
         status: 'error',
         message: 'Error al obtener la lista de suscriptores',
       }), { status: 500, headers: { 'Content-Type': 'application/json' } });
     }
 
-    const contactsData = await contactsResponse.json();
-    const contacts = contactsData.result;
+    const contacts = contactsList?.data;
 
     if (!Array.isArray(contacts) || contacts.length === 0) {
       return new Response(JSON.stringify({
@@ -53,25 +38,35 @@ export const POST: APIRoute = async ({ request }) => {
       }), { status: 200, headers: { 'Content-Type': 'application/json' } });
     }
 
-    const emails = contacts.map((contact: { email: string }) => contact.email);
+    const from = import.meta.env.VERIFIED_USER;
+    const templateVariables = { post1_title, post1_link, post2_title, post2_link };
 
-    const msg = {
-      to: emails,
-      from: import.meta.env.VERIFIED_USER,
-      templateId,
-      dynamic_template_data: {
-        post1_title,
-        post1_link,
-        post2_title,
-        post2_link,
-      },
-    };
+    // Enviar en batches de 100 (límite de Resend batch API)
+    const BATCH_SIZE = 100;
+    let totalSent = 0;
 
-    await sgMail.sendMultiple(msg);
+    for (let i = 0; i < contacts.length; i += BATCH_SIZE) {
+      const batch = contacts.slice(i, i + BATCH_SIZE);
+      const emails = batch.map((contact: { email: string }) => ({
+        from,
+        to: contact.email,
+        template: {
+          id: 'weekly-updates-1',
+          variables: templateVariables,
+        },
+      }));
+
+      const { error: batchError } = await resend.batch.send(emails);
+      if (batchError) {
+        console.error(`Error en batch ${i / BATCH_SIZE + 1}:`, batchError);
+      } else {
+        totalSent += batch.length;
+      }
+    }
 
     return new Response(JSON.stringify({
       status: 'success',
-      message: `Correos enviados correctamente a ${emails.length} suscriptores.`,
+      message: `Correos enviados correctamente a ${totalSent} suscriptores.`,
     }), { status: 200, headers: { 'Content-Type': 'application/json' } });
   } catch (error) {
     console.error('Error al enviar correos:', error);

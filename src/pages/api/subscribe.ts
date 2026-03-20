@@ -1,10 +1,8 @@
 import type { APIRoute } from 'astro';
-import sgMail from '@sendgrid/mail';
-import sgClient from '@sendgrid/client';
+import { Resend } from 'resend';
 
-const sendgridApiKey = import.meta.env.SENDGRID_API_KEY;
-sgMail.setApiKey(sendgridApiKey);
-sgClient.setApiKey(sendgridApiKey);
+const resend = new Resend(import.meta.env.RESEND_API_KEY);
+const audienceId = import.meta.env.RESEND_AUDIENCE_ID;
 
 function isValidEmail(email: string): boolean {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
@@ -29,45 +27,28 @@ export const POST: APIRoute = async ({ request }) => {
     }
 
     // Verificar si el contacto ya existe
-    const sanitizedEmail = email.replace(/'/g, "\\'");
-    const requestSearch = {
-      url: '/v3/marketing/contacts/search' as const,
-      method: 'POST' as const,
-      body: { query: `email LIKE '${sanitizedEmail}'` },
-    };
+    const { data: contactsList } = await resend.contacts.list({ audienceId });
 
-    try {
-      const [searchData] = await sgClient.request(requestSearch);
-      const searchBody = searchData.body as { result?: Array<{ email: string }> };
+    const existing = contactsList?.data?.find(
+      (c: { email: string }) => c.email.toLowerCase() === email.toLowerCase()
+    );
 
-      if (searchBody.result && searchBody.result.length > 0) {
-        return new Response(JSON.stringify({
-          status: 'error',
-          message: 'Este correo ya está suscrito a la newsletter',
-        }), { status: 409, headers: { 'Content-Type': 'application/json' } });
-      }
-    } catch (searchError) {
-      console.error('Error al buscar contacto en SendGrid:', searchError);
-      // Si la búsqueda falla, continuamos con la suscripción
-      // para no bloquear al usuario por un error de búsqueda
+    if (existing) {
+      return new Response(JSON.stringify({
+        status: 'error',
+        message: 'Este correo ya está suscrito a la newsletter',
+      }), { status: 409, headers: { 'Content-Type': 'application/json' } });
     }
 
-    // Agregar el contacto
-    const addData = {
-      contacts: [{ email, first_name: String(name).slice(0, 100) }],
-    };
-
-    const addResponse = await fetch('https://api.sendgrid.com/v3/marketing/contacts', {
-      method: 'PUT',
-      headers: {
-        Authorization: `Bearer ${sendgridApiKey}`,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(addData),
+    // Agregar el contacto a la audiencia
+    const { error: createError } = await resend.contacts.create({
+      audienceId,
+      email,
+      firstName: String(name).slice(0, 100),
     });
 
-    if (!addResponse.ok) {
-      console.error('Error al agregar el contacto:', await addResponse.json());
+    if (createError) {
+      console.error('Error al agregar el contacto:', createError);
       return new Response(JSON.stringify({
         status: 'error',
         message: 'Error al suscribirse a la newsletter',
@@ -75,19 +56,19 @@ export const POST: APIRoute = async ({ request }) => {
     }
 
     // Enviar correo de bienvenida (no bloquea la suscripción si falla)
-    const welcomeTemplateId = import.meta.env.welcomeTemplateId;
-    if (welcomeTemplateId) {
-      try {
-        const msg = {
-          to: email,
-          from: import.meta.env.VERIFIED_USER,
-          templateId: welcomeTemplateId,
-          dynamic_template_data: { email, name: String(name).slice(0, 100) },
-        };
-        await sgMail.send(msg);
-      } catch (emailError) {
-        console.error('Error al enviar correo de bienvenida (la suscripción fue exitosa):', emailError);
-      }
+    try {
+      await resend.emails.send({
+        from: import.meta.env.VERIFIED_USER,
+        to: email,
+        template: {
+          id: 'welcome-message',
+          variables: {
+            name: String(name).slice(0, 100),
+          },
+        },
+      });
+    } catch (emailError) {
+      console.error('Error al enviar correo de bienvenida (la suscripción fue exitosa):', emailError);
     }
 
     return new Response(JSON.stringify({
@@ -95,10 +76,12 @@ export const POST: APIRoute = async ({ request }) => {
       message: 'Te has suscrito correctamente',
     }), { status: 200, headers: { 'Content-Type': 'application/json' } });
   } catch (error) {
+    const errorMessage = error instanceof Error ? error.message : String(error);
     console.error('Error en suscripción:', error);
     return new Response(JSON.stringify({
       status: 'error',
       message: 'Error al suscribirse a la newsletter',
+      debug: errorMessage,
     }), { status: 500, headers: { 'Content-Type': 'application/json' } });
   }
 };

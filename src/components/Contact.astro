@@ -29,10 +29,8 @@ const recaptchaSiteKey = import.meta.env.PUBLIC_RECAPTCHA_SITE_KEY;
             <textarea id="contact-message" name="message" rows="6" class="input-field p-2 border rounded" placeholder={translations.form.placeholder.message} required aria-required="true"></textarea>
         </div>
 
-        <div class="field col-12">
-            <script is:inline src="https://www.google.com/recaptcha/api.js"></script>
-            <div class="g-recaptcha" data-sitekey={recaptchaSiteKey}></div>
-        </div>
+        <!-- reCAPTCHA v3: invisible, se ejecuta al enviar -->
+        <script is:inline src={`https://www.google.com/recaptcha/api.js?render=${recaptchaSiteKey}`}></script>
 
         <div class="field col-12">
             <button type="submit" class="submit-button">
@@ -116,14 +114,14 @@ const recaptchaSiteKey = import.meta.env.PUBLIC_RECAPTCHA_SITE_KEY;
     }
 </style>
 
-<script>
+<script define:vars={{ recaptchaSiteKey }}>
 document.getElementById('contact-form')?.addEventListener('submit', async function (e) {
     e.preventDefault();
 
-    const nameElement = document.getElementById('contact-name') as HTMLInputElement | null;
-    const emailElement = document.getElementById('contact-email') as HTMLInputElement | null;
-    const subjectElement = document.getElementById('contact-subject') as HTMLInputElement | null;
-    const messageElement = document.getElementById('contact-message') as HTMLTextAreaElement | null;
+    const nameElement = document.getElementById('contact-name');
+    const emailElement = document.getElementById('contact-email');
+    const subjectElement = document.getElementById('contact-subject');
+    const messageElement = document.getElementById('contact-message');
 
     if (nameElement && emailElement && subjectElement && messageElement) {
         const name = nameElement.value;
@@ -131,23 +129,25 @@ document.getElementById('contact-form')?.addEventListener('submit', async functi
         const subject = subjectElement.value;
         const message = messageElement.value;
 
-        // Obtener token de reCAPTCHA
-        const recaptchaResponse = document.querySelector('.g-recaptcha-response') as HTMLTextAreaElement | null;
-        const recaptchaToken = recaptchaResponse?.value || '';
-
         try {
+            // Obtener token de reCAPTCHA v3
+            const recaptchaToken = await new Promise((resolve, reject) => {
+                window.grecaptcha.ready(() => {
+                    window.grecaptcha.execute(recaptchaSiteKey, { action: 'contact' })
+                        .then(resolve)
+                        .catch(reject);
+                });
+            });
+
             const response = await fetch('/api/contact', {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
+                headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ name, email, subject, message, recaptchaToken }),
             });
 
             if (response.ok) {
-                const data = await response.json();
                 showContactNotification('Correo enviado correctamente', 'success');
-                (document.getElementById('contact-form') as HTMLFormElement).reset();
+                document.getElementById('contact-form').reset();
             } else {
                 const data = await response.json();
                 showContactNotification(data.message || 'Error al enviar el correo', 'error');
@@ -159,16 +159,13 @@ document.getElementById('contact-form')?.addEventListener('submit', async functi
     }
 });
 
-function showContactNotification(message: string, type: string) {
+function showContactNotification(message, type) {
     const notification = document.getElementById('contact-notification');
     if (!notification) return;
     notification.textContent = message;
     notification.classList.remove('success', 'error');
     notification.classList.add(type === 'success' ? 'success' : 'error');
     notification.style.display = 'block';
-
-    setTimeout(() => {
-        notification.style.display = 'none';
-    }, 5000);
+    setTimeout(() => { notification.style.display = 'none'; }, 5000);
 }
 </script>

@@ -35,7 +35,8 @@ export const POST: APIRoute = async ({ request }) => {
       });
       const recaptchaData = await recaptchaResponse.json();
 
-      if (!recaptchaData.success) {
+      // v3: verificar success y score mínimo de 0.5
+      if (!recaptchaData.success || (recaptchaData.score !== undefined && recaptchaData.score < 0.5)) {
         return new Response(JSON.stringify({
           status: 'error',
           message: 'Verificación reCAPTCHA fallida',

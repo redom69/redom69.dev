@@ -152,7 +152,7 @@ document.getElementById('contact-form')?.addEventListener('submit', async functi
                 showContactNotification(data.message || 'Error al enviar el correo', 'error');
             }
         } catch (error) {
-            console.error('Error:', error);
+            if (import.meta.env.DEV) console.error('Error:', error);
             showContactNotification('Error al enviar el correo', 'error');
         }
     }

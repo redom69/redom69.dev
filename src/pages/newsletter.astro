@@ -226,7 +226,7 @@ document.getElementById('newsletter-form')?.addEventListener('submit', async fun
         showNotification(data.message || 'Hubo un error al suscribirte. Intenta nuevamente', 'error');
       }
     } catch (error) {
-      console.error('Error de red:', error);
+      if (import.meta.env.DEV) console.error('Error de red:', error);
       showNotification('No se pudo conectar con el servidor. Revisa tu conexión a Internet', 'error');
     }
   }

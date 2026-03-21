@@ -5,7 +5,6 @@
     "subject": "Subject",
     "message": "Message",
     "submit": "Send",
-    "recaptcha": "Please complete the reCAPTCHA",
     "placeholder": {
       "name": "John Doe",
       "email": "john@doe.com",

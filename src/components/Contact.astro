@@ -94,14 +94,19 @@ const translations = await import(`../locales/${lang}.json`);
 
     .notification {
         position: fixed;
-        top: 20px;
-        right: 20px;
-        padding: 1rem;
-        border-radius: 5px;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        padding: 1.25rem 1.5rem;
+        border-radius: 10px;
         display: none;
         font-size: 1rem;
+        font-weight: 500;
         z-index: 9999;
-        max-width: 350px;
+        width: 90%;
+        max-width: 380px;
+        text-align: center;
+        box-shadow: 0 8px 32px rgba(0,0,0,0.25);
     }
 
     .notification.success {

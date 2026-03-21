@@ -52,15 +52,16 @@ export const POST: APIRoute = async ({ request }) => {
       from: import.meta.env.VERIFIED_USER,
       to: import.meta.env.GMAIL_USER,
       replyTo: email,
-      subject: sanitizedSubject,
-      template: {
-        id: 'feedback-notification',
-        variables: {
-          name: sanitizedName,
-          subject: sanitizedSubject,
-          message: sanitizedMessage,
-        },
-      },
+      subject: `[redom69.dev] ${sanitizedSubject}`,
+      html: `
+        <h2>Nuevo mensaje de contacto</h2>
+        <p><strong>Nombre:</strong> ${sanitizedName}</p>
+        <p><strong>Email:</strong> ${email}</p>
+        <p><strong>Asunto:</strong> ${sanitizedSubject}</p>
+        <hr />
+        <p><strong>Mensaje:</strong></p>
+        <p>${sanitizedMessage.replace(/\n/g, '<br/>')}</p>
+      `,
     });
 
     return new Response(JSON.stringify({

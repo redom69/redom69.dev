@@ -4,18 +4,22 @@ import Badge from "./Badge.astro";
 import LinkedInIcon from "./icons/LinkedIn.astro";
 import MailIcon from "./icons/Mail.astro";
 import SocialPill from "./SocialPill.astro";
+import { Image } from 'astro:assets';
+import profileImg from '../../public/profile.webp';
 ---
 
 <div class="max-w-xl mx-auto hero-container">
   <div class="flex flex-col sm:flex-row gap-4 mb-6 items-center">
     <!-- Imagen de perfil -->
     <div class="rounded-full w-24 h-24 overflow-hidden shadow-lg ring-2 ring-[var(--red)] ring-offset-2 ring-offset-transparent">
-      <img
+      <Image
         class="object-cover w-full h-full"
         style={{ objectPosition: "50% 25%" }}
-        src="/profile.webp"
+        src={profileImg}
         alt={personalImageAlt}
-        loading="lazy"
+        width={96}
+        height={96}
+        loading="eager"
       />
     </div>
 

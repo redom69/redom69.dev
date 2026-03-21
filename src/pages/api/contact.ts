@@ -2,15 +2,52 @@ import type { APIRoute } from 'astro';
 import { Resend } from 'resend';
 
 const resend = new Resend(import.meta.env.RESEND_API_KEY);
-const RECAPTCHA_SECRET_KEY = import.meta.env.RECAPTCHA_SECRET_KEY;
+
+// Rate limiting: máximo 3 emails por IP por hora
+const rateLimitMap = new Map<string, { count: number; resetAt: number }>();
+const MAX_REQUESTS = 3;
+const WINDOW_MS = 60 * 60 * 1000; // 1 hora
+
+function isRateLimited(ip: string): boolean {
+  const now = Date.now();
+  const entry = rateLimitMap.get(ip);
+
+  if (!entry || now > entry.resetAt) {
+    rateLimitMap.set(ip, { count: 1, resetAt: now + WINDOW_MS });
+    return false;
+  }
+
+  if (entry.count >= MAX_REQUESTS) return true;
+
+  entry.count++;
+  return false;
+}
 
 function isValidEmail(email: string): boolean {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 }
 
-export const POST: APIRoute = async ({ request }) => {
+export const POST: APIRoute = async ({ request, clientAddress }) => {
   try {
-    const { name, email, message, subject, recaptchaToken } = await request.json();
+    const ip = clientAddress || 'unknown';
+
+    // Rate limiting
+    if (isRateLimited(ip)) {
+      return new Response(JSON.stringify({
+        status: 'error',
+        message: 'Demasiadas peticiones. Inténtalo más tarde.',
+      }), { status: 429, headers: { 'Content-Type': 'application/json' } });
+    }
+
+    const { name, email, message, subject, honeypot } = await request.json();
+
+    // Honeypot: si viene relleno es un bot
+    if (honeypot) {
+      return new Response(JSON.stringify({
+        status: 'success',
+        message: 'Correo enviado correctamente',
+      }), { status: 200, headers: { 'Content-Type': 'application/json' } });
+    }
 
     if (!name || !email || !subject || !message) {
       return new Response(JSON.stringify({
@@ -24,24 +61,6 @@ export const POST: APIRoute = async ({ request }) => {
         status: 'error',
         message: 'Email no válido',
       }), { status: 400, headers: { 'Content-Type': 'application/json' } });
-    }
-
-    // Verificar reCAPTCHA server-side
-    if (RECAPTCHA_SECRET_KEY) {
-      const recaptchaResponse = await fetch('https://www.google.com/recaptcha/api/siteverify', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: `secret=${RECAPTCHA_SECRET_KEY}&response=${recaptchaToken}`,
-      });
-      const recaptchaData = await recaptchaResponse.json();
-
-      // v3: verificar success y score mínimo de 0.5
-      if (!recaptchaData.success || (recaptchaData.score !== undefined && recaptchaData.score < 0.5)) {
-        return new Response(JSON.stringify({
-          status: 'error',
-          message: 'Verificación reCAPTCHA fallida',
-        }), { status: 403, headers: { 'Content-Type': 'application/json' } });
-      }
     }
 
     const sanitizedName = String(name).slice(0, 100);
@@ -67,6 +86,7 @@ export const POST: APIRoute = async ({ request }) => {
       status: 'success',
       message: 'Correo enviado correctamente',
     }), { status: 200, headers: { 'Content-Type': 'application/json' } });
+
   } catch (error) {
     console.error('Error al enviar el correo:', error);
     return new Response(JSON.stringify({

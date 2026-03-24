@@ -18,7 +18,12 @@ export const POST: APIRoute = async ({ request }) => {
       }), { status: 401, headers: { 'Content-Type': 'application/json' } });
     }
 
-    const { post1_title, post1_link, post2_title, post2_link } = await request.json();
+    const {
+      post1_title, post1_link, post1_image = '', post1_description = '',
+      post2_title = '', post2_link = '', post2_image = '', post2_description = '',
+    } = await request.json();
+
+    const subject = post1_title ? `Nuevo post: ${post1_title}` : 'Nuevas publicaciones en redom69.dev';
 
     // Obtener todos los contactos de la audiencia
     const { data: contactsList, error: listError } = await resend.contacts.list({ audienceId });
@@ -41,7 +46,10 @@ export const POST: APIRoute = async ({ request }) => {
     }
 
     const from = process.env.VERIFIED_USER;
-    const templateVariables = { post1_title, post1_link, post2_title, post2_link };
+    const templateVariables = {
+      post1_title, post1_link, post1_image: `https://redom69.dev${post1_image}`, post1_description,
+      post2_title, post2_link, post2_image: post2_image ? `https://redom69.dev${post2_image}` : '', post2_description,
+    };
 
     // Enviar en batches de 100 (límite de Resend batch API)
     const BATCH_SIZE = 100;
@@ -52,6 +60,7 @@ export const POST: APIRoute = async ({ request }) => {
       const emails = batch.map((contact: { email: string }) => ({
         from,
         to: contact.email,
+        subject,
         template: {
           id: 'weekly-updates-1',
           variables: templateVariables,

@@ -32,11 +32,14 @@ jobs:
 
           FILE1=$(echo "$NEW_FILES" | head -1)
           SLUG1=$(basename "$FILE1" .md)
-          TITLE1=""
-          [ -f "$FILE1" ] && TITLE1=$(grep -m1 '^title:' "$FILE1" | sed 's/^title: *//;s/^["'"'"']//;s/["'"'"']$//')
+          TITLE1=""; IMAGE1=""; DESC1=""
+          if [ -f "$FILE1" ]; then
+            TITLE1=$(grep -m1 '^title:' "$FILE1" | sed 's/^title: *//;s/^["'"'"']//;s/["'"'"']$//')
+            IMAGE1=$(grep -m1 '^image:' "$FILE1" | sed 's/^image: *//;s/^["'"'"']//;s/["'"'"']$//')
+            DESC1=$(grep -m1 '^description:' "$FILE1" | sed 's/^description: *//;s/^["'"'"']//;s/["'"'"']$//')
+          fi
 
           # Slug2 = segundo post más reciente del repo (por fecha en frontmatter)
-          # Obtener todos los posts actuales ordenados por fecha desc, excluyendo el nuevo
           ALL_POSTS=$(git ls-tree -r --name-only HEAD -- src/content/posts/ | grep '\.md$')
           SECOND_FILE=$(echo "$ALL_POSTS" | while read f; do
             DATE=$(grep -m1 '^date:' "$f" 2>/dev/null | sed 's/^date: *//')
@@ -44,15 +47,23 @@ jobs:
           done | sort -r | grep -v "$(basename "$FILE1")" | head -1 | awk '{print $2}')
 
           SLUG2=$(basename "$SECOND_FILE" .md)
-          TITLE2=""
-          [ -f "$SECOND_FILE" ] && TITLE2=$(grep -m1 '^title:' "$SECOND_FILE" | sed 's/^title: *//;s/^["'"'"']//;s/["'"'"']$//')
+          TITLE2=""; IMAGE2=""; DESC2=""
+          if [ -f "$SECOND_FILE" ]; then
+            TITLE2=$(grep -m1 '^title:' "$SECOND_FILE" | sed 's/^title: *//;s/^["'"'"']//;s/["'"'"']$//')
+            IMAGE2=$(grep -m1 '^image:' "$SECOND_FILE" | sed 's/^image: *//;s/^["'"'"']//;s/["'"'"']$//')
+            DESC2=$(grep -m1 '^description:' "$SECOND_FILE" | sed 's/^description: *//;s/^["'"'"']//;s/["'"'"']$//')
+          fi
 
           echo "slug1=$SLUG1" >> $GITHUB_OUTPUT
           echo "slug2=$SLUG2" >> $GITHUB_OUTPUT
           echo "title1=$TITLE1" >> $GITHUB_OUTPUT
           echo "title2=$TITLE2" >> $GITHUB_OUTPUT
-          echo "Title 1: $TITLE1 | Slug 1: $SLUG1"
-          echo "Title 2: $TITLE2 | Slug 2: $SLUG2"
+          echo "image1=$IMAGE1" >> $GITHUB_OUTPUT
+          echo "image2=$IMAGE2" >> $GITHUB_OUTPUT
+          echo "desc1=$DESC1" >> $GITHUB_OUTPUT
+          echo "desc2=$DESC2" >> $GITHUB_OUTPUT
+          echo "Title 1: $TITLE1 | Slug 1: $SLUG1 | Image: $IMAGE1"
+          echo "Title 2: $TITLE2 | Slug 2: $SLUG2 | Image: $IMAGE2"
 
       - name: Notify subscribers
         if: steps.detect.outputs.slug1 != ''
@@ -64,14 +75,23 @@ jobs:
           TITLE1="${{ steps.detect.outputs.title1 }}"
           TITLE2="${{ steps.detect.outputs.title2 }}"
 
+          IMAGE1="${{ steps.detect.outputs.image1 }}"
+          IMAGE2="${{ steps.detect.outputs.image2 }}"
+          DESC1="${{ steps.detect.outputs.desc1 }}"
+          DESC2="${{ steps.detect.outputs.desc2 }}"
+
           curl -s -L -X POST https://redom69.dev/api/notify-new-post \
             -H "Content-Type: application/json" \
             -H "X-Notify-Secret: $NOTIFY_SECRET" \
             -d "{
               \"post1_title\": \"$TITLE1\",
               \"post1_link\": \"https://redom69.dev/newsletter/$SLUG1\",
+              \"post1_image\": \"$IMAGE1\",
+              \"post1_description\": \"$DESC1\",
               \"post2_title\": \"$TITLE2\",
-              \"post2_link\": \"https://redom69.dev/newsletter/$SLUG2\"
+              \"post2_link\": \"https://redom69.dev/newsletter/$SLUG2\",
+              \"post2_image\": \"$IMAGE2\",
+              \"post2_description\": \"$DESC2\"
             }" | tee response.json
 
           STATUS=$(cat response.json | python3 -c "import sys,json; print(json.load(sys.stdin).get('status',''))" 2>/dev/null)

@@ -23,7 +23,7 @@ export const POST: APIRoute = async ({ request }) => {
       post2_title = '', post2_link = '', post2_image = '', post2_description = '',
     } = await request.json();
 
-    const subject = post1_title ? `Nuevo post: ${post1_title}` : 'Nuevas publicaciones en redom69.dev';
+    const subject = post1_title ?? 'Nuevas publicaciones en redom69.dev';
 
     // Obtener todos los contactos de la audiencia
     const { data: contactsList, error: listError } = await resend.contacts.list({ audienceId });

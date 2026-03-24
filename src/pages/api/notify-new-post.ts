@@ -9,10 +9,15 @@ export const POST: APIRoute = async ({ request }) => {
   try {
     // Proteger con token secreto
     const authHeader = request.headers.get('Authorization');
+    const secretExists = !!NOTIFY_SECRET;
+    const secretLen = NOTIFY_SECRET?.length ?? 0;
+    const headerMatch = authHeader === `Bearer ${NOTIFY_SECRET}`;
+    console.log('[notify] secretExists:', secretExists, 'secretLen:', secretLen, 'headerMatch:', headerMatch);
     if (!NOTIFY_SECRET || authHeader !== `Bearer ${NOTIFY_SECRET}`) {
       return new Response(JSON.stringify({
         status: 'error',
         message: 'No autorizado',
+        debug: { secretExists, secretLen, headerMatch }
       }), { status: 401, headers: { 'Content-Type': 'application/json' } });
     }
 

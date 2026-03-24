@@ -1,0 +1,80 @@
+name: Notify Newsletter — New Post
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'src/content/posts/**'
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+
+      - name: Get new post files
+        id: new_posts
+        run: |
+          NEW_FILES=$(git diff --name-only --diff-filter=A HEAD~1 HEAD -- 'src/content/posts/*.md' | head -2)
+          echo "files=$NEW_FILES" >> $GITHUB_OUTPUT
+          echo "New post files: $NEW_FILES"
+
+      - name: Extract post slugs
+        id: slugs
+        run: |
+          FILES="${{ steps.new_posts.outputs.files }}"
+          SLUG1=$(echo "$FILES" | head -1 | xargs basename 2>/dev/null | sed 's/\.md$//')
+          SLUG2=$(echo "$FILES" | tail -n +2 | head -1 | xargs basename 2>/dev/null | sed 's/\.md$//')
+          echo "slug1=$SLUG1" >> $GITHUB_OUTPUT
+          echo "slug2=$SLUG2" >> $GITHUB_OUTPUT
+          echo "Slug 1: $SLUG1 | Slug 2: $SLUG2"
+
+      - name: Extract post titles
+        id: titles
+        run: |
+          FILES="${{ steps.new_posts.outputs.files }}"
+          FILE1=$(echo "$FILES" | head -1)
+          FILE2=$(echo "$FILES" | tail -n +2 | head -1)
+
+          TITLE1=""
+          TITLE2=""
+
+          if [ -n "$FILE1" ] && [ -f "$FILE1" ]; then
+            TITLE1=$(grep -m1 '^title:' "$FILE1" | sed 's/^title: *//;s/^["'"'"']//;s/["'"'"']$//')
+          fi
+          if [ -n "$FILE2" ] && [ -f "$FILE2" ]; then
+            TITLE2=$(grep -m1 '^title:' "$FILE2" | sed 's/^title: *//;s/^["'"'"']//;s/["'"'"']$//')
+          fi
+
+          echo "title1=$TITLE1" >> $GITHUB_OUTPUT
+          echo "title2=$TITLE2" >> $GITHUB_OUTPUT
+          echo "Title 1: $TITLE1 | Title 2: $TITLE2"
+
+      - name: Notify subscribers
+        if: steps.slugs.outputs.slug1 != ''
+        run: |
+          SLUG1="${{ steps.slugs.outputs.slug1 }}"
+          SLUG2="${{ steps.slugs.outputs.slug2 }}"
+          TITLE1="${{ steps.titles.outputs.title1 }}"
+          TITLE2="${{ steps.titles.outputs.title2 }}"
+
+          curl -s -X POST https://redom69.dev/api/notify-new-post \
+            -H "Content-Type: application/json" \
+            -H "Authorization: Bearer ${{ secrets.NOTIFY_SECRET }}" \
+            -d "{
+              \"post1_title\": \"$TITLE1\",
+              \"post1_link\": \"https://redom69.dev/newsletter/$SLUG1\",
+              \"post2_title\": \"$TITLE2\",
+              \"post2_link\": \"https://redom69.dev/newsletter/$SLUG2\"
+            }" | tee response.json
+
+          STATUS=$(cat response.json | python3 -c "import sys,json; print(json.load(sys.stdin).get('status',''))" 2>/dev/null)
+          if [ "$STATUS" != "success" ]; then
+            echo "Error al notificar: $(cat response.json)"
+            exit 1
+          fi
+          echo "✅ Suscriptores notificados correctamente"

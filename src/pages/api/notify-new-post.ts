@@ -1,11 +1,11 @@
 import type { APIRoute } from 'astro';
 import { Resend } from 'resend';
 
-const resend = new Resend(process.env.RESEND_API_KEY);
-const audienceId = process.env.RESEND_AUDIENCE_ID;
-const NOTIFY_SECRET = process.env.NOTIFY_SECRET;
-
 export const POST: APIRoute = async ({ request }) => {
+  const NOTIFY_SECRET = process.env.NOTIFY_SECRET;
+  const resend = new Resend(process.env.RESEND_API_KEY);
+  const audienceId = process.env.RESEND_AUDIENCE_ID;
+
   try {
     // Proteger con token secreto
     const authHeader = request.headers.get('Authorization');

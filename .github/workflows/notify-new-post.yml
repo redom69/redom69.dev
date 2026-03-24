@@ -19,7 +19,7 @@ jobs:
       - name: Get new post files
         id: new_posts
         run: |
-          NEW_FILES=$(git diff --name-only --diff-filter=A HEAD~1 HEAD -- 'src/content/posts/*.md' | head -2)
+          NEW_FILES=$(git diff --name-only --diff-filter=AR HEAD~1 HEAD -- 'src/content/posts/*.md' | head -2)
           echo "files=$NEW_FILES" >> $GITHUB_OUTPUT
           echo "New post files: $NEW_FILES"
 

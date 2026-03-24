@@ -1,8 +1,8 @@
 ---
 title: "Cómo solucioné el procesamiento de audios en mi asistente de IA"
 description: "Llevaba tiempo queriendo hablarle a mi asistente por nota de voz. Lo que parecía simple se convirtió en una odisea. Te cuento cómo lo resolví."
-date: 2026-03-28
-draft: true
+date: 2026-03-24
+image: "/posts/openclaw-whisper.webp"
 ---
 
 Llevaba tiempo queriendo hablarle a mi asistente por nota de voz desde el móvil. Simple, ¿no? Pues no tanto.
@@ -24,6 +24,8 @@ En el repositorio de OpenClaw encontré varios issues abiertos hablando exactame
 - **Issue #1989** — El plugin de Telegram no llamaba a `applyMediaUnderstanding`
 
 El fallo estaba en el plugin de Telegram de OpenClaw. El audio llegaba al servidor, se guardaba bien, pero el pipeline de transcripción nunca se activaba. El asistente ni se enteraba de que había llegado un mensaje de voz.
+
+![Desarrollador esperando a que cargue Whisper](/posts/meme-whisper-cansado.webp)
 
 ## **El game changer: un skill de un tío en ClawHub**
 

@@ -47,8 +47,14 @@ export const POST: APIRoute = async ({ request }) => {
 
     const from = process.env.VERIFIED_USER;
     const templateVariables = {
-      post1_title, post1_link, post1_image: `https://redom69.dev${post1_image}`, post1_description,
-      post2_title, post2_link, post2_image: post2_image ? `https://redom69.dev${post2_image}` : '', post2_description,
+      POST1_TITLE: post1_title,
+      POST1_LINK: post1_link,
+      POST1_IMAGE: post1_image ? `https://redom69.dev${post1_image}` : '',
+      POST1_DESCRIPTION: post1_description,
+      POST2_TITLE: post2_title,
+      POST2_LINK: post2_link,
+      POST2_IMAGE: post2_image ? `https://redom69.dev${post2_image}` : '',
+      POST2_DESCRIPTION: post2_description,
     };
 
     // Enviar en batches de 100 (límite de Resend batch API)

@@ -28,20 +28,24 @@ jobs:
           # Archivos que están en CURR pero no en PREV = posts nuevos
           NEW_FILES=$(comm -13 <(echo "$PREV") <(echo "$CURR"))
 
-          echo "Posts anteriores: $(echo "$PREV" | wc -l)"
-          echo "Posts actuales: $(echo "$CURR" | wc -l)"
           echo "Posts nuevos: $NEW_FILES"
 
           FILE1=$(echo "$NEW_FILES" | head -1)
-          FILE2=$(echo "$NEW_FILES" | tail -n +2 | head -1)
-
           SLUG1=$(basename "$FILE1" .md)
-          SLUG2=$(basename "$FILE2" .md)
-
           TITLE1=""
-          TITLE2=""
           [ -f "$FILE1" ] && TITLE1=$(grep -m1 '^title:' "$FILE1" | sed 's/^title: *//;s/^["'"'"']//;s/["'"'"']$//')
-          [ -f "$FILE2" ] && TITLE2=$(grep -m1 '^title:' "$FILE2" | sed 's/^title: *//;s/^["'"'"']//;s/["'"'"']$//')
+
+          # Slug2 = segundo post más reciente del repo (por fecha en frontmatter)
+          # Obtener todos los posts actuales ordenados por fecha desc, excluyendo el nuevo
+          ALL_POSTS=$(git ls-tree -r --name-only HEAD -- src/content/posts/ | grep '\.md$')
+          SECOND_FILE=$(echo "$ALL_POSTS" | while read f; do
+            DATE=$(grep -m1 '^date:' "$f" 2>/dev/null | sed 's/^date: *//')
+            echo "$DATE $f"
+          done | sort -r | grep -v "$(basename "$FILE1")" | head -1 | awk '{print $2}')
+
+          SLUG2=$(basename "$SECOND_FILE" .md)
+          TITLE2=""
+          [ -f "$SECOND_FILE" ] && TITLE2=$(grep -m1 '^title:' "$SECOND_FILE" | sed 's/^title: *//;s/^["'"'"']//;s/["'"'"']$//')
 
           echo "slug1=$SLUG1" >> $GITHUB_OUTPUT
           echo "slug2=$SLUG2" >> $GITHUB_OUTPUT
@@ -52,6 +56,8 @@ jobs:
 
       - name: Notify subscribers
         if: steps.detect.outputs.slug1 != ''
+        env:
+          NOTIFY_SECRET: ${{ secrets.NOTIFY_SECRET }}
         run: |
           SLUG1="${{ steps.detect.outputs.slug1 }}"
           SLUG2="${{ steps.detect.outputs.slug2 }}"
@@ -60,7 +66,7 @@ jobs:
 
           curl -s -L -X POST https://redom69.dev/api/notify-new-post \
             -H "Content-Type: application/json" \
-            -H "Authorization: Bearer ${{ secrets.NOTIFY_SECRET }}" \
+            -H "X-Notify-Secret: $NOTIFY_SECRET" \
             -d "{
               \"post1_title\": \"$TITLE1\",
               \"post1_link\": \"https://redom69.dev/newsletter/$SLUG1\",

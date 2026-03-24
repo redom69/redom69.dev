@@ -7,21 +7,14 @@ export const POST: APIRoute = async ({ request }) => {
   const audienceId = process.env.RESEND_AUDIENCE_ID;
 
   try {
-    // Proteger con token secreto
+    // Proteger con token secreto — acepta X-Notify-Secret o Authorization: Bearer <token>
+    const customHeader = request.headers.get('X-Notify-Secret');
     const authHeader = request.headers.get('Authorization');
-    const secretExists = !!NOTIFY_SECRET;
-    const secretLen = NOTIFY_SECRET?.length ?? 0;
-    const headerMatch = authHeader === `Bearer ${NOTIFY_SECRET}`;
-    console.log('[notify] secretExists:', secretExists, 'secretLen:', secretLen, 'headerMatch:', headerMatch);
-    const secretFirst5 = NOTIFY_SECRET?.substring(0, 5);
-    const secretLast5 = NOTIFY_SECRET?.substring(NOTIFY_SECRET.length - 5);
-    const authFirst20 = authHeader?.substring(0, 20);
-    console.log('[notify] first5:', secretFirst5, 'last5:', secretLast5, 'authFirst20:', authFirst20);
-    if (!NOTIFY_SECRET || authHeader !== `Bearer ${NOTIFY_SECRET}`) {
+    const token = customHeader ?? (authHeader?.startsWith('Bearer ') ? authHeader.slice(7) : null);
+    if (!NOTIFY_SECRET || token !== NOTIFY_SECRET) {
       return new Response(JSON.stringify({
         status: 'error',
         message: 'No autorizado',
-        debug: { secretExists, secretLen, headerMatch, secretFirst5, secretLast5, authFirst20 }
       }), { status: 401, headers: { 'Content-Type': 'application/json' } });
     }
 

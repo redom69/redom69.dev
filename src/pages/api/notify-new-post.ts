@@ -1,9 +1,9 @@
 import type { APIRoute } from 'astro';
 import { Resend } from 'resend';
 
-const resend = new Resend(import.meta.env.RESEND_API_KEY);
-const audienceId = import.meta.env.RESEND_AUDIENCE_ID;
-const NOTIFY_SECRET = import.meta.env.NOTIFY_SECRET;
+const resend = new Resend(process.env.RESEND_API_KEY);
+const audienceId = process.env.RESEND_AUDIENCE_ID;
+const NOTIFY_SECRET = process.env.NOTIFY_SECRET;
 
 export const POST: APIRoute = async ({ request }) => {
   try {
@@ -38,7 +38,7 @@ export const POST: APIRoute = async ({ request }) => {
       }), { status: 200, headers: { 'Content-Type': 'application/json' } });
     }
 
-    const from = import.meta.env.VERIFIED_USER;
+    const from = process.env.VERIFIED_USER;
     const templateVariables = { post1_title, post1_link, post2_title, post2_link };
 
     // Enviar en batches de 100 (límite de Resend batch API)

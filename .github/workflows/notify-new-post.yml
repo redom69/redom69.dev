@@ -3,7 +3,7 @@ name: Notify Newsletter — New Post
 on:
   push:
     branches:
-      - main
+      - master
     paths:
       - 'src/content/posts/**'
 

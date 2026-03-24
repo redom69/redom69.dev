@@ -57,7 +57,7 @@ jobs:
           TITLE1="${{ steps.detect.outputs.title1 }}"
           TITLE2="${{ steps.detect.outputs.title2 }}"
 
-          curl -s -X POST https://redom69.dev/api/notify-new-post \
+          curl -s -L -X POST https://redom69.dev/api/notify-new-post \
             -H "Content-Type: application/json" \
             -H "Authorization: Bearer ${{ secrets.NOTIFY_SECRET }}" \
             -d "{

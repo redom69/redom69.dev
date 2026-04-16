@@ -6,6 +6,8 @@ tags: [ia, optimizacion, tokens, claude, github]
 image: "/posts/caveman-cover.jpg"
 ---
 
+![Imagen de Caveman](/posts/caveman-cover.jpg)
+
 A ver, que levante la mano quien no se haya cabreado con el consumo de tokens de las IAs. ¿Claude? Un fenómeno, sí, pero a veces parece que te escribe una novela para responderte un 'hola'. Me ha pasado de ver un puto `ritmo` de canción para una simple consulta. ¡Un sinsentido! Por eso hoy te quiero hablar de `Caveman`, una herramienta que me ha salvado la vida (y el bolsillo) y que te va a volar la cabeza si usas mucho Claude.
 
 ## ¿Qué es Caveman y por qué lo necesitas en tu vida?

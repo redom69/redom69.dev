@@ -1,7 +1,17 @@
 ---
+import crypto from 'crypto';
 const url = new URL(Astro.url);
 const lang = url.searchParams.get('lang') || 'en';
 const translations = await import(`../locales/${lang}.json`);
+
+// Anti-bot: token firmado (A) + challenge JS (C)
+const secret = import.meta.env.FORM_SECRET || 'redom69-form-secret';
+const ts = Date.now();
+const a = Math.floor(Math.random() * 9) + 1;
+const b = Math.floor(Math.random() * 9) + 1;
+const payload = `${ts}.${a}.${b}`;
+const sig = crypto.createHmac('sha256', secret).update(payload).digest('hex').slice(0, 20);
+const formToken = `${payload}.${sig}`;
 ---
 
 <div class="form-container">
@@ -11,6 +21,10 @@ const translations = await import(`../locales/${lang}.json`);
         <!-- Honeypot: campo oculto, los bots lo rellenan, los humanos no -->
         <div style="display:none" aria-hidden="true">
             <input type="text" name="website" tabindex="-1" autocomplete="off" />
+            <!-- Anti-bot A: token firmado con timestamp -->
+            <input type="hidden" name="_ft" id="_ft" value={formToken} />
+            <!-- Anti-bot C: challenge JS (resultado calculado por el browser) -->
+            <input type="hidden" name="_fc" id="_fc" value="" />
         </div>
 
         <div class="field col-12">
@@ -120,45 +134,54 @@ const translations = await import(`../locales/${lang}.json`);
     }
 </style>
 
-<script>
+<script define:vars={{ formToken, a, b }}>
+// Anti-bot C: resolver el challenge al cargar la página
+document.addEventListener('DOMContentLoaded', () => {
+    const fcEl = document.getElementById('_fc');
+    if (fcEl) fcEl.value = String(a + b);
+});
+
 document.getElementById('contact-form')?.addEventListener('submit', async function (e) {
     e.preventDefault();
 
-    const nameElement = document.getElementById('contact-name') as HTMLInputElement;
-    const emailElement = document.getElementById('contact-email') as HTMLInputElement;
-    const subjectElement = document.getElementById('contact-subject') as HTMLInputElement;
-    const messageElement = document.getElementById('contact-message') as HTMLTextAreaElement;
-    const honeypotElement = document.querySelector('input[name="website"]') as HTMLInputElement;
+    const nameElement = document.getElementById('contact-name');
+    const emailElement = document.getElementById('contact-email');
+    const subjectElement = document.getElementById('contact-subject');
+    const messageElement = document.getElementById('contact-message');
+    const honeypotElement = document.querySelector('input[name="website"]');
+    const ftElement = document.getElementById('_ft');
+    const fcElement = document.getElementById('_fc');
 
     if (nameElement && emailElement && subjectElement && messageElement) {
         const name = nameElement.value;
         const email = emailElement.value;
         const subject = subjectElement.value;
         const message = messageElement.value;
-        const honeypot = honeypotElement?.value || '';
+        const honeypot = honeypotElement ? honeypotElement.value : '';
+        const _ft = ftElement ? ftElement.value : '';
+        const _fc = fcElement ? fcElement.value : '';
 
         try {
             const response = await fetch('/api/contact', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ name, email, subject, message, honeypot }),
+                body: JSON.stringify({ name, email, subject, message, honeypot, _ft, _fc }),
             });
 
             if (response.ok) {
                 showContactNotification('Correo enviado correctamente', 'success');
-                (document.getElementById('contact-form') as HTMLFormElement).reset();
+                document.getElementById('contact-form').reset();
             } else {
                 const data = await response.json();
                 showContactNotification(data.message || 'Error al enviar el correo', 'error');
             }
         } catch (error) {
-            if (import.meta.env.DEV) console.error('Error:', error);
             showContactNotification('Error al enviar el correo', 'error');
         }
     }
 });
 
-function showContactNotification(message: string, type: string) {
+function showContactNotification(message, type) {
     const notification = document.getElementById('contact-notification');
     if (!notification) return;
     notification.textContent = message;

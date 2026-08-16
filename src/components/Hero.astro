@@ -26,7 +26,7 @@ const projectsCount = await getGithubPublicReposCount();
 <div class="max-w-xl mx-auto hero-container">
   <div class="flex flex-col sm:flex-row gap-4 mb-6 items-center">
     <!-- Imagen de perfil -->
-    <div class="rounded-full w-24 h-24 overflow-hidden shadow-lg ring-2 ring-[var(--red)] ring-offset-2 ring-offset-transparent">
+    <div class="rounded-full w-24 h-24 overflow-hidden shadow-lg ring-2 ring-brand-red ring-offset-2 ring-offset-transparent">
       <Image
         class="object-cover w-full h-full"
         style={{ objectPosition: "50% 25%" }}
@@ -50,27 +50,27 @@ const projectsCount = await getGithubPublicReposCount();
   </div>
 
   <!-- Título principal -->
-  <h1 class="text-center sm:text-left text-5xl sm:text-6xl font-bold tracking-tight text-[var(--text-color-dark)] dark:text-[var(--text-color-light)] leading-tight">
-    Hola, soy <span class="text-[var(--red)]">Daniel</span>
+  <h1 class="text-center sm:text-left text-5xl sm:text-6xl font-bold tracking-tight text-ink-dark dark:text-ink-light leading-tight">
+    Hola, soy <span class="text-brand-red">Daniel</span>
   </h1>
 
   <!-- Descripción -->
-  <p class="mt-6 text-center sm:text-left text-xl text-[var(--text-color-dark)] dark:text-gray-300 [&>strong]:text-[var(--red)] [&>strong]:font-semibold leading-relaxed">
+  <p class="mt-6 text-center sm:text-left text-xl text-ink-dark dark:text-gray-300 [&>strong]:text-brand-red [&>strong]:font-semibold leading-relaxed">
     Ingeniero informático y <strong>desarrollador full-stack</strong> con +5 años de experiencia construyendo productos web desde Madrid.
   </p>
 
   <!-- Stats -->
   <div class="flex gap-8 mt-8 justify-center sm:justify-start">
     <div class="text-center sm:text-left">
-      <span class="block text-3xl font-bold text-[var(--red)]">+5</span>
+      <span class="block text-3xl font-bold text-brand-red">+5</span>
       <span class="text-sm text-gray-500 dark:text-gray-400">años de experiencia</span>
     </div>
     <div class="text-center sm:text-left">
-      <span class="block text-3xl font-bold text-[var(--red)]">+{projectsCount}</span>
+      <span class="block text-3xl font-bold text-brand-red">+{projectsCount}</span>
       <span class="text-sm text-gray-500 dark:text-gray-400">repos públicos en GitHub</span>
     </div>
     <div class="text-center sm:text-left">
-      <span class="block text-3xl font-bold text-[var(--red)]">MERN</span>
+      <span class="block text-3xl font-bold text-brand-red">MERN</span>
       <span class="text-sm text-gray-500 dark:text-gray-400">stack principal</span>
     </div>
   </div>

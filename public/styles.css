@@ -51,7 +51,7 @@ html.dark .article-content code {
 .article-content hr {
   margin-bottom: 2rem;
   margin-top: 2rem;
-  border-color: #999a9b;
+  border-color: #9ca3af;
 }
 
 html.dark .article-content hr {
@@ -90,7 +90,7 @@ html.dark .article-content hr {
 .article-content th,
 .article-content td {
   padding: 0.5rem;
-  border: 1px solid #ccc;
+  border: 1px solid #d1d5db;
   text-align: left;
 }
 

@@ -27,7 +27,7 @@ const projects = (await getCollection('projects')).sort((a, b) => a.data.order -
       </div>
 
       <div class="w-full md:w-1/2 md:max-w-lg">
-        <h3 class="text-2xl font-bold text-[var(--text-color-dark)] dark:text-[var(--text-color-light)]">
+        <h3 class="text-2xl font-bold text-ink-dark dark:text-ink-light">
           {title}
         </h3>
         <div class="flex flex-wrap mt-2 gap-2">
@@ -37,7 +37,7 @@ const projects = (await getCollection('projects')).sort((a, b) => a.data.order -
             </span>
           ))}
         </div>
-        <p class="mt-2 text-[var(--text-color-dark)] dark:text-[var(--text-color-light)]">
+        <p class="mt-2 text-ink-dark dark:text-ink-light">
           {description}
         </p>
         <div class="mt-4">
@@ -45,7 +45,7 @@ const projects = (await getCollection('projects')).sort((a, b) => a.data.order -
             href={url}
             target="_blank"
             rel="noopener noreferrer"
-            class="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-white bg-[var(--red)] rounded-lg hover:bg-[var(--dark-blue)] transition-colors"
+            class="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-white bg-brand-red rounded-lg hover:bg-brand-navy transition-colors"
           >
             Ver proyecto
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">

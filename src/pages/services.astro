@@ -36,8 +36,8 @@ const services = [
 >
 <div class="px-4">
   <section class="services-section py-8 px-4">
-    <h1 class="services-title text-4xl font-bold mb-4 text-[var(--text-color-dark)] dark:text-[var(--text-color-light)]">Nuestros Servicios</h1>
-    <p class="services-description text-lg mb-4 text-[var(--text-color-dark)] dark:text-gray-300">
+    <h1 class="services-title text-4xl font-bold mb-4 text-ink-dark dark:text-ink-light">Nuestros Servicios</h1>
+    <p class="services-description text-lg mb-4 text-ink-dark dark:text-gray-300">
       En esta sección te presento los servicios que ofrezco, diseñados para cubrir todas tus necesidades tecnológicas.
     </p>
 
@@ -45,14 +45,14 @@ const services = [
       {services.map(service => (
         <div class="service-box" >
           <img src={service.image} alt={service.title} class="service-image mb-2" loading="lazy"/>
-          <h3 class="text-2xl py-4 font-bold text-[var(--text-color-dark)] dark:text-[var(--text-color-light)]">{service.title}</h3>
-          <p class=" text-lg mb-4 text-[var(--text-color-dark)] dark:text-gray-300">
+          <h3 class="text-2xl py-4 font-bold text-ink-dark dark:text-ink-light">{service.title}</h3>
+          <p class=" text-lg mb-4 text-ink-dark dark:text-gray-300">
             {service.description}</p>
         </div>
       ))}
     </div>
     <div
-      class=" py-6 [&>p]:mb-4 [&>p>strong]:text-[var(--red)] dark:[&>p>strong]:text-[var(--red)] [&>p>strong]:font-normal [&>p>strong]:font-mono text-pretty order-2 md:order-1"
+      class=" py-6 [&>p]:mb-4 [&>p>strong]:text-brand-red dark:[&>p>strong]:text-brand-red [&>p>strong]:font-normal [&>p>strong]:font-mono text-pretty order-2 md:order-1"
     >
       <p><strong>Para cualquier otro tipo de servicio</strong>, no dudes en contactarme. Estoy disponible para explorar tus necesidades y encontrar la mejor solución personalizada para ti.</p>
     </div>
@@ -101,8 +101,8 @@ html.dark .services-description {
 
 /* Estilos para cada box de servicio */
 .service-box {
-  background-color: #f9f9f9; /* Color de fondo */
-  border: 1px solid #e0e0e0; /* Borde */
+  background-color: #f9fafb; /* Color de fondo */
+  border: 1px solid #e5e7eb; /* Borde */
   border-radius: 8px; /* Esquinas redondeadas */
   padding: 16px; /* Espaciado interno */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra suave */
@@ -145,11 +145,11 @@ html.dark .service-box h3 {
 }
 
 .service-box p {
-  color: #555; /* Color de la descripción */
+  color: #4b5563; /* Color de la descripción */
 }
 
 html.dark .service-box p {
-  color: #CCCCCC; /* Color de la descripción en modo oscuro */
+  color: #d1d5db; /* Color de la descripción en modo oscuro */
 }
 
 /* Responsividad */

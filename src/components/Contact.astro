@@ -49,7 +49,7 @@ const formToken = `${payload}.${sig}`;
 
         <div class="field col-12">
             <button type="submit" class="submit-button">
-                <span class="inline-flex items-center justify-center gap-2 px-6 py-2 text-gray-800 transition bg-gray-100 border border-gray-300 rounded-full dark:bg-gray-800 dark:border-gray-600 dark:text-white text-md hover:bg-[var(--red)] hover:border-[var(--red)] hover:text-white dark:hover:bg-[var(--red)] dark:hover:border-[var(--red)] dark:hover:text-black focus:outline-none focus-visible:ring focus-visible:ring-white focus-visible:ring-offset-2 active:bg-black w-full">
+                <span class="inline-flex items-center justify-center gap-2 px-6 py-2 text-gray-800 transition bg-gray-100 border border-gray-300 rounded-full dark:bg-gray-800 dark:border-gray-600 dark:text-white text-md hover:bg-brand-red hover:border-brand-red hover:text-white dark:hover:bg-brand-red dark:hover:border-brand-red dark:hover:text-black focus:outline-none focus-visible:ring focus-visible:ring-white focus-visible:ring-offset-2 active:bg-black w-full">
                     {translations.form.submit}
                 </span>
             </button>
@@ -85,7 +85,7 @@ const formToken = `${payload}.${sig}`;
         width: 100%;
         padding: 0.75rem;
         margin-bottom: 1.5rem;
-        border: 1px solid #ccc;
+        border: 1px solid #d1d5db;
         border-radius: 5px;
         font-size: 1rem;
         color: var(--text-color-dark);
@@ -124,12 +124,12 @@ const formToken = `${payload}.${sig}`;
     }
 
     .notification.success {
-        background-color: #4caf50;
+        background-color: var(--success);
         color: white;
     }
 
     .notification.error {
-        background-color: #f44336;
+        background-color: var(--error);
         color: white;
     }
 </style>

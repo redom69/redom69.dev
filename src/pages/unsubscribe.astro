@@ -8,8 +8,8 @@ export const prerender = true;
   <section class="px-4 py-10">
     <div class="flex justify-center">
       <div class="unsubscribe-section py-8 px-4 max-w-2xl w-full">
-        <h1 class="text-3xl font-bold mb-4 text-center text-[var(--text-color-dark)] dark:text-[var(--text-color-light)]">Cancelar Suscripción</h1>
-        <p class="text-lg mb-4 text-center text-[var(--text-color-dark)] dark:text-gray-300">
+        <h1 class="text-3xl font-bold mb-4 text-center text-ink-dark dark:text-ink-light">Cancelar Suscripción</h1>
+        <p class="text-lg mb-4 text-center text-ink-dark dark:text-gray-300">
           Si ya no deseas pertenecer a esta comunidad y perderte las últimas noticias, tu te lo pierdes.
         </p>
 
@@ -25,7 +25,7 @@ export const prerender = true;
             class="input-field p-2 border rounded"
           />
           <button type="submit" class="submit-button">
-            <span class="inline-flex items-center justify-center gap-2 px-6 py-2 text-gray-800 transition bg-gray-100 border border-gray-300 rounded-full dark:bg-gray-800 dark:border-gray-600 dark:text-white text-md hover:bg-[var(--red)] hover:border-[var(--red)] hover:text-white dark:hover:bg-[var(--red)] dark:hover:border-[var(--red)] dark:hover:text-black focus:outline-none focus-visible:ring focus-visible:ring-white focus-visible:ring-offset-2 active:bg-black w-full">
+            <span class="inline-flex items-center justify-center gap-2 px-6 py-2 text-gray-800 transition bg-gray-100 border border-gray-300 rounded-full dark:bg-gray-800 dark:border-gray-600 dark:text-white text-md hover:bg-brand-red hover:border-brand-red hover:text-white dark:hover:bg-brand-red dark:hover:border-brand-red dark:hover:text-black focus:outline-none focus-visible:ring focus-visible:ring-white focus-visible:ring-offset-2 active:bg-black w-full">
               Desuscribirme
             </span>
           </button>
@@ -40,7 +40,7 @@ export const prerender = true;
 <style>
 .input-field {
   padding: 0.75rem;
-  border: 1px solid #ccc;
+  border: 1px solid #d1d5db;
   border-radius: 8px;
   font-size: 1rem;
   color: var(--text-color-dark);
@@ -78,12 +78,12 @@ html.dark .input-field {
 }
 
 .notification.success {
-  background-color: #4caf50;
+  background-color: var(--success);
   color: white;
 }
 
 .notification.error {
-  background-color: #f44336;
+  background-color: var(--error);
   color: white;
 }
 </style>

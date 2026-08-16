@@ -28,11 +28,11 @@ const readingTime = Math.ceil(words / 200);
   <section class="px-4 py-10">
     <div class="flex justify-center">
       <article class="py-8 px-4 max-w-2xl w-full">
-        <h1 class="text-4xl font-bold mb-4 text-center text-[var(--text-color-dark)] dark:text-[var(--text-color-light)] pb-6">{post.data.title}</h1>
+        <h1 class="text-4xl font-bold mb-4 text-center text-ink-dark dark:text-ink-light pb-6">{post.data.title}</h1>
 
         <div class="post-info-container">
           <div class="flex justify-between items-center">
-            <p class="text-sm text-left ml-4 text-[var(--text-color-dark)] dark:text-gray-300">
+            <p class="text-sm text-left ml-4 text-ink-dark dark:text-gray-300">
               {readingTime} min · {new Date(post.data.date).toLocaleDateString()}
             </p>
             <button id="shareButton" aria-label="Compartir post" class="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">
@@ -58,7 +58,7 @@ const readingTime = Math.ceil(words / 200);
           <Image src={post.data.image} alt={post.data.title} class="max-w-full h-auto block mx-auto py-5" loading="lazy" widths={[400, 800]} sizes="(max-width: 640px) 100vw, 640px" />
         )}
 
-        <div class="article-content text-[var(--text-color-dark)] dark:text-[var(--text-color-light)]">
+        <div class="article-content text-ink-dark dark:text-ink-light">
           <Content />
         </div>
         <div class="py-3">
@@ -74,8 +74,8 @@ const readingTime = Math.ceil(words / 200);
 
 <style>
 .post-info-container {
-  border-top: 1px solid #999a9b;
-  border-bottom: 1px solid #999a9b;
+  border-top: 1px solid #9ca3af;
+  border-bottom: 1px solid #9ca3af;
   padding: 10px 0;
 }
 
@@ -85,7 +85,7 @@ const readingTime = Math.ceil(words / 200);
   top: 20px;
   right: 20px;
   padding: 10px 16px;
-  background-color: #4caf50;
+  background-color: var(--success);
   color: white;
   border-radius: 5px;
   z-index: 9999;
@@ -96,7 +96,7 @@ const readingTime = Math.ceil(words / 200);
 }
 
 .notification.error {
-  background-color: #f44336;
+  background-color: var(--error);
 }
 </style>
 

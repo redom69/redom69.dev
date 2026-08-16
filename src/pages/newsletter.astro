@@ -21,8 +21,8 @@ const currentPosts = sortedPosts.slice((currentPage - 1) * postsPerPage, current
 <section class="px-4">
   <div class="space-y-24">
     <div class="newsletter-section py-8 px-4">
-      <h1 class="newsletter-title text-4xl font-bold mb-4 text-[var(--text-color-dark)] dark:text-[var(--text-color-light)] items-center justify-center text-center">Suscríbete a la Newsletter</h1>
-      <p class="newsletter-description text-lg mb-4 text-[var(--text-color-dark)] dark:text-gray-300">
+      <h1 class="newsletter-title text-4xl font-bold mb-4 text-ink-dark dark:text-ink-light items-center justify-center text-center">Suscríbete a la Newsletter</h1>
+      <p class="newsletter-description text-lg mb-4 text-ink-dark dark:text-gray-300">
         Esta es tu newsletter de confianza, en ella podrás leer posts sobre opiniones mías, últimos avances y relatos de la vida de un desarrollador full-stack.
       </p>
 
@@ -32,7 +32,7 @@ const currentPosts = sortedPosts.slice((currentPage - 1) * postsPerPage, current
         <label for="newsletter-email" class="sr-only">Email</label>
         <input type="email" id="newsletter-email" name="email" placeholder="Introduce tu email" required aria-required="true" class="input-field p-2 border rounded">
         <button type="submit" class="submit-button">
-          <span class="inline-flex items-center justify-center gap-2 px-6 py-2 text-gray-800 transition bg-gray-100 border border-gray-300 rounded-full dark:bg-gray-800 dark:border-gray-600 dark:text-white text-md hover:bg-[var(--red)] hover:border-[var(--red)] hover:text-white dark:hover:bg-[var(--red)] dark:hover:border-[var(--red)] dark:hover:text-black focus:outline-none focus-visible:ring focus-visible:ring-white focus-visible:ring-offset-2 active:bg-black w-full">
+          <span class="inline-flex items-center justify-center gap-2 px-6 py-2 text-gray-800 transition bg-gray-100 border border-gray-300 rounded-full dark:bg-gray-800 dark:border-gray-600 dark:text-white text-md hover:bg-brand-red hover:border-brand-red hover:text-white dark:hover:bg-brand-red dark:hover:border-brand-red dark:hover:text-black focus:outline-none focus-visible:ring focus-visible:ring-white focus-visible:ring-offset-2 active:bg-black w-full">
             Suscribirse
           </span>
         </button>
@@ -40,7 +40,7 @@ const currentPosts = sortedPosts.slice((currentPage - 1) * postsPerPage, current
 
       <div id="newsletter-notification" class="notification" role="alert" aria-live="polite"></div>
 
-      <h2 class="text-3xl font-bold mb-4 text-[var(--text-color-dark)] dark:text-[var(--text-color-light)]">Ultimos posts</h2>
+      <h2 class="text-3xl font-bold mb-4 text-ink-dark dark:text-ink-light">Ultimos posts</h2>
       <div class="article-card-grid">
         {currentPosts && currentPosts.length > 0 ? (
           currentPosts.map((post, index) => (
@@ -53,7 +53,7 @@ const currentPosts = sortedPosts.slice((currentPage - 1) * postsPerPage, current
               />
           ))
         ) : (
-          <p class="text-[var(--text-color-dark)] dark:text-[var(--text-color-light)]">No hay posts.</p>
+          <p class="text-ink-dark dark:text-ink-light">No hay posts.</p>
         )}
       </div>
 
@@ -61,7 +61,7 @@ const currentPosts = sortedPosts.slice((currentPage - 1) * postsPerPage, current
         {currentPage > 1 && (
           <a href={`?page=${currentPage - 1}`} class="pagination-btn">Anterior</a>
         )}
-        <span class="text-[var(--text-color-dark)] dark:text-[var(--text-color-light)]">Página {currentPage} de {totalPages}</span>
+        <span class="text-ink-dark dark:text-ink-light">Página {currentPage} de {totalPages}</span>
         {currentPage < totalPages && (
           <a href={`?page=${currentPage + 1}`} class="pagination-btn">Siguiente</a>
         )}
@@ -120,7 +120,7 @@ html.dark .newsletter-description {
 
 .input-field {
   padding: 0.75rem;
-  border: 1px solid #ccc;
+  border: 1px solid #d1d5db;
   border-radius: 8px;
   font-size: 1rem;
   color: var(--text-color-dark);
@@ -174,13 +174,13 @@ html.dark .input-field {
 }
 
 .notification.success {
-  background-color: #4caf50;
+  background-color: var(--success);
   color: white;
   display: block;
 }
 
 .notification.error {
-  background-color: #f44336;
+  background-color: var(--error);
   color: white;
   display: block;
 }

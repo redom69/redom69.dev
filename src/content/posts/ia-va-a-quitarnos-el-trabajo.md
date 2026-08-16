@@ -1,8 +1,9 @@
 ---
-title: "La IA va a quitarnos el trabajo. ¿O no?"
-description: "El debate está en todas partes. Te doy mi opinión después de llevar un tiempo usando IA a diario en proyectos reales."
+title: 'La IA va a quitarnos el trabajo. ¿O no?'
+description: 'El debate está en todas partes. Te doy mi opinión después de llevar un tiempo usando IA a diario en proyectos reales.'
 date: 2026-03-19
-image: "/posts/ia-developers.jpg"
+image: './ia-developers.jpg'
+tags: [ia, opinion, trabajo, futuro]
 ---
 
 Esta semana vi un post en dev.to que generó casi 100 comentarios. La tesis: el 90% del código ya se genera con IA. Y la pregunta que dejaba en el aire era la más incómoda: ¿nos va a quitar el trabajo?
@@ -17,11 +18,11 @@ No es que la IA nos vaya a reemplazar. Es que a largo plazo las empresas no van 
 
 ## **El problema no es la IA, es cómo la usas**
 
-He visto el comentario mil veces: *"me paso más tiempo corrigiendo que lo que tarda en generar"*. Y tiene sentido, si le das una tarea abierta sin dirección y la dejas correr sola. Así no funciona.
+He visto el comentario mil veces: _"me paso más tiempo corrigiendo que lo que tarda en generar"_. Y tiene sentido, si le das una tarea abierta sin dirección y la dejas correr sola. Así no funciona.
 
-La forma en la que yo lo uso, y la gente que conozco que lo usa bien, es con tareas concretas y repetitivas, con supervisión. En frontend, por ejemplo: *"hazme este componente, este botón, esta tarjeta"*. Él lo genera, tú ajustas el padding, revisas que tenga sentido. Nadie tiene en la cabeza las 15 millones de líneas de CSS que existen — para ese tipo de cosas la IA es increíble.
+La forma en la que yo lo uso, y la gente que conozco que lo usa bien, es con tareas concretas y repetitivas, con supervisión. En frontend, por ejemplo: _"hazme este componente, este botón, esta tarjeta"_. Él lo genera, tú ajustas el padding, revisas que tenga sentido. Nadie tiene en la cabeza las 15 millones de líneas de CSS que existen — para ese tipo de cosas la IA es increíble.
 
-Donde no funciona es cuando le dices *"hazme una feature completa de gestión de documentos"* sin más. Ahí tienes que desgranarlo, darle dirección, supervisar cada paso. Y esa capacidad de desglosar un problema, de entender qué le estás pidiendo y por qué — eso es exactamente lo que va a diferenciar a los buenos developers.
+Donde no funciona es cuando le dices _"hazme una feature completa de gestión de documentos"_ sin más. Ahí tienes que desgranarlo, darle dirección, supervisar cada paso. Y esa capacidad de desglosar un problema, de entender qué le estás pidiendo y por qué — eso es exactamente lo que va a diferenciar a los buenos developers.
 
 ## **Lo que hay que hacer**
 
@@ -31,6 +32,6 @@ Meterse en el mundillo. No para depender de la IA, sino para saber usarla y no q
 
 Para cualquier duda o si quieres debatir sobre esto, déjame un comentario en [**LinkedIn**](https://www.linkedin.com/in/daniel-hernandez-puerto-57a093194/) o comparte la newsletter si te ha resultado útil.
 
-<img src="/posts/meme-ia-chatgpt.jpg" alt="Meme: Me saying please to ChatGPT stopping the robot apocalypse" style="max-width: 100%; border-radius: 8px; margin-top: 1rem;" />
+![Meme: Me saying please to ChatGPT stopping the robot apocalypse](./meme-ia-chatgpt.jpg)
 
 ¡Hasta la próxima! 👋🏽

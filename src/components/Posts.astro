@@ -3,7 +3,7 @@ import { getCollection } from 'astro:content';
 import Card from './Card.astro';
 import LinkButton from './LinkButton.astro';
 
-const posts = await getCollection('posts');
+const posts = await getCollection('posts', ({ data }) => !data.draft);
 
 // Ordenar los posts por fecha de manera descendente
 const sortedPosts = posts.sort((a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime());

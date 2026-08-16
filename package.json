@@ -11,17 +11,19 @@
     "format": "prettier --write ."
   },
   "dependencies": {
-    "@astrojs/check": "^0.9.6",
-    "@astrojs/sitemap": "^3.6.0",
-    "@astrojs/tailwind": "^6.0.2",
-    "@astrojs/vercel": "^9.0.2",
+    "@astrojs/check": "^0.9.10",
+    "@astrojs/rss": "^4.0.19",
+    "@astrojs/sitemap": "^3.7.3",
+    "@astrojs/vercel": "^11.0.5",
     "@fontsource-variable/onest": "^5.1.0",
-    "@vercel/speed-insights": "^1.0.12",
-    "astro": "^5.16.2",
+    "@vercel/speed-insights": "^2.0.0",
+    "astro": "^7.2.2",
     "astro-robots-txt": "^1.0.0",
+    "autoprefixer": "^10.5.4",
+    "postcss": "^8.5.26",
     "resend": "^6.9.4",
     "tailwindcss": "^3.4.12",
-    "typescript": "^5.6.2"
+    "typescript": "^5.9.3"
   },
   "devDependencies": {
     "prettier": "^3.3.3"

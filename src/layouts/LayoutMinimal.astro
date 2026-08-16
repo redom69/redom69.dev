@@ -1,5 +1,6 @@
 ---
-import { ViewTransitions } from "astro:transitions"
+import '../styles/global.css';
+import { ClientRouter } from "astro:transitions"
 
 interface Props {
   title: string
@@ -22,7 +23,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
     <meta name="generator" content={Astro.generator} />
     <link rel="stylesheet" href="/styles.css" media="print" onload="this.media='all'" />
     <noscript><link rel="stylesheet" href="/styles.css"></noscript>
-    <ViewTransitions />
+    <ClientRouter />
   </head>
   <body class="relative text-black dark:text-white">
     <div class="absolute top-0 bottom-0 z-[-2] min-h-screen w-full bg-gray-50 dark:bg-gray-950

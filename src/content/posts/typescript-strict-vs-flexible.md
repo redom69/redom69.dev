@@ -1,8 +1,9 @@
 ---
-title: "TypeScript estricto o flexible: dónde pongo la línea"
-description: "Mi opinión después de años trabajando con TypeScript a diario — cuándo strict mode es innegociable y cuándo hay que ser pragmático."
+title: 'TypeScript estricto o flexible: dónde pongo la línea'
+description: 'Mi opinión después de años trabajando con TypeScript a diario — cuándo strict mode es innegociable y cuándo hay que ser pragmático.'
 date: 2026-03-22
-image: "/posts/typescript-strict.png"
+image: './typescript-strict.png'
+tags: [typescript, opinion, buenas-practicas]
 ---
 
 Cuando empecé a trabajar con TypeScript en serio, asumí que poner `"strict": true` en el `tsconfig.json` era lo básico. Y lo es — pero nadie me explicó bien qué activa exactamente ni por qué cada opción importa.
@@ -26,7 +27,8 @@ Esta es mi favorita. No tolero `any` implícito en mi código — si TypeScript 
 
 ```typescript
 // Esto no compila con noImplicitAny ✅
-function procesar(datos) { // Error: datos tiene tipo any implícito
+function procesar(datos) {
+  // Error: datos tiene tipo any implícito
   return datos.nombre;
 }
 
@@ -45,7 +47,7 @@ El famoso "billion-dollar mistake" — el `null` que se cuela donde no debería 
 ```typescript
 const user = getUser(); // User | null
 
-console.log(user.name);  // 💥 Error: user podría ser null
+console.log(user.name); // 💥 Error: user podría ser null
 console.log(user?.name); // ✅
 ```
 
@@ -81,7 +83,7 @@ Puede parecer mucho, pero en un proyecto nuevo el coste es cero — simplemente 
 
 Si empiezas un proyecto desde cero: strict desde el día uno, sin excepción. Si recibes código heredado: estrategia progresiva según el tiempo y el proyecto. `any` implícito nunca — si lo usas, que sea una decisión consciente tuya, no un default del compilador.
 
-<img src="/posts/meme-typescript-any.jpg" alt="This is fine - TypeScript any en producción" style="max-width: 100%; border-radius: 8px; margin-top: 1rem;" />
+![This is fine - TypeScript any en producción](./meme-typescript-any.jpg)
 
 ---
 

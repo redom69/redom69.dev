@@ -1,9 +1,9 @@
 ---
-title: "Memory Leaks en JavaScript: el bug que no ves hasta que es tarde"
-description: "La app va lenta sin razón, el servidor se cae cada pocas horas y reinicias el proceso como si nada. Spoiler: tienes una fuga de memoria. Te cuento cómo detectarla y eliminarla."
+title: 'Memory Leaks en JavaScript: el bug que no ves hasta que es tarde'
+description: 'La app va lenta sin razón, el servidor se cae cada pocas horas y reinicias el proceso como si nada. Spoiler: tienes una fuga de memoria. Te cuento cómo detectarla y eliminarla.'
 date: 2026-03-26
 tags: [javascript, performance, debugging]
-image: "/posts/memory-leaks-cover.webp"
+image: './memory-leaks-cover.webp'
 ---
 
 Hace un tiempo estaba trabajando en una app que generaba reportes en PDF usando jsPDF. Tablas con un montón de datos, imágenes en HD sin comprimir — PDFs de 50MB en algunos casos. Generabas el reporte, lo descargabas, salías. Hasta aquí todo bien.
@@ -37,12 +37,12 @@ El más tonto pero el que más veces he visto en código de otros — y alguna v
 ```typescript
 // ❌ MAL — 'datos' acaba en window/global sin que te des cuenta
 function procesarRespuesta(response: Response) {
-  datos = response.json() // sin const/let — variable global accidental
+  datos = response.json(); // sin const/let — variable global accidental
 }
 
 // ✅ BIEN
 function procesarRespuesta(response: Response) {
-  const datos = response.json()
+  const datos = response.json();
 }
 ```
 
@@ -60,20 +60,24 @@ Este me lo encontré en un proyecto de trabajo. Cada vez que montabas un compone
 // ❌ MAL — acumulas listeners cada vez que se monta el componente
 class DataTable {
   constructor(private container: HTMLElement) {
-    window.addEventListener('resize', this.handleResize)
+    window.addEventListener('resize', this.handleResize);
   }
-  private handleResize = () => { /* ... */ }
+  private handleResize = () => {
+    /* ... */
+  };
 }
 
 // ✅ BIEN — siempre con su cleanup
 class DataTable {
   constructor(private container: HTMLElement) {
-    window.addEventListener('resize', this.handleResize)
+    window.addEventListener('resize', this.handleResize);
   }
-  private handleResize = () => { /* ... */ }
+  private handleResize = () => {
+    /* ... */
+  };
 
   destroy() {
-    window.removeEventListener('resize', this.handleResize)
+    window.removeEventListener('resize', this.handleResize);
   }
 }
 ```
@@ -90,25 +94,25 @@ La trampa más común: usar arrow functions inline en el `addEventListener`. No 
 // ❌ MAL — se llama varias veces y acumulas intervalos duplicados
 function iniciarPolling(url: string) {
   setInterval(async () => {
-    const data = await fetch(url)
-    actualizarUI(data) // referencia a un DOM que puede no existir ya
-  }, 5000)
+    const data = await fetch(url);
+    actualizarUI(data); // referencia a un DOM que puede no existir ya
+  }, 5000);
 }
 
 // ✅ BIEN — siempre devuelve el cleanup
 function iniciarPolling(url: string): () => void {
   const intervalId = setInterval(async () => {
-    const data = await fetch(url)
-    actualizarUI(data)
-  }, 5000)
-  return () => clearInterval(intervalId)
+    const data = await fetch(url);
+    actualizarUI(data);
+  }, 5000);
+  return () => clearInterval(intervalId);
 }
 
 // En React:
 useEffect(() => {
-  const cleanup = iniciarPolling('/api/data')
-  return cleanup // se ejecuta al desmontar
-}, [])
+  const cleanup = iniciarPolling('/api/data');
+  return cleanup; // se ejecuta al desmontar
+}, []);
 ```
 
 ---
@@ -120,15 +124,15 @@ Eliminas el elemento del DOM pero en algún Map o array de JavaScript sigues ten
 ```typescript
 // ❌ MAL — nodeCache retiene el nodo aunque ya no esté en el DOM
 function eliminar(id: string) {
-  const el = nodeCache.get(id)
-  el?.remove() // fuera del DOM, pero nodeCache lo sigue teniendo
+  const el = nodeCache.get(id);
+  el?.remove(); // fuera del DOM, pero nodeCache lo sigue teniendo
 }
 
 // ✅ BIEN — si lo quitas del DOM, quítalo también de JS
 function eliminar(id: string) {
-  const el = nodeCache.get(id)
-  el?.remove()
-  nodeCache.delete(id) // ahora sí el GC puede limpiarlo
+  const el = nodeCache.get(id);
+  el?.remove();
+  nodeCache.delete(id); // ahora sí el GC puede limpiarlo
 }
 ```
 
@@ -143,20 +147,20 @@ Los closures capturan el scope donde se crean. Si ese scope tiene un objeto gran
 ```typescript
 // ❌ MAL — el closure captura datosGrandes entero aunque solo usa id
 function crearHandler(datosGrandes: BigDataObject[]) {
-  const id = datosGrandes[0].id
+  const id = datosGrandes[0].id;
   return function handler() {
-    console.log('Procesando:', id)
+    console.log('Procesando:', id);
     // datosGrandes sigue en memoria por culpa del closure
-  }
+  };
 }
 
 // ✅ BIEN — extrae solo lo que necesitas antes del closure
 function crearHandler(datosGrandes: BigDataObject[]) {
-  const id = datosGrandes[0].id
+  const id = datosGrandes[0].id;
   // aquí datosGrandes ya puede ser recogido por el GC
   return function handler() {
-    console.log('Procesando:', id)
-  }
+    console.log('Procesando:', id);
+  };
 }
 ```
 
@@ -173,7 +177,7 @@ Cuando empecé a investigar los memory leaks, no sabía ni por dónde tirar. Chr
 3. Ejecuta la acción sospechosa (navega, cierra un modal, desmonta un componente)
 4. Fuerza el GC manualmente (botón 🗑️)
 5. Segundo snapshot
-6. Filtra por *"Objects allocated between snapshots"*
+6. Filtra por _"Objects allocated between snapshots"_
 
 Si ves objetos que deberían haber desaparecido (componentes desmontados, listeners, nodos DOM), tienes el leak ahí. Mira la columna **Retainers** — te dice exactamente qué está manteniendo vivo ese objeto.
 
@@ -193,36 +197,36 @@ Si el heap sube sin parar y el baseline no baja aunque el GC se dispare, hay lea
 
 ```typescript
 useEffect(() => {
-  const controller = new AbortController()
+  const controller = new AbortController();
 
   fetch('/api/datos', { signal: controller.signal })
-    .then(res => res.json())
-    .then(data => setData(data))
-    .catch(err => {
-      if (err.name !== 'AbortError') console.error(err)
-    })
+    .then((res) => res.json())
+    .then((data) => setData(data))
+    .catch((err) => {
+      if (err.name !== 'AbortError') console.error(err);
+    });
 
-  window.addEventListener('resize', handleResize)
-  const intervalId = setInterval(sincronizar, 10_000)
+  window.addEventListener('resize', handleResize);
+  const intervalId = setInterval(sincronizar, 10_000);
 
   return () => {
-    controller.abort()
-    window.removeEventListener('resize', handleResize)
-    clearInterval(intervalId)
-  }
-}, [])
+    controller.abort();
+    window.removeEventListener('resize', handleResize);
+    clearInterval(intervalId);
+  };
+}, []);
 ```
 
 **WeakMap para cachés**:
 
 ```typescript
-const cache = new WeakMap<object, ComputedResult>()
+const cache = new WeakMap<object, ComputedResult>();
 
 function getComputedResult(obj: object): ComputedResult {
-  if (cache.has(obj)) return cache.get(obj)!
-  const result = computeExpensive(obj)
-  cache.set(obj, result) // si obj desaparece, esta entrada también
-  return result
+  if (cache.has(obj)) return cache.get(obj)!;
+  const result = computeExpensive(obj);
+  cache.set(obj, result); // si obj desaparece, esta entrada también
+  return result;
 }
 ```
 
@@ -259,18 +263,21 @@ El `useMemo` evita que se creen objetos nuevos en cada render. El GC puede limpi
 ```typescript
 useEffect(() => {
   const observer = new IntersectionObserver(
-    (entries) => entries.forEach(e => { if (e.isIntersecting) cargarMas() }),
+    (entries) =>
+      entries.forEach((e) => {
+        if (e.isIntersecting) cargarMas();
+      }),
     { threshold: 0.1 }
-  )
+  );
 
-  const target = ref.current
-  if (target) observer.observe(target)
+  const target = ref.current;
+  if (target) observer.observe(target);
 
   return () => {
-    if (target) observer.unobserve(target)
-    observer.disconnect()
-  }
-}, [])
+    if (target) observer.unobserve(target);
+    observer.disconnect();
+  };
+}, []);
 ```
 
 ---
@@ -291,7 +298,7 @@ La mayoría de leaks son predecibles. No son bugs raros — son consecuencia de 
 
 Crea el recurso, úsalo, líbralo. Siempre.
 
-<img src="/posts/meme-memory-leak-honest-work.jpg" alt="It ain't much but it's honest work — el fix de limpiar el estado y desmontar bien el componente" style="max-width: 100%; border-radius: 8px; margin-top: 1rem;" />
+![It ain't much but it's honest work — el fix de limpiar el estado y desmontar bien el componente](./meme-memory-leak-honest-work.jpg)
 
 ---
 

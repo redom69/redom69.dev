@@ -5,7 +5,7 @@ import ArticleCards from '../components/ArticleCards.astro';
 
 export const prerender = false;
 
-const posts = await getCollection('posts');
+const posts = await getCollection('posts', ({ data }) => !data.draft);
 const sortedPosts = posts.sort((a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime());
 
 const postsPerPage = 10;
@@ -48,6 +48,7 @@ const currentPosts = sortedPosts.slice((currentPage - 1) * postsPerPage, current
               href={`/newsletter/${post.id.replace(/\.md$/, '')}`}
               title={post.data.title}
               description={post.data.description}
+              tags={post.data.tags}
               index={index+1}
               />
           ))

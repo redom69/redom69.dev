@@ -3,7 +3,7 @@ title: "Metieron el cerebro de una mosca en un ordenador y la mosca se movió so
 description: "En marzo de 2026, Eon Systems emulando las 125.000 neuronas de una mosca real en un cuerpo virtual. Sin IA. Sin entrenamiento. El cerebro simplemente... funcionó."
 date: 2026-04-05
 tags: [ia, neurociencia, cerebro, simulacion, tech]
-image: "/posts/cerebro-mosca-cover.jpg"
+image: "./cerebro-mosca-cover.jpg"
 ---
 
 Hace unas semanas leí algo que me quedé un rato mirando la pantalla sin saber muy bien qué pensar.

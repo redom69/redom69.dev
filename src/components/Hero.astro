@@ -6,6 +6,21 @@ import MailIcon from "./icons/Mail.astro";
 import SocialPill from "./SocialPill.astro";
 import { Image } from 'astro:assets';
 import profileImg from '../../public/profile.webp';
+
+const FALLBACK_PROJECTS_COUNT = 10;
+
+async function getGithubPublicReposCount(): Promise<number> {
+  try {
+    const response = await fetch('https://api.github.com/users/redom69');
+    if (!response.ok) return FALLBACK_PROJECTS_COUNT;
+    const { public_repos } = await response.json();
+    return typeof public_repos === 'number' ? public_repos : FALLBACK_PROJECTS_COUNT;
+  } catch {
+    return FALLBACK_PROJECTS_COUNT;
+  }
+}
+
+const projectsCount = await getGithubPublicReposCount();
 ---
 
 <div class="max-w-xl mx-auto hero-container">
@@ -51,8 +66,8 @@ import profileImg from '../../public/profile.webp';
       <span class="text-sm text-gray-500 dark:text-gray-400">años de experiencia</span>
     </div>
     <div class="text-center sm:text-left">
-      <span class="block text-3xl font-bold text-[var(--red)]">+10</span>
-      <span class="text-sm text-gray-500 dark:text-gray-400">proyectos entregados</span>
+      <span class="block text-3xl font-bold text-[var(--red)]">+{projectsCount}</span>
+      <span class="text-sm text-gray-500 dark:text-gray-400">repos públicos en GitHub</span>
     </div>
     <div class="text-center sm:text-left">
       <span class="block text-3xl font-bold text-[var(--red)]">MERN</span>

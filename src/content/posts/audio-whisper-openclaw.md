@@ -1,8 +1,9 @@
 ---
-title: "Cómo solucioné el procesamiento de audios en mi asistente de IA"
-description: "Llevaba tiempo queriendo hablarle a mi asistente por nota de voz. Lo que parecía simple se convirtió en una odisea. Te cuento cómo lo resolví."
+title: 'Cómo solucioné el procesamiento de audios en mi asistente de IA'
+description: 'Llevaba tiempo queriendo hablarle a mi asistente por nota de voz. Lo que parecía simple se convirtió en una odisea. Te cuento cómo lo resolví.'
 date: 2026-03-24
-image: "/posts/openclaw-whisper.webp"
+image: './openclaw-whisper.webp'
+tags: [ia, whisper, audio, openclaw, asistente]
 ---
 
 Llevaba tiempo queriendo hablarle a mi asistente por nota de voz desde el móvil. Simple, ¿no? Pues no tanto.
@@ -33,7 +34,7 @@ La solución era simple y elegante: en vez de esperar a que OpenClaw activara el
 
 Eso fue el punto de inflexión. A partir de ahí solo quedaba adaptarlo y hacerlo robusto.
 
-![Desarrollador esperando a que cargue Whisper](/posts/meme-whisper-cansado.webp)
+![Desarrollador esperando a que cargue Whisper](./meme-whisper-cansado.webp)
 
 ## **Cómo lo montamos**
 

@@ -1,8 +1,9 @@
 ---
-title: "Entendiendo la Diferencia entre (===) y (==) en JavaScript"
-description: "Una pequeña aclaración para aquellas personas que, como yo, tienen algunas dudas."
+title: 'Entendiendo la Diferencia entre (===) y (==) en JavaScript'
+description: 'Una pequeña aclaración para aquellas personas que, como yo, tienen algunas dudas.'
 date: 2024-09-21
-image: "/posts/image.webp"
+image: './image.webp'
+tags: [javascript, fundamentos, operadores]
 ---
 
 Esta será mi primera contribución a esta nueva newsletter. Este es un proyecto que estoy intentando llevar a cabo con el objetivo de que personas dentro del mundo de la programación puedan compartir y aprender nuevos conocimientos de manera colaborativa.
@@ -26,7 +27,7 @@ Pero, ¿qué es exactamente la coerción de tipos? En programación, y específi
 El resultado de este proceso es que el lenguaje transforma automáticamente ciertos valores de un tipo a otro, permitiendo que la operación o comparación funcione.
 
 ```javascript
-5 == "5"; // true
+5 == '5'; // true
 true == 1; // true
 null == undefined; // true
 ```
@@ -38,7 +39,7 @@ Una vez entendido el operador de igualdad abstracta, pasemos al operador de igua
 Esta comparación es más estricta, y ambos valores tienen que ser del mismo tipo para que se considere que son iguales. Este enfoque es más seguro y preciso a la hora de evitar confusiones y errores.
 
 ```javascript
-5 === "5"; // false
+5 === '5'; // false
 true === 1; // false
 null === undefined; // false
 ```

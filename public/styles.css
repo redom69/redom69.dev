@@ -1,5 +1,10 @@
 /* src/styles/content.css */
 
+.article-content img {
+  border-radius: 8px;
+  margin-top: 1rem;
+}
+
 .article-content h1,
 .article-content h2,
 .article-content h3,

@@ -1,11 +1,12 @@
 ---
-title: "Cómo monté mi propio asistente de IA personal con OpenClaw"
-description: "Llevo un tiempo con ganas de tener un asistente que realmente fuera mío. Te cuento cómo lo hice y qué me encontré por el camino."
+title: 'Cómo monté mi propio asistente de IA personal con OpenClaw'
+description: 'Llevo un tiempo con ganas de tener un asistente que realmente fuera mío. Te cuento cómo lo hice y qué me encontré por el camino.'
 date: 2026-03-18
-image: "/posts/openclaw-ia.jpg"
+image: './openclaw-ia.jpg'
+tags: [ia, openclaw, asistente, github]
 ---
 
-Llevaba tiempo con ganas de montar algo así. No un chatbot genérico, sino algo que fuera realmente *mío*: que me conociera, que recordara lo que le digo, que pudiera hablarle desde el móvil y que tuviera acceso a mis herramientas. La típica idea que tienes en la cabeza pero que vas postergando porque "hay cosas más urgentes".
+Llevaba tiempo con ganas de montar algo así. No un chatbot genérico, sino algo que fuera realmente _mío_: que me conociera, que recordara lo que le digo, que pudiera hablarle desde el móvil y que tuviera acceso a mis herramientas. La típica idea que tienes en la cabeza pero que vas postergando porque "hay cosas más urgentes".
 
 Pues bien, me puse a ello. Y di con **OpenClaw**.
 

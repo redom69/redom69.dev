@@ -6,9 +6,10 @@ interface Props {
   title: string;
   index: number;
   description: string;
+  tags?: string[];
 }
 
-const { href, title,  description,index } = Astro.props;
+const { href, title, description, index, tags = [] } = Astro.props;
 
 // Función para calcular el tiempo de lectura
 const calculateReadingTime = (text: string): string => {
@@ -37,7 +38,12 @@ const readingTime = calculateReadingTime(description);
 
     <h3>{title}</h3>
     <p>{description}</p>
-    <small style="padding-top: 0px;">{readingTime} read</small> 
+    <small style="padding-top: 0px;">{readingTime} read</small>
+    {tags.length > 0 && (
+      <div class="article-tags">
+        {tags.slice(0, 3).map((tag) => <span class="article-tag">{tag}</span>)}
+      </div>
+    )}
   </div>
 
   <div class="external-link">
@@ -91,6 +97,26 @@ const readingTime = calculateReadingTime(description);
     font-size: 0.75rem;
     color: #a1a1a1;
     margin-bottom: 8px;
+  }
+
+  .article-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 8px;
+  }
+
+  .article-tag {
+    font-size: 0.7rem;
+    font-weight: 600;
+    padding: 2px 8px;
+    border-radius: 4px;
+    background-color: rgba(255, 255, 255, 0.15);
+    color: inherit;
+  }
+
+  html.dark .article-tag {
+    background-color: rgba(255, 255, 255, 0.08);
   }
 
   .article-content h3, .article-content p {

@@ -1,7 +1,9 @@
 ---
+import '../styles/global.css';
 import Footer from '../components/Footer.astro';
 import Navbar from '../components/Navbar.astro';
-import { ViewTransitions } from "astro:transitions"
+import CookieConsent from '../components/CookieConsent.astro';
+import { ClientRouter } from "astro:transitions"
 import SpeedInsights from "@vercel/speed-insights/astro"
 
 interface Props {
@@ -35,6 +37,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
     <meta name="twitter:image" content="https://www.redom69.dev/profile.webp" />
 
     <link rel="canonical" href={canonicalURL.href} />
+    <link rel="alternate" type="application/rss+xml" title="Code2Learn RSS Feed" href="/rss.xml" />
 
     <!-- Manifest -->
     <link rel="manifest" href="/site.webmanifest">
@@ -44,10 +47,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
     <meta name="generator" content={Astro.generator} />
     <link rel="stylesheet" href="/styles.css" media="print" onload="this.media='all'" />
     <noscript><link rel="stylesheet" href="/styles.css"></noscript>
-    <ViewTransitions />
-
-    <!-- Google Tag Manager -->
-    <script async src="https://www.googletagmanager.com/gtm.js?id=GTM-K7WHQKP6"></script>
+    <ClientRouter />
   </head>
   <body class="relative text-black dark:text-white">
     <!-- Skip to content -->
@@ -59,14 +59,12 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
     bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,#CFD8EE,#ECECEC)]
     dark:bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,#374364,#1D1D1D)]"/>
 
-    <!-- Google Tag Manager (noscript) -->
-    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-K7WHQKP6" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-
     <Navbar />
     <main id="main-content">
       <slot />
     </main>
     <Footer />
+    <CookieConsent />
     <SpeedInsights />
     <style is:global>
       :root {

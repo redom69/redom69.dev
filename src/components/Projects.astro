@@ -1,47 +1,31 @@
 ---
-const projects = [
-  {
-    title: "Club Voleibol Arganda",
-    description: "Sitio web completo para un club de voleibol con gestión de equipos, competiciones, noticias y sistema de administración. Desarrollado con React, Vite, Supabase y TailwindCSS.",
-    url: "https://clubvoleibolarganda.es",
-    link: "https://clubvoleibolarganda.es",
-    tags: ["React", "Supabase", "TailwindCSS", "Vite"],
-    fallback: "/projects/voleibol-arganda.png"
-  },
-  {
-    title: "Camila Paz Neurofisio",
-    description: "Web profesional para fisioterapeuta especializada en neurofisiología. Incluye presentación de servicios, información de contacto y diseño responsive adaptado a la identidad de marca. Desarrollado con Vite, React, TypeScript y Tailwind CSS v4.",
-    url: "https://www.camilapazneurofisio.com",
-    link: "https://www.camilapazneurofisio.com",
-    tags: ["React", "TypeScript", "Tailwind CSS v4", "Vite"],
-    fallback: "/projects/camila-fisio.jpg"
-  }
-];
+import { getCollection } from 'astro:content';
+import { Image } from 'astro:assets';
+
+const projects = (await getCollection('projects')).sort((a, b) => a.data.order - b.data.order);
 ---
 
 <div class="flex flex-col gap-y-16">
-  {projects.map(({ url, title, description, link, tags, fallback }) => (
+  {projects.map(({ data: { url, title, description, tags, image } }) => (
     <article class="flex flex-col space-y-8 group md:flex-row md:space-x-8 md:space-y-0">
-      <!-- Preview dinámico del sitio -->
       <div class="w-full md:w-1/2">
         <a
-          href={link}
+          href={url}
           target="_blank"
           rel="noopener noreferrer"
           class="relative flex flex-col items-center gap-8 transition transform shadow-xl overflow-clip rounded-xl md:group-hover:translate-y-1 md:group-hover:shadow-2xl lg:border lg:border-gray-800 lg:hover:border-gray-700 lg:hover:bg-gray-800/50 block"
         >
-          <!-- Preview dinámico sin cache -->
-          <img
-            alt={`Preview de ${title}`}
+          <Image
+            src={image}
+            alt={`Captura de ${title}`}
             class="object-cover object-top w-full h-56 transition sm:h-full md:scale-110 md:group-hover:scale-105"
             loading="lazy"
-            src={`https://api.microlink.io/?url=${encodeURIComponent(url)}&screenshot=true&meta=false&embed=screenshot.url&force=true&waitUntil=networkidle2`}
-            onerror={`this.src='${fallback}'`}
+            width={800}
+            height={450}
           />
         </a>
       </div>
 
-      <!-- Título y Descripción -->
       <div class="w-full md:w-1/2 md:max-w-lg">
         <h3 class="text-2xl font-bold text-[var(--text-color-dark)] dark:text-[var(--text-color-light)]">
           {title}
@@ -56,31 +40,28 @@ const projects = [
         <p class="mt-2 text-[var(--text-color-dark)] dark:text-[var(--text-color-light)]">
           {description}
         </p>
-        {link && (
-          <div class="mt-4">
-            <a
-              href={link}
-              target="_blank"
-              rel="noopener noreferrer"
-              class="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-white bg-[var(--red)] rounded-lg hover:bg-[var(--dark-blue)] transition-colors"
-            >
-              Ver proyecto
-              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-              </svg>
-            </a>
-          </div>
-        )}
+        <div class="mt-4">
+          <a
+            href={url}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-white bg-[var(--red)] rounded-lg hover:bg-[var(--dark-blue)] transition-colors"
+          >
+            Ver proyecto
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+            </svg>
+          </a>
+        </div>
       </div>
     </article>
   ))}
 </div>
 
 <style>
-  /* Asegura que las imágenes mantengan su relación de aspecto en pantallas más pequeñas */
   @media (max-width: 768px) {
     img {
-      height: auto; /* Ajusta la altura automáticamente para pantallas móviles */
+      height: auto;
     }
   }
 </style>

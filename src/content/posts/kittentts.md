@@ -3,7 +3,7 @@ title: "KittenTTS: TTS de calidad en 25MB, sin GPU y gratis"
 description: "Estaba buscando opciones para añadir voz a un proyecto sin montar infraestructura ni pagar APIs. Encontré KittenTTS y es exactamente lo que necesitaba."
 date: 2026-04-04
 tags: [python, ia, tts, open-source]
-image: "/posts/kittentts-cover.jpg"
+image: "./kittentts-cover.jpg"
 ---
 
 Estaba mirando opciones para añadir síntesis de voz a un proyecto personal. La mayoría de soluciones o necesitan GPU, o son APIs de pago con límites, o los modelos pesan varios gigas. Para algo pequeño no tiene ningún sentido montar toda esa infraestructura.

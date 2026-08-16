@@ -3,10 +3,10 @@ title: "Caveman: Mi Hechizo Personal para Ahorrar Tokens en tus IAs (¡y el tuyo
 description: "Descubre cómo Caveman optimiza el consumo de tokens en IAs como Claude, permitiéndote ahorrar costes y acelerar tus interacciones. ¡Menos palabras, más eficiencia!"
 date: 2026-04-16
 tags: [ia, optimizacion, tokens, claude, github]
-image: "/posts/caveman-cover.jpg"
+image: "./caveman-cover.jpg"
 ---
 
-![Imagen de Caveman](/posts/caveman-cover.jpg)
+![Imagen de Caveman](./caveman-cover.jpg)
 
 A ver, que levante la mano quien no se haya cabreado con el consumo de tokens de las IAs. ¿Claude? Un fenómeno, sí, pero a veces parece que te escribe una novela para responderte un 'hola'. Me ha pasado de ver un puto `ritmo` de canción para una simple consulta. ¡Un sinsentido! Por eso hoy te quiero hablar de `Caveman`, una herramienta que me ha salvado la vida (y el bolsillo) y que te va a volar la cabeza si usas mucho Claude.
 
